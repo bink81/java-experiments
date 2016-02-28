@@ -1,14 +1,14 @@
-package proxy;
+package proxy.withinterface;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class Handler implements InvocationHandler {
+public class DemoHandler implements InvocationHandler {
 
 	private final OriginalInterface originalObject;
 
-	public Handler(OriginalInterface originalObject) {
+	public DemoHandler(OriginalInterface originalObject) {
 		this.originalObject = originalObject;
 	}
 

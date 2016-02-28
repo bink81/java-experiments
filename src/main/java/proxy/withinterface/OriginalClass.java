@@ -1,4 +1,4 @@
-package proxy;
+package proxy.withinterface;
 
 public class OriginalClass implements OriginalInterface {
 	@Override
