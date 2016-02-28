@@ -2,7 +2,7 @@ package proxy.withinterface;
 
 import java.lang.reflect.Proxy;
 
-public class ProxyWithInterfaceDemo {
+public class Demo {
 	public static void main(String[] args) {
 		OriginalInterface originalObject = new OriginalClass();
 		DemoHandler handler = new DemoHandler(originalObject);
