@@ -5,20 +5,20 @@ import org.junit.Test;
 
 import junit.framework.Assert;
 
-public class ProjectTest {
+public class PaymentTest {
 
-	private Project theProject;
+	private Payment thePayment;
 
 	@Before
 	public void setUp() throws Exception {
-		theProject = new Project();
+		thePayment = new Payment();
 	}
 
 	@Test
 	public void testIsOverdueWithoutSpecificationPattern() throws Exception {
-		// without specification pattern the project needs to include business
+		// without specification pattern the payment needs to include business
 		// logic which unnecessarily adds complexity
-		Assert.assertTrue(theProject.isOverdue());
+		Assert.assertTrue(thePayment.isOverdue());
 	}
 
 	@Test
@@ -27,7 +27,7 @@ public class ProjectTest {
 		// the entity and made it a responsibility of another class which makes
 		// the client code flexible, readable and allow the entity to focus on
 		// it's state
-		ProjectSpecification projectIsOverdueSpecification = new OverdueProjectSpecification();
-		Assert.assertTrue(projectIsOverdueSpecification.isSatisfiedBy(theProject));
+		PaymentSpecification projectIsOverdueSpecification = new OverduePaymentSpecification();
+		Assert.assertTrue(projectIsOverdueSpecification.isSatisfiedBy(thePayment));
 	}
 }
