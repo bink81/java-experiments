@@ -4,16 +4,11 @@ import java.io.OutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import junit.framework.Assert;
 
 public class HelloWorldCodeGeneratorTest {
-
-	@Before
-	public void setUp() throws Exception {
-	}
 
 	@Test
 	public void testName() throws Exception {

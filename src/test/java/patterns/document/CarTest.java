@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import junit.framework.Assert;
@@ -16,10 +15,6 @@ public class CarTest {
 	private static final String MODEL = "Audi";
 	private static final String COLOR = "red";
 	private static final int WHEELS_COUNT = 4;
-
-	@Before
-	public void setUp() throws Exception {
-	}
 
 	@Test
 	public void testCreateCar() throws Exception {

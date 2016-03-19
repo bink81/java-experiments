@@ -14,7 +14,7 @@ import com.squareup.javapoet.TypeSpec;
 
 public class HelloWorldCodeGenerator {
 
-	OutputStream generateCode() throws IOException, URISyntaxException {
+	public OutputStream generateCode() throws IOException, URISyntaxException {
 		MethodSpec main = MethodSpec.methodBuilder("main")
 				.addModifiers(Modifier.PUBLIC, Modifier.STATIC)
 				.returns(void.class)

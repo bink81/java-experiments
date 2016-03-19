@@ -1,5 +1,5 @@
 package patterns.proxy.withinterface;
 
 public interface SayHelloInterface {
-	String sayHello(String name);
+	public String sayHello(String name);
 }
