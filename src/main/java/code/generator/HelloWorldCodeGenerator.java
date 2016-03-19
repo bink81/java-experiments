@@ -1,6 +1,10 @@
 package code.generator;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.net.URISyntaxException;
 
 import javax.lang.model.element.Modifier;
 
@@ -8,8 +12,9 @@ import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 
-public class HelloWorldGenerator {
-	public static void main(String[] args) throws IOException {
+public class HelloWorldCodeGenerator {
+
+	OutputStream generateCode() throws IOException, URISyntaxException {
 		MethodSpec main = MethodSpec.methodBuilder("main")
 				.addModifiers(Modifier.PUBLIC, Modifier.STATIC)
 				.returns(void.class)
@@ -25,6 +30,14 @@ public class HelloWorldGenerator {
 		JavaFile javaFile = JavaFile.builder("com.example.helloworld", helloWorld)
 				.build();
 
-		javaFile.writeTo(System.out);
+		OutputStream out = new ByteArrayOutputStream();
+		Appendable stream = new PrintStream(out);
+		javaFile.writeTo(stream);
+		return out;
+	}
+
+	public static void main(String[] args) throws IOException, URISyntaxException {
+		OutputStream result = new HelloWorldCodeGenerator().generateCode();
+		System.out.println(result);
 	}
 }
