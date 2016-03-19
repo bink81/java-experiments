@@ -39,17 +39,4 @@ public class DebugUtils {
 		byte[] encoded = Files.readAllBytes(path);
 		return new String(encoded, StandardCharsets.UTF_8);
 	}
-
-	@FunctionalInterface
-	interface CheckedRunnable {
-		void run() throws Throwable;
-	}
-
-	public static void ignoreException(CheckedRunnable r) {
-		try {
-			r.run();
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
-	}
 }

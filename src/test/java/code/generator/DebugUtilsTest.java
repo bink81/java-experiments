@@ -1,6 +1,6 @@
 package code.generator;
 
-import static code.generator.DebugUtils.ignoreException;
+import static utils.CommonCode.ignoreException;
 
 import org.junit.Test;
 
