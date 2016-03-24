@@ -10,7 +10,7 @@ public final class Shop {
 	}
 
 	public Product orderProduct(String type) {
-		final Product product = factory.make(type);
+		final Product product = factory.produce(type);
 		setTotal(getTotal() + product.getPrice());
 		return product;
 	}

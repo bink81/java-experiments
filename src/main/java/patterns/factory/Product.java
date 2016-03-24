@@ -5,7 +5,7 @@ public abstract class Product {
 
 	@FunctionalInterface
 	public interface Factory {
-		Product make(String type);
+		Product produce(String type);
 	}
 
 	protected Product(String size) {
