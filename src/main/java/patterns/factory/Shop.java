@@ -5,7 +5,7 @@ public final class Shop {
 	private Product.Factory factory;
 	private long total;
 
-	public void setSupplier(Product.Factory factory) {
+	public void setType(Product.Factory factory) {
 		this.factory = factory;
 	}
 

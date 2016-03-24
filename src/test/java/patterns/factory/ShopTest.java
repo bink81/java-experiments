@@ -18,7 +18,7 @@ public class ShopTest {
 
 	@Test
 	public void testOrderProduct1() throws Exception {
-		setSupplier1();
+		setType1();
 
 		final Product product = shop.orderProduct(SIZE_1);
 
@@ -29,7 +29,7 @@ public class ShopTest {
 
 	@Test
 	public void testOrderProduct2() throws Exception {
-		setSupplier2();
+		setType2();
 
 		final Product product = shop.orderProduct(SIZE_2);
 
@@ -40,7 +40,7 @@ public class ShopTest {
 
 	@Test
 	public void testOrderTwoProducts1() throws Exception {
-		setSupplier1();
+		setType1();
 		final Product product1 = shop.orderProduct(SIZE_1);
 		final Product product2 = shop.orderProduct(SIZE_2);
 
@@ -52,9 +52,9 @@ public class ShopTest {
 
 	@Test
 	public void testOrderProducts1and2() throws Exception {
-		setSupplier1();
+		setType1();
 		final Product product1 = shop.orderProduct(SIZE_1);
-		setSupplier2();
+		setType2();
 		final Product product2 = shop.orderProduct(SIZE_2);
 
 		long total = shop.getTotal();
@@ -63,11 +63,11 @@ public class ShopTest {
 		Assert.assertEquals(30, total);
 	}
 
-	private void setSupplier1() {
-		shop.setSupplier(Product1::new);
+	private void setType1() {
+		shop.setType(Product1::new);
 	}
 
-	private void setSupplier2() {
-		shop.setSupplier(Product2::new);
+	private void setType2() {
+		shop.setType(Product2::new);
 	}
 }
