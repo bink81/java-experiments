@@ -5,7 +5,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 public class ExampleConsumer implements Runnable {
-
 	private final String name;
 	private final CompletionService<ExampleProduct> completionService;
 

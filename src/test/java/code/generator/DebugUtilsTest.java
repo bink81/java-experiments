@@ -10,7 +10,7 @@ public class DebugUtilsTest {
 	public void testIgnoreExceptionForBlock() throws Exception {
 		ignoreException(() -> {
 			// complex code
-			throw new Throwable("Shown (just in case) but then continues...");
+			throw new Throwable("Exception is shown here just in case but the execution continues...");
 		});
 	}
 

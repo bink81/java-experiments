@@ -1,5 +1,8 @@
 package tools.javaparser;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.github.javaparser.ASTHelper;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.PackageDeclaration;
@@ -15,20 +18,22 @@ import com.github.javaparser.ast.expr.StringLiteralExpr;
 import com.github.javaparser.ast.stmt.BlockStmt;
 
 public class CodeCreator {
+	private static final Logger LOGGER = LoggerFactory.getLogger(CodeCreator.class);
+
 	public CompilationUnit createCU() {
-		CompilationUnit cu = new CompilationUnit();
-		addPackage(cu);
-		ClassOrInterfaceDeclaration type = addClassDeclaration(cu);
+		CompilationUnit compilationUnit = new CompilationUnit();
+		addPackage(compilationUnit);
+		ClassOrInterfaceDeclaration type = addClassDeclaration(compilationUnit);
 		MethodDeclaration method = addMethodDeclaration(type);
 		addMethodParameter(method);
 		BlockStmt codeBlock = addBlock(method);
 		addSystemOutPrintln(codeBlock);
-		System.out.println(cu.toString());
-		return cu;
+		LOGGER.info("{}", compilationUnit);
+		return compilationUnit;
 	}
 
-	private void addPackage(CompilationUnit cu) {
-		cu.setPackage(new PackageDeclaration(ASTHelper.createNameExpr("tools.javaparser")));
+	private void addPackage(CompilationUnit compilationUnit) {
+		compilationUnit.setPackage(new PackageDeclaration(ASTHelper.createNameExpr("tools.javaparser")));
 	}
 
 	private ClassOrInterfaceDeclaration addClassDeclaration(CompilationUnit cu) {
@@ -67,7 +72,7 @@ public class CodeCreator {
 		ASTHelper.addStmt(block, call);
 	}
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		new CodeCreator().createCU();
 	}
 }

@@ -9,8 +9,12 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class Demo {
 	private static final String FILE_NAME = "person.xml";
+	private static final Logger LOGGER = LoggerFactory.getLogger(Demo.class);
 
 	public static void main(String[] args) throws JAXBException, FileNotFoundException {
 		Demo demo = new Demo();
@@ -18,7 +22,7 @@ public class Demo {
 		demo.marshalPerson(person);
 		Person loadedPerson = demo.unmarshalPerson();
 		assert loadedPerson.equals(person);
-		System.out.println("The End");
+		LOGGER.info("The End");
 	}
 
 	private Person createPerson() {
