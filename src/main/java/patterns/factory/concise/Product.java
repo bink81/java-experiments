@@ -1,4 +1,4 @@
-package patterns.factory;
+package patterns.factory.concise;
 
 public abstract class Product {
 	private final String size;

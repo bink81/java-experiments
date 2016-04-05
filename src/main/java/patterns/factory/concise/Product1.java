@@ -1,4 +1,4 @@
-package patterns.factory;
+package patterns.factory.concise;
 
 public final class Product1 extends Product {
 	public Product1(String size) {

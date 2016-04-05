@@ -1,9 +1,13 @@
-package patterns.factory;
+package patterns.factory.concise;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import junit.framework.Assert;
+import patterns.factory.concise.Product;
+import patterns.factory.concise.Product1;
+import patterns.factory.concise.Product2;
+import patterns.factory.concise.Shop;
 
 public class ShopTest {
 
