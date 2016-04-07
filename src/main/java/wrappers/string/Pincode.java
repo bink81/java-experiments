@@ -25,7 +25,6 @@ public final class Pincode extends SecretStringWrapper {
 			MAX_NUMBER_OF_DIGITS);
 	}
 
-	// constructors
 	public static Pincode of(String value) {
 		return new Pincode(value);
 	}
