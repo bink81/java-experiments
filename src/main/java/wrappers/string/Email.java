@@ -12,6 +12,10 @@ public final class Email extends StringWrapper {
 
 	public Email(String value) {
 		super(value);
-		checkArgument(new EmailAddressValidator().isValid(value));
+		EmailAddressValidator emailAddressValidator = new EmailAddressValidator();
+		checkArgument(
+			emailAddressValidator.isValid(value),
+			"The value %s does match expected regular expression: %s", value,
+			emailAddressValidator.getPattern());
 	}
 }
