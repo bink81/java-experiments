@@ -14,6 +14,7 @@ public final class Age extends IntegerWrapper {
 
 	private Age(Integer value) {
 		super(value);
+		// IDEA: We could also put this check in a new AgeValidator
 		checkArgument(value >= 0, "The age must not be negative:  %s", value);
 	}
 
