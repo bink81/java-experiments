@@ -1,6 +1,9 @@
-package utils.validator;
+package wrappers.core;
 
-public class StringValidator {
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class StringValidator implements WrapperValidator {
 
 	private String pattern;
 
@@ -8,9 +11,10 @@ public class StringValidator {
 		this.setPattern(pattern);
 	}
 
+	@Override
 	public boolean isValid(String string) {
-		java.util.regex.Pattern p = java.util.regex.Pattern.compile(getPattern());
-		java.util.regex.Matcher m = p.matcher(string);
+		Pattern p = Pattern.compile(getPattern());
+		Matcher m = p.matcher(string);
 		return m.matches();
 	}
 

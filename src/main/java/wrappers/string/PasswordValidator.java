@@ -1,4 +1,6 @@
-package utils.validator;
+package wrappers.string;
+
+import wrappers.core.StringValidator;
 
 public class PasswordValidator extends StringValidator {
 	public PasswordValidator() {

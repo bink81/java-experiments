@@ -2,7 +2,6 @@ package wrappers.string;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-import utils.validator.EmailAddressValidator;
 import wrappers.core.StringWrapper;
 import wrappers.core.ValueSafe;
 

@@ -2,7 +2,6 @@ package wrappers.string;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-import utils.validator.PincodeValidator;
 import wrappers.core.SecretStringWrapper;
 import wrappers.core.ValueSafe;
 
