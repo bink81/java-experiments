@@ -12,9 +12,12 @@ public class StringValidator implements WrapperValidator {
 	}
 
 	@Override
-	public boolean isValid(String string) {
+	public boolean isValid(String text) {
+		if (text == null) {
+			throw new IllegalArgumentException("Text must not be null!");
+		}
 		Pattern p = Pattern.compile(getPattern());
-		Matcher m = p.matcher(string);
+		Matcher m = p.matcher(text);
 		return m.matches();
 	}
 
