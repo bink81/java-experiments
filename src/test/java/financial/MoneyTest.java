@@ -6,7 +6,6 @@ import java.util.Collection;
 
 import org.junit.Test;
 
-import financial.Money;
 import junit.framework.Assert;
 
 public class MoneyTest {
@@ -28,87 +27,87 @@ public class MoneyTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testEmptyValue() throws Exception {
-		Money.of("");
+		new Money("");
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testNullValue() throws Exception {
-		Money.of(null);
+		new Money((String) null);
 	}
 
 	@Test
 	public void testToString() throws Exception {
-		Money money = Money.of(VALUE);
+		Money money = new Money(VALUE);
 
 		Assert.assertEquals(new BigDecimal(VALUE), money.getAmount());
 	}
 
 	@Test
 	public void testEquals() throws Exception {
-		Money money1 = Money.of(VALUE);
-		Money money2 = Money.of(VALUE);
+		Money money1 = new Money(VALUE);
+		Money money2 = new Money(VALUE);
 
 		Assert.assertEquals(money1, money2);
 	}
 
 	@Test
 	public void testEqual() throws Exception {
-		Money money1 = Money.of(VALUE);
-		Money money2 = Money.of(VALUE);
+		Money money1 = new Money(VALUE);
+		Money money2 = new Money(VALUE);
 
 		Assert.assertTrue(money1.equal(money2));
 	}
 
 	@Test
 	public void testTrueGreaterThanOrEqual() throws Exception {
-		Money money1 = Money.of(VALUE);
-		Money money2 = Money.of(VALUE);
+		Money money1 = new Money(VALUE);
+		Money money2 = new Money(VALUE);
 
 		Assert.assertTrue(money1.greaterThanOrEqual(money2));
 	}
 
 	@Test
 	public void testTrueLessThanOrEqual() throws Exception {
-		Money money1 = Money.of(VALUE);
-		Money money2 = Money.of(VALUE);
+		Money money1 = new Money(VALUE);
+		Money money2 = new Money(VALUE);
 
 		Assert.assertTrue(money1.lessThanOrEqual(money2));
 	}
 
 	@Test
 	public void testFalseGreaterThan() throws Exception {
-		Money money1 = Money.of(VALUE);
-		Money money2 = Money.of(VALUE);
+		Money money1 = new Money(VALUE);
+		Money money2 = new Money(VALUE);
 
 		Assert.assertFalse(money1.greaterThan(money2));
 	}
 
 	@Test
 	public void testTrueGreaterThan() throws Exception {
-		Money money1 = Money.of(BIGGER_VALUE);
-		Money money2 = Money.of(SMALLER_VALUE);
+		Money money1 = new Money(BIGGER_VALUE);
+		Money money2 = new Money(SMALLER_VALUE);
 
 		Assert.assertTrue(money1.greaterThan(money2));
 	}
 
 	@Test
 	public void testIsZero() throws Exception {
-		Money money = Money.of("0");
+		Money money = new Money("0");
 
 		Assert.assertTrue(money.isZero());
 	}
 
 	@Test
 	public void testIsPositive() throws Exception {
-		Money money = Money.of(SMALLER_VALUE);
+		Money money = new Money(SMALLER_VALUE);
 
 		Assert.assertTrue(money.isPositive());
 	}
 
 	@Test
 	public void testTrueLessThan() throws Exception {
-		Money money1 = Money.of(BIGGER_VALUE);
-		Money money2 = Money.of(SMALLER_VALUE);
+		Money money1 = new Money(BIGGER_VALUE);
+		Money money2 = new Money(SMALLER_VALUE);
 
 		Assert.assertTrue(money2.lessThan(money1));
 	}
@@ -116,22 +115,22 @@ public class MoneyTest {
 	@Test
 	public void testSumCollection() throws Exception {
 		Collection<Money> moneys = new ArrayList<>();
-		moneys.add(Money.of(SMALLER_VALUE));
-		moneys.add(Money.of(BIGGER_VALUE));
+		moneys.add(new Money(SMALLER_VALUE));
+		moneys.add(new Money(BIGGER_VALUE));
 
 		Money sum = Money.sum(moneys);
 
-		Assert.assertTrue(Money.of(SUMMED_VALUE).equal(sum));
+		Assert.assertTrue(new Money(SUMMED_VALUE).equal(sum));
 	}
 
 	@Test
 	public void testPlus() throws Exception {
-		Money money1 = Money.of(BIGGER_VALUE);
-		Money money2 = Money.of(SMALLER_VALUE);
+		Money money1 = new Money(BIGGER_VALUE);
+		Money money2 = new Money(SMALLER_VALUE);
 
 		Money sum = money2.plus(money1);
 
-		Assert.assertEquals(Money.of(SUMMED_VALUE), sum);
+		Assert.assertEquals(new Money(SUMMED_VALUE), sum);
 	}
 
 	@Test
@@ -142,31 +141,31 @@ public class MoneyTest {
 
 	@Test
 	public void testMinus() throws Exception {
-		Money money1 = Money.of(BIGGER_VALUE);
-		Money money2 = Money.of(SMALLER_VALUE);
+		Money money1 = new Money(BIGGER_VALUE);
+		Money money2 = new Money(SMALLER_VALUE);
 
 		Money minus = money1.minus(money2);
 
-		Assert.assertEquals(Money.of(POSITIVE_VALUE), minus);
+		Assert.assertEquals(new Money(POSITIVE_VALUE), minus);
 	}
 
 	@Test
 	public void testNegativeMinus() throws Exception {
-		Money money1 = Money.of(SMALLER_VALUE);
-		Money money2 = Money.of(VALUE);
+		Money money1 = new Money(SMALLER_VALUE);
+		Money money2 = new Money(VALUE);
 
 		Money minus = money1.minus(money2);
 
-		Assert.assertEquals(Money.of(NEGATIVE_VALUE), minus);
+		Assert.assertEquals(new Money(NEGATIVE_VALUE), minus);
 	}
 
 	@Test
 	public void testMultiply() throws Exception {
-		Money money1 = Money.of(MULTIPLICATION_FACTOR);
-		Money money2 = Money.of(VALUE);
+		Money money1 = new Money(MULTIPLICATION_FACTOR);
+		Money money2 = new Money(VALUE);
 
 		Money minus = money2.multiply(money1);
 
-		Assert.assertEquals(Money.of(MULTIPLIED_VALUE), minus);
+		Assert.assertEquals(new Money(MULTIPLIED_VALUE), minus);
 	}
 }

@@ -19,23 +19,24 @@ public final class Money implements Serializable {
 
 	private final BigDecimal amount;
 
-	protected Money(BigDecimal amount) {
+	// constructors
+	public Money(String value) {
+		this(value != null ? new BigDecimal(value) : null);
+	}
+
+	public Money(BigDecimal amount) {
 		if (amount == null) {
 			throw new IllegalArgumentException("Value must not be null!");
 		}
 		this.amount = amount;
 	}
 
+	// getters
 	public final BigDecimal getAmount() {
 		return amount;
 	}
 
-	public static Money of(String value) {
-		// TODO: This feels like a smell and there should be a better way, maybe with Optional.
-		BigDecimal bigDecimal = value != null ? new BigDecimal(value) : null;
-		return new Money(bigDecimal);
-	}
-
+	// operations
 	public static Money sum(Collection<Money> moneys) {
 		Money sum = new Money(ZERO);
 		for (Money money : moneys) {
