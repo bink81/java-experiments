@@ -1,4 +1,4 @@
-package wrappers.financial;
+package financial;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

@@ -1,7 +1,8 @@
-package wrappers.financial;
+package financial;
 
 import org.junit.Test;
 
+import financial.MoneyValidator;
 import junit.framework.Assert;
 import wrappers.core.WrapperValidator;
 

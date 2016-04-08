@@ -1,4 +1,4 @@
-package wrappers.financial;
+package financial;
 
 import wrappers.core.StringValidator;
 

@@ -1,4 +1,4 @@
-package wrappers.financial;
+package financial;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -6,6 +6,7 @@ import java.util.Collection;
 
 import org.junit.Test;
 
+import financial.Money;
 import junit.framework.Assert;
 
 public class MoneyTest {
