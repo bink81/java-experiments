@@ -3,12 +3,15 @@ package financial;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Currency;
 
 import org.junit.Test;
 
 import junit.framework.Assert;
 
 public class MoneyTest {
+	private static final Currency DKK_CURRENCY = Currency.getInstance("DKK");
+
 	private static final String MULTIPLICATION_FACTOR = "2";
 
 	private static final String VALUE = "10.01";
@@ -35,11 +38,30 @@ public class MoneyTest {
 		new Money((String) null);
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testNullCurrency() throws Exception {
+		new Money(VALUE, null);
+	}
+
 	@Test
-	public void testToString() throws Exception {
+	public void testGetAmount() throws Exception {
 		Money money = new Money(VALUE);
 
 		Assert.assertEquals(new BigDecimal(VALUE), money.getAmount());
+	}
+
+	@Test
+	public void testGetDefaultCurrency() throws Exception {
+		Money money = new Money(VALUE);
+
+		Assert.assertEquals(Money.DEFAULT_CURRENCY, money.getCurrency());
+	}
+
+	@Test
+	public void testGetCurrency() throws Exception {
+		Money money = new Money(VALUE, DKK_CURRENCY);
+
+		Assert.assertEquals(DKK_CURRENCY, money.getCurrency());
 	}
 
 	@Test
@@ -59,11 +81,27 @@ public class MoneyTest {
 	}
 
 	@Test
+	public void testEqualForDifferentCurrencies() throws Exception {
+		Money money1 = new Money(VALUE);
+		Money money2 = new Money(VALUE, DKK_CURRENCY);
+
+		Assert.assertFalse(money1.equal(money2));
+	}
+
+	@Test
 	public void testTrueGreaterThanOrEqual() throws Exception {
 		Money money1 = new Money(VALUE);
 		Money money2 = new Money(VALUE);
 
 		Assert.assertTrue(money1.greaterThanOrEqual(money2));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testTrueGreaterThanOrEqualForDifferentCurrencies() throws Exception {
+		Money money1 = new Money(VALUE);
+		Money money2 = new Money(VALUE, DKK_CURRENCY);
+
+		money1.greaterThanOrEqual(money2);
 	}
 
 	@Test
@@ -74,6 +112,14 @@ public class MoneyTest {
 		Assert.assertTrue(money1.lessThanOrEqual(money2));
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testTrueLessThanOrEqualForDifferentCurrencies() throws Exception {
+		Money money1 = new Money(VALUE);
+		Money money2 = new Money(VALUE, DKK_CURRENCY);
+
+		money1.lessThanOrEqual(money2);
+	}
+
 	@Test
 	public void testFalseGreaterThan() throws Exception {
 		Money money1 = new Money(VALUE);
@@ -82,12 +128,28 @@ public class MoneyTest {
 		Assert.assertFalse(money1.greaterThan(money2));
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testFalseGreaterThanForDifferentCurrencies() throws Exception {
+		Money money1 = new Money(VALUE);
+		Money money2 = new Money(VALUE, DKK_CURRENCY);
+
+		money1.greaterThan(money2);
+	}
+
 	@Test
 	public void testTrueGreaterThan() throws Exception {
 		Money money1 = new Money(BIGGER_VALUE);
 		Money money2 = new Money(SMALLER_VALUE);
 
 		Assert.assertTrue(money1.greaterThan(money2));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testTrueGreaterThanForDifferentCurrencies() throws Exception {
+		Money money1 = new Money(BIGGER_VALUE);
+		Money money2 = new Money(SMALLER_VALUE, DKK_CURRENCY);
+
+		money1.greaterThan(money2);
 	}
 
 	@Test
@@ -105,11 +167,35 @@ public class MoneyTest {
 	}
 
 	@Test
+	public void testIsSameCurrency() throws Exception {
+		Money money1 = new Money(SMALLER_VALUE);
+		Money money2 = new Money(BIGGER_VALUE);
+
+		Assert.assertTrue(money1.isSameCurrency(money2));
+	}
+
+	@Test
+	public void testIsSameCurrencyForDifferentCurrencies() throws Exception {
+		Money money1 = new Money(SMALLER_VALUE);
+		Money money2 = new Money(BIGGER_VALUE, DKK_CURRENCY);
+
+		Assert.assertFalse(money1.isSameCurrency(money2));
+	}
+
+	@Test
 	public void testTrueLessThan() throws Exception {
 		Money money1 = new Money(BIGGER_VALUE);
 		Money money2 = new Money(SMALLER_VALUE);
 
 		Assert.assertTrue(money2.lessThan(money1));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testTrueLessThanForDifferentCurrencies() throws Exception {
+		Money money1 = new Money(BIGGER_VALUE);
+		Money money2 = new Money(SMALLER_VALUE, DKK_CURRENCY);
+
+		money2.lessThan(money1);
 	}
 
 	@Test
@@ -123,6 +209,15 @@ public class MoneyTest {
 		Assert.assertTrue(new Money(SUMMED_VALUE).equal(sum));
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testSumCollectionForDifferentCurrencies() throws Exception {
+		Collection<Money> moneys = new ArrayList<>();
+		moneys.add(new Money(SMALLER_VALUE));
+		moneys.add(new Money(BIGGER_VALUE, DKK_CURRENCY));
+
+		Money.sum(moneys);
+	}
+
 	@Test
 	public void testPlus() throws Exception {
 		Money money1 = new Money(BIGGER_VALUE);
@@ -133,10 +228,12 @@ public class MoneyTest {
 		Assert.assertEquals(new Money(SUMMED_VALUE), sum);
 	}
 
-	@Test
-	public void testXor() throws Exception {
-		Assert.assertTrue(true);
-		;
+	@Test(expected = IllegalArgumentException.class)
+	public void testPlusForDifferentCurrencies() throws Exception {
+		Money money1 = new Money(BIGGER_VALUE);
+		Money money2 = new Money(SMALLER_VALUE, DKK_CURRENCY);
+
+		money2.plus(money1);
 	}
 
 	@Test
@@ -147,6 +244,14 @@ public class MoneyTest {
 		Money minus = money1.minus(money2);
 
 		Assert.assertEquals(new Money(POSITIVE_VALUE), minus);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testMinusForDifferentCurrencies() throws Exception {
+		Money money1 = new Money(BIGGER_VALUE);
+		Money money2 = new Money(SMALLER_VALUE, DKK_CURRENCY);
+
+		money1.minus(money2);
 	}
 
 	@Test
@@ -167,5 +272,13 @@ public class MoneyTest {
 		Money minus = money2.multiply(money1);
 
 		Assert.assertEquals(new Money(MULTIPLIED_VALUE), minus);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testMultiplyForDifferentCurrencies() throws Exception {
+		Money money1 = new Money(MULTIPLICATION_FACTOR);
+		Money money2 = new Money(VALUE, DKK_CURRENCY);
+
+		money2.multiply(money1);
 	}
 }
