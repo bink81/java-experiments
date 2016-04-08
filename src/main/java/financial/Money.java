@@ -85,12 +85,16 @@ public final class Money implements Serializable {
 		return new Money(getAmount().multiply(other.getAmount()));
 	}
 
-	public boolean isPositive() {
-		return getAmount().compareTo(ZERO) > 0;
+	public boolean isNegative() {
+		return getAmount().compareTo(ZERO) < 0;
 	}
 
 	public boolean isZero() {
 		return getAmount().compareTo(ZERO) == 0;
+	}
+
+	public boolean isPositive() {
+		return getAmount().compareTo(ZERO) > 0;
 	}
 
 	public boolean isSameCurrency(Money other) {

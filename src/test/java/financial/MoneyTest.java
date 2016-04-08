@@ -167,6 +167,13 @@ public class MoneyTest {
 	}
 
 	@Test
+	public void testIsNegative() throws Exception {
+		Money money = new Money(NEGATIVE_VALUE);
+
+		Assert.assertTrue(money.isNegative());
+	}
+
+	@Test
 	public void testIsSameCurrency() throws Exception {
 		Money money1 = new Money(SMALLER_VALUE);
 		Money money2 = new Money(BIGGER_VALUE);
