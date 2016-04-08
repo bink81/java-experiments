@@ -154,7 +154,7 @@ public class MoneyTest {
 
 	@Test
 	public void testIsZero() throws Exception {
-		Money money = new Money("0");
+		Money money = new Money(BigDecimal.ZERO);
 
 		Assert.assertTrue(money.isZero());
 	}
