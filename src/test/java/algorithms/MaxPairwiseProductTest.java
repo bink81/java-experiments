@@ -7,7 +7,7 @@ import junit.framework.Assert;
 public class MaxPairwiseProductTest {
 	@Test
 	public void testZero() throws Exception {
-		int[] numbers = { 0 };
+		Integer[] numbers = { 0 };
 
 		int actual = MaxPairwiseProduct.getMaxPairwiseProduct(numbers);
 
@@ -16,7 +16,7 @@ public class MaxPairwiseProductTest {
 
 	@Test
 	public void testOne() throws Exception {
-		int[] numbers = { 1 };
+		Integer[] numbers = { 1 };
 
 		int actual = MaxPairwiseProduct.getMaxPairwiseProduct(numbers);
 
@@ -25,7 +25,7 @@ public class MaxPairwiseProductTest {
 
 	@Test
 	public void testTwo() throws Exception {
-		int[] numbers = { 1, 2 };
+		Integer[] numbers = { 1, 2 };
 
 		int actual = MaxPairwiseProduct.getMaxPairwiseProduct(numbers);
 
@@ -34,7 +34,7 @@ public class MaxPairwiseProductTest {
 
 	@Test
 	public void testTree() throws Exception {
-		int[] numbers = { 1, 2, 3 };
+		Integer[] numbers = { 1, 2, 3 };
 
 		int actual = MaxPairwiseProduct.getMaxPairwiseProduct(numbers);
 
@@ -43,7 +43,7 @@ public class MaxPairwiseProductTest {
 
 	@Test
 	public void testFour() throws Exception {
-		int[] numbers = { 1, 2, 3, 4 };
+		Integer[] numbers = { 1, 2, 3, 4 };
 
 		int actual = MaxPairwiseProduct.getMaxPairwiseProduct(numbers);
 
@@ -52,7 +52,7 @@ public class MaxPairwiseProductTest {
 
 	@Test
 	public void testUnorderedFour() throws Exception {
-		int[] numbers = { 1, 2, 3, 2 };
+		Integer[] numbers = { 1, 2, 3, 2 };
 
 		int actual = MaxPairwiseProduct.getMaxPairwiseProduct(numbers);
 

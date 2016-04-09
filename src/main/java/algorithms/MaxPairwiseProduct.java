@@ -1,17 +1,14 @@
 package algorithms;
 
+import java.util.Arrays;
+
 public class MaxPairwiseProduct {
-	static int getMaxPairwiseProduct(int[] numbers) {
-		int result = 0;
-		for (int i = 0; i < numbers.length; ++i) {
-			for (int j = i + 1; j < numbers.length; ++j) {
-				int pairwiseProduct = numbers[i] * numbers[j];
-				if (pairwiseProduct > result) {
-					result = pairwiseProduct;
-				}
-			}
+	static int getMaxPairwiseProduct(Integer[] numbers) {
+		if (numbers.length == 1) {
+			return 0;
 		}
-		return result;
+		Arrays.sort(numbers, (x, y) -> x - y);
+		return numbers[numbers.length - 1] * numbers[numbers.length - 2];
 	}
 
 	public static void main(String[] args) {
@@ -23,7 +20,7 @@ public class MaxPairwiseProduct {
 		if (numberOfNumbers > Integer.MAX_VALUE) {
 			throw new IllegalArgumentException("Too many numbers, the max is: " + Integer.MAX_VALUE);
 		}
-		int[] numbers = new int[numberOfNumbers];
+		Integer[] numbers = new Integer[numberOfNumbers];
 		for (int i = 0; i < numberOfNumbers; i++) {
 			numbers[i] = scanner.popNextInt();
 		}
