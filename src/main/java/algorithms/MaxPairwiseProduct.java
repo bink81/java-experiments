@@ -1,7 +1,7 @@
 package algorithms;
 
 public class MaxPairwiseProduct {
-	static long getMaxPairwiseProduct(Integer[] numbers) {
+	static long getMaxPairwiseProduct(int[] numbers) {
 		if (numbers.length == 1) {
 			return 0;
 		}
@@ -27,7 +27,7 @@ public class MaxPairwiseProduct {
 		if (numberOfNumbers > Integer.MAX_VALUE) {
 			throw new IllegalArgumentException("Too many numbers, the max is: " + Integer.MAX_VALUE);
 		}
-		Integer[] numbers = new Integer[numberOfNumbers];
+		int[] numbers = new int[numberOfNumbers];
 		for (int i = 0; i < numberOfNumbers; i++) {
 			numbers[i] = scanner.popNextInt();
 		}
