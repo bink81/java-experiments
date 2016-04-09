@@ -1,16 +1,21 @@
 package algorithms;
 
-import java.util.Arrays;
-
 public class MaxPairwiseProduct {
 	static long getMaxPairwiseProduct(Integer[] numbers) {
 		if (numbers.length == 1) {
 			return 0;
 		}
-		Arrays.sort(numbers, (x, y) -> x - y);
-		int lastIndex = numbers.length - 1;
-		long bigResult = (long) numbers[lastIndex] * numbers[lastIndex - 1];
-		return bigResult;
+		Integer maxIndex1 = null;
+		Integer maxIndex2 = null;
+		for (int i = 0; i < numbers.length; ++i) {
+			if (maxIndex1 == null || numbers[i] > numbers[maxIndex1]) {
+				maxIndex2 = maxIndex1;
+				maxIndex1 = i;
+			} else if (maxIndex2 == null || numbers[i] > numbers[maxIndex2]) {
+				maxIndex2 = i;
+			}
+		}
+		return ((long) (numbers[maxIndex1])) * numbers[maxIndex2];
 	}
 
 	public static void main(String[] args) {
