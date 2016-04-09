@@ -20,6 +20,9 @@ public class MaxPairwiseProduct {
 						+ "The first number is a total count of numbers.");
 		FastScanner scanner = new FastScanner(System.in);
 		int numberOfNumbers = scanner.popNextInt();
+		if (numberOfNumbers > Integer.MAX_VALUE) {
+			throw new IllegalArgumentException("Too many numbers, the max is: " + Integer.MAX_VALUE);
+		}
 		int[] numbers = new int[numberOfNumbers];
 		for (int i = 0; i < numberOfNumbers; i++) {
 			numbers[i] = scanner.popNextInt();
