@@ -3,12 +3,14 @@ package algorithms;
 import java.util.Arrays;
 
 public class MaxPairwiseProduct {
-	static int getMaxPairwiseProduct(Integer[] numbers) {
+	static long getMaxPairwiseProduct(Integer[] numbers) {
 		if (numbers.length == 1) {
 			return 0;
 		}
 		Arrays.sort(numbers, (x, y) -> x - y);
-		return numbers[numbers.length - 1] * numbers[numbers.length - 2];
+		int lastIndex = numbers.length - 1;
+		long bigResult = (long) numbers[lastIndex] * numbers[lastIndex - 1];
+		return bigResult;
 	}
 
 	public static void main(String[] args) {
