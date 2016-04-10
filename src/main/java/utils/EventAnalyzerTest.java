@@ -15,8 +15,13 @@ public class EventAnalyzerTest {
 	}
 
 	@Test
-	public void testInitilized() throws Exception {
+	public void testInitilizedSize() throws Exception {
 		Assert.assertEquals(0, eventAnalyzer.getEventCount());
+	}
+
+	@Test
+	public void testInitilizedDifference() throws Exception {
+		Assert.assertEquals(0, eventAnalyzer.getTotalDifference());
 	}
 
 	@Test

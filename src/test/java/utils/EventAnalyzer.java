@@ -36,7 +36,7 @@ public class EventAnalyzer {
 	}
 
 	public void report() {
-		System.out.println("Number of measured events: " + getEventCount());
+		System.out.println("Number of registered events: " + getEventCount());
 		System.out.println();
 		System.out.println("Delta[ms] | Label");
 		System.out.println("----------|------------------------");
@@ -46,7 +46,8 @@ public class EventAnalyzer {
 			System.out.format("%9d | %s\n", delta, getLabels().get(index));
 			timestamp = getTimestamps().get(index);
 		}
-		System.out.println("Difference between first and last event[ms]: " + getTotalDifference());
+		System.out.println();
+		System.out.println("Difference between first and last event: " + getTotalDifference() + "[ms]");
 	}
 
 	public long getTotalDifference() {
