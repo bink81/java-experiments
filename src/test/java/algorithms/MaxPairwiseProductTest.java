@@ -81,4 +81,13 @@ public class MaxPairwiseProductTest {
 		eventAnalyzer.report();
 		Assert.assertEquals(0, actual);
 	}
+
+	@Test
+	public void testCollectionWithTwoFours() throws Exception {
+		int[] numbers = { 1, 4, 3, 4 };
+
+		long actual = MaxPairwiseProduct.getMaxPairwiseProduct(numbers);
+
+		Assert.assertEquals(16, actual);
+	}
 }
