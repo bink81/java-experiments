@@ -1,5 +1,7 @@
 package algorithms;
 
+import java.util.Arrays;
+
 public class MaxPairwiseProduct {
 	static long getMaxPairwiseProduct(int[] numbers) {
 		if (numbers.length == 1) {
@@ -15,7 +17,30 @@ public class MaxPairwiseProduct {
 				maxIndex2 = i;
 			}
 		}
-		return ((long) (numbers[maxIndex1])) * numbers[maxIndex2];
+		long result = ((long) (numbers[maxIndex1])) * numbers[maxIndex2];
+		checkAgainstAlgorithmWithSorting(numbers, result);
+		return result;
+	}
+
+	private static void checkAgainstAlgorithmWithSorting(int[] numbers, long result) {
+		long result2 = getMaxPairwiseProductWithSorting(numbers);
+		if (result != result2) {
+			throw new RuntimeException("getMaxPairwiseProduct returned " + result
+					+ " while getMaxPairwiseProductWithSorting returned " + result2);
+		}
+	}
+
+	// This method is not as efficient (n logn) but it's used as a result verification experiment
+	private static long getMaxPairwiseProductWithSorting(int[] numbers) {
+		Integer[] newArray = new Integer[numbers.length];
+		for (int i = 0; i < numbers.length; i++) {
+			newArray[i] = numbers[i];
+		}
+		if (newArray.length == 1) {
+			return 0;
+		}
+		Arrays.sort(newArray, (x, y) -> x - y);
+		return (long) newArray[newArray.length - 1] * newArray[newArray.length - 2];
 	}
 
 	public static void main(String[] args) {
