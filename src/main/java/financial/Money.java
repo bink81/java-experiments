@@ -2,6 +2,7 @@ package financial;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.Collection;
 import java.util.Currency;
 
@@ -128,8 +129,7 @@ public final class Money implements Serializable {
 
 	private static boolean checkSameCurrency(Currency currency1, Currency currency2) {
 		if (currency1 != null && !currenciesAreEqual(currency1, currency2)) {
-			throw new IllegalArgumentException(
-				"Currency " + currency1 + " is different than " + currency2);
+			throw new MixedCurrenciesException(currency1, currency2);
 		}
 		return true;
 	}
@@ -169,6 +169,13 @@ public final class Money implements Serializable {
 	@Override
 	public String toString() {
 		return "Money [amount=" + amount + ", currency=" + currency + "]";
+	}
+
+	public String toDisplay() {
+		NumberFormat numberFormat = NumberFormat.getNumberInstance();
+		numberFormat.setMinimumFractionDigits(1);
+		numberFormat.setMaximumFractionDigits(2);
+		return numberFormat.format(getAmount().doubleValue()) + getCurrency().getDisplayName();
 	}
 
 	// getters
