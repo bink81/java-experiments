@@ -10,6 +10,7 @@ public class EventAnalyzer {
 	private static final Logger LOGGER = LoggerFactory.getLogger(EventAnalyzer.class);
 
 	private final List<Long> timestamps = new ArrayList<>();
+
 	private final List<String> labels = new ArrayList<>();
 
 	public void before() {
@@ -26,8 +27,8 @@ public class EventAnalyzer {
 		getLabels().add(label);
 		if (getTimestamps().size() != getLabels().size()) {
 			LOGGER.error(
-					"After addition of label '{}', size of timestamps ({}) does not match size of labels ({}) ",
-					new String[] { label, getTimestamps().size() + "", getLabels().size() + "" });
+				"After addition of label '{}', size of timestamps ({}) does not match size of labels ({}) ",
+				new String[] { label, getTimestamps().size() + "", getLabels().size() + "" });
 		}
 	}
 
@@ -47,11 +48,15 @@ public class EventAnalyzer {
 			timestamp = getTimestamps().get(index);
 		}
 		System.out.println();
-		System.out.println("Difference between first and last event: " + getTotalDifference() + "[ms]");
+		System.out
+			.println("Difference between first and last event: " + getTotalDifference() + "[ms]");
 	}
 
 	public long getTotalDifference() {
 		int lastIndex = timestamps.size() > 0 ? timestamps.size() - 1 : 0;
+		if (lastIndex == 0) {
+			return 0;
+		}
 		return timestamps.get(lastIndex) - timestamps.get(0);
 	}
 
