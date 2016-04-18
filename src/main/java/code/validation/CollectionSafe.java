@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  * an equals and hashCode methods.
  */
 @Target(ElementType.TYPE)
-@Retention(RetentionPolicy.SOURCE)
+@Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
 public @interface CollectionSafe {
