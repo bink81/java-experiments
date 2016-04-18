@@ -27,6 +27,6 @@ public class DebugUtilsTest {
 	}
 
 	private void logThatExecutionContinuesDespiteTheException() {
-		LOGGER.info("Execution continues despite the exception");
+		LOGGER.info("Ignored! Execution continues despite the exception");
 	}
 }
