@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import com.google.common.base.Objects;
 
-public abstract class GenericWrapper<T extends Serializable> implements Serializable {
+public abstract class GenericWrapper<T extends Serializable> implements ValueType {
 	private static final long serialVersionUID = -8179388800930925443L;
 
 	private final T value;
