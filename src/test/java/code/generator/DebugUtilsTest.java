@@ -15,7 +15,7 @@ public class DebugUtilsTest {
 			// some complex code here
 			throw new Throwable("Example exception is thrown");
 		});
-		LOGGER.info("Code continues despite an exception");
+		logThatExecutionContinuesDespiteTheException();
 	}
 
 	@SuppressWarnings("null") // We test this on purpose
@@ -23,5 +23,10 @@ public class DebugUtilsTest {
 	public void testIgnoreExceptionWhenCallingMethod() throws Exception {
 		String nullObject = null;
 		ignoreException(nullObject::toString);
+		logThatExecutionContinuesDespiteTheException();
+	}
+
+	private void logThatExecutionContinuesDespiteTheException() {
+		LOGGER.info("Execution continues despite the exception");
 	}
 }
