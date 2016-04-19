@@ -33,7 +33,7 @@ public class EventAnalyzer {
 	}
 
 	private long getCurrentTimestamp() {
-		return System.currentTimeMillis();
+		return System.nanoTime();
 	}
 
 	public void report() {
