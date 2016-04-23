@@ -2,6 +2,7 @@ package utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,13 +34,13 @@ public class EventAnalyzer {
 	}
 
 	private long getCurrentTimestamp() {
-		return System.currentTimeMillis();
+		return System.nanoTime();
 	}
 
 	public void report() {
 		System.out.println("Number of registered events: " + getEventCount());
 		System.out.println();
-		System.out.println("Delta[ms] | Label");
+		System.out.println("Delta[ns] | Label");
 		System.out.println("----------|------------------------");
 		Long timestamp = null;
 		for (int index = 0; index < getTimestamps().size(); index++) {
@@ -57,7 +58,8 @@ public class EventAnalyzer {
 		if (lastIndex == 0) {
 			return 0;
 		}
-		return timestamps.get(lastIndex) - timestamps.get(0);
+		long deltaInNanoseconds = timestamps.get(lastIndex) - timestamps.get(0);
+		return TimeUnit.NANOSECONDS.toMillis(deltaInNanoseconds);
 	}
 
 	public int getEventCount() {
