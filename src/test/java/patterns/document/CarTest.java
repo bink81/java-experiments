@@ -5,12 +5,12 @@ import java.util.Map;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
 
-import org.junit.Test;
-
 import org.junit.Assert;
+import org.junit.Test;
 
 public class CarTest {
 
+	private static final double DELTA = 0.000001;
 	private static final double PRICE = 100.0;
 	private static final String MODEL = "Audi";
 	private static final String COLOR = "red";
@@ -31,7 +31,7 @@ public class CarTest {
 		String model = car.getModel();
 		Assert.assertEquals(MODEL, model);
 		OptionalDouble price = car.getPrice();
-		Assert.assertEquals(PRICE, price.getAsDouble());
+		Assert.assertEquals(PRICE, price.getAsDouble(), DELTA);
 		OptionalInt wheels = car.getWheels();
 		Assert.assertEquals(WHEELS_COUNT, wheels.getAsInt());
 	}
