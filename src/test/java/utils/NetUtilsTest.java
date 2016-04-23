@@ -1,9 +1,11 @@
 package utils;
 
-import org.junit.Test;
-
 import org.junit.Assert;
+import org.junit.FixMethodOrder;
+import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class NetUtilsTest {
 	private static final String ROOT = "https://mail.google.com";
 	private static final String EXPECTED_WITHOUT_SLASH = ROOT + "/mail";
