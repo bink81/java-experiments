@@ -14,8 +14,18 @@ public class FirstNameTest {
 		FirstName.of("");
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testSpaceValue() throws Exception {
+		FirstName.of(" ");
+	}
+
 	@Test
 	public void testOneLetter() throws Exception {
 		FirstName.of("A");
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testLowercaseLetter() throws Exception {
+		FirstName.of("a");
 	}
 }

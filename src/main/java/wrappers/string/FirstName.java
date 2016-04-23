@@ -19,13 +19,17 @@ public final class FirstName extends StringWrapper {
 	private FirstName(String value) {
 		super(value);
 		checkArgument(
-			new NameValidator().isValid(value), "Non-letters detected in string  %s", value);
+				new NameValidator().isValid(value), "Non-letters detected in string  %s", value);
 		checkArgument(
-			value.length() >= MIN_NUMBER_OF_LETTERS, "The minimum number of letters must be %s",
-			MIN_NUMBER_OF_LETTERS);
+				value.length() >= MIN_NUMBER_OF_LETTERS, "The minimum number of letters must be %s",
+				MIN_NUMBER_OF_LETTERS);
 		checkArgument(
-			value.length() <= MAX_NUMBER_OF_LETTERS, "The maximum number of letters must be %s",
-			MAX_NUMBER_OF_LETTERS);
+				value.length() <= MAX_NUMBER_OF_LETTERS, "The maximum number of letters must be %s",
+				MAX_NUMBER_OF_LETTERS);
+		checkArgument(
+				Character.isUpperCase(value.charAt(0)),
+				"The first letters must be capital but in '%s'",
+				value);
 
 	}
 
