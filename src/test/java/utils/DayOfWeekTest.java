@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 public class DayOfWeekTest {
 	private static final int VERY_FUTURE_DATE = 99999999;

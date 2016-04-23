@@ -2,7 +2,7 @@ package utils;
 
 import org.junit.Test;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 public class NetUtilsTest {
 	private static final String ROOT = "https://mail.google.com";

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 public class RandomArrayGeneratorTest {
 	private static final int MAX = 100;

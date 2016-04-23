@@ -2,7 +2,7 @@ package patterns.factory.static_factory;
 
 import org.junit.Test;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 public class StaticFactoryClientTest {
 	@Test

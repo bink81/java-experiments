@@ -2,7 +2,7 @@ package code.validation;
 
 import org.junit.Test;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 public class CollectionUnsafeClassTest {
 	private static final Long ID = 1L;

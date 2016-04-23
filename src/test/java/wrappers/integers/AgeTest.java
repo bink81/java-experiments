@@ -2,7 +2,7 @@ package wrappers.integers;
 
 import org.junit.Test;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 public class AgeTest {
 	private static final Integer ONE = 1;

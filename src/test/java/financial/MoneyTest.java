@@ -7,7 +7,7 @@ import java.util.Currency;
 
 import org.junit.Test;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 public class MoneyTest {
 	private static final Currency DKK_CURRENCY = Currency.getInstance("DKK");

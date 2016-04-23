@@ -6,9 +6,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Test;
-
-import junit.framework.Assert;
 
 public class CollectionToListConverterTest {
 
@@ -21,8 +20,7 @@ public class CollectionToListConverterTest {
 
 	@Test
 	public void testEmpty() throws Exception {
-		List<String> list =
-				new CollectionToListConverter<String>(Collections.emptyList()).convert();
+		List<String> list = new CollectionToListConverter<String>(Collections.emptyList()).convert();
 
 		Assert.assertEquals(0, list.size());
 	}

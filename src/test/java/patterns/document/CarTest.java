@@ -7,7 +7,7 @@ import java.util.OptionalInt;
 
 import org.junit.Test;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 public class CarTest {
 

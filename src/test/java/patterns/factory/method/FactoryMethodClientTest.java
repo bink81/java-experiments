@@ -2,7 +2,7 @@ package patterns.factory.method;
 
 import org.junit.Test;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 public class FactoryMethodClientTest {
 	@Test

@@ -2,7 +2,7 @@ package wrappers.string;
 
 import org.junit.Test;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import wrappers.core.SecretStringWrapper;
 
 public class PincodeTest {

@@ -3,7 +3,7 @@ package financial;
 import org.junit.Test;
 
 import financial.MoneyValidator;
-import junit.framework.Assert;
+import org.junit.Assert;
 import wrappers.core.WrapperValidator;
 
 public class MoneyValidatorTest {

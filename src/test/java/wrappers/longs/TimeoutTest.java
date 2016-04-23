@@ -2,7 +2,7 @@ package wrappers.longs;
 
 import org.junit.Test;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 public class TimeoutTest {
 	private static final Long ONE = 1L;

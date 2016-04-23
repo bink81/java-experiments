@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 public class PastDateTest {
 	@Test(expected = IllegalArgumentException.class)
