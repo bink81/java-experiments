@@ -17,9 +17,11 @@ public class RandomArrayGenerator {
 		this(recordSize, max, 0);
 	}
 
-	public RandomArrayGenerator(int recordSize, int max, int min) {
+	public RandomArrayGenerator(int size, int max, int min) {
 		Preconditions.checkArgument(max > min, "Max must be bigger than Min");
-		this.size = recordSize;
+		Preconditions.checkArgument(min >= 0, "Min must not be negative");
+		Preconditions.checkArgument(size >= 0, "Size must not be negative");
+		this.size = size;
 		this.max = max;
 		this.min = min;
 	}
