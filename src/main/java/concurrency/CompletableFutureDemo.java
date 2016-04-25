@@ -8,6 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CompletableFutureDemo {
+	private static final int RESULT_MODIFIER = 100;
+
+	private static final int RESULT_FROM_TASK = 20;
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(CompletableFutureDemo.class);
 
 	public static void main(String[] args) {
@@ -17,14 +21,14 @@ public class CompletableFutureDemo {
 	public void init(String[] args) {
 		CompletableFuture<String> completableFuture =
 				createCompletableFuture().thenApply((Integer result) -> {
-					int transformedResult = result * 100;
+					int transformedResult = result * RESULT_MODIFIER;
 					return transformedResult;
 				}).thenApply(result -> "Result: " + result);
 
 		try {
 			LOGGER.info("{}", completableFuture.get());
 		} catch (InterruptedException | ExecutionException ex) {
-			LOGGER.error("CompletableFutureTest", ex);
+			LOGGER.error("CompletableFutureTest exception", ex);
 		}
 	}
 
@@ -34,8 +38,9 @@ public class CompletableFutureDemo {
 				// test delay
 				Thread.sleep(TimeUnit.SECONDS.toMillis(5));
 			} catch (InterruptedException e) {
+				LOGGER.error("CompletableFutureDemo exception", e);
 			}
-			return 20;
+			return RESULT_FROM_TASK;
 		});
 		return futureCount;
 	}
