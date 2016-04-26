@@ -8,7 +8,7 @@ public class MoneyChangeCalculator {
 
 	private static final int TEN = 10;
 
-	public static int getChange(int amount) {
+	public static int calculateMinimumChange(int amount) {
 		int[] coinTypes = new int[] { 10, 5, 1 };
 		int remaining = amount;
 		int numberOfCoins = 0;
