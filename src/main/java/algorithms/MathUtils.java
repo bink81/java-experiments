@@ -1,11 +1,11 @@
 package algorithms;
 
 public class MathUtils {
-	public static int greatesCommonDivisor(int a, int b) {
+	public static int greatestCommonDivisor(int a, int b) {
 		if (b == 0) {
 			return a;
 		}
-		return greatesCommonDivisor(b, a % b);
+		return greatestCommonDivisor(b, a % b);
 	}
 
 	public static long leastCommonMultiple(int a, int b) {
@@ -15,6 +15,6 @@ public class MathUtils {
 		if (a == b) {
 			return a;
 		}
-		return (long) a * b / greatesCommonDivisor(a, b);
+		return (long) a * b / greatestCommonDivisor(a, b);
 	}
 }
