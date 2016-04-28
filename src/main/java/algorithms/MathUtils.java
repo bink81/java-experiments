@@ -1,6 +1,7 @@
 package algorithms;
 
 public class MathUtils {
+	// Euclidean algorithm
 	public static int greatestCommonDivisor(int a, int b) {
 		if (b == 0) {
 			return a;
