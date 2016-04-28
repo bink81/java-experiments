@@ -17,4 +17,25 @@ public class MathUtilsTest {
 
 		Assert.assertEquals(17657, actual);
 	}
+
+	@Test
+	public void testLeastCommonMultipleWithSmallNumbers() throws Exception {
+		long actual = MathUtils.leastCommonMultiple(6, 8);
+
+		Assert.assertEquals(24, actual);
+	}
+
+	@Test
+	public void testLeastCommonMultipleWithEqualNumbers() throws Exception {
+		long actual = MathUtils.leastCommonMultiple(10, 10);
+
+		Assert.assertEquals(10, actual);
+	}
+
+	@Test
+	public void testLeastCommonMultipleWithBigNumbers() throws Exception {
+		long actual = MathUtils.leastCommonMultiple(28851538, 1183019);
+
+		Assert.assertEquals(1933053046, actual);
+	}
 }
