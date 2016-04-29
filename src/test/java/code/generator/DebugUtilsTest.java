@@ -29,4 +29,9 @@ public class DebugUtilsTest {
 	private void logThatExecutionContinuesDespiteTheException() {
 		LOGGER.info("Ignored! Execution continues despite the exception");
 	}
+
+	@Test
+	public void testLogEnvironmentProperties() throws Exception {
+		DebugUtils.logEnvironmentProperties();
+	}
 }
