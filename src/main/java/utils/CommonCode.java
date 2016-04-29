@@ -11,7 +11,9 @@ public class CommonCode {
 		void run() throws Throwable;
 	}
 
-	// This method helps skipping useless catch clauses
+	/**
+	 * This method helps to skip catch clauses that can be ignored
+	 */
 	public static void ignoreException(CheckedRunnable r) {
 		try {
 			r.run();

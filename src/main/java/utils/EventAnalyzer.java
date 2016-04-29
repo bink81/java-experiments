@@ -7,6 +7,10 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * This class is meant for performance analysis. Once initialized, you can add new steps and see a
+ * report or total execution time at the end.
+ */
 public class EventAnalyzer {
 	private static final Logger LOGGER = LoggerFactory.getLogger(EventAnalyzer.class);
 
@@ -49,11 +53,11 @@ public class EventAnalyzer {
 			timestamp = getTimestamps().get(index);
 		}
 		System.out.println();
-		System.out
-			.println("Difference between first and last event: " + getTotalDifference() + "[ms]");
+		System.out.println(
+			"Difference between first and last event: " + getTotalExecutionTime() + "[ms]");
 	}
 
-	public long getTotalDifference() {
+	public long getTotalExecutionTime() {
 		int lastIndex = timestamps.size() > 0 ? timestamps.size() - 1 : 0;
 		if (lastIndex == 0) {
 			return 0;

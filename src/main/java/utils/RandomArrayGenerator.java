@@ -6,11 +6,15 @@ import java.util.Random;
 
 import com.google.common.base.Preconditions;
 
+/**
+ * This class generates an array of random integers that are useful for testing.
+ */
 public class RandomArrayGenerator {
 
 	private final int size;
 
 	private final int min;
+
 	private final int max;
 
 	public RandomArrayGenerator(int recordSize, int max) {

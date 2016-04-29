@@ -23,7 +23,7 @@ public class EventAnalyzerTest {
 
 	@Test
 	public void testInitilizedDifference() throws Exception {
-		Assert.assertEquals(0, eventAnalyzer.getTotalDifference());
+		Assert.assertEquals(0, eventAnalyzer.getTotalExecutionTime());
 	}
 
 	@Test

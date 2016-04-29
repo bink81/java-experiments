@@ -60,6 +60,9 @@ public class DebugUtils {
 		return new String(encoded, StandardCharsets.UTF_8);
 	}
 
+	/**
+	 * This method logs system properties
+	 */
 	public static void logEnvironmentProperties() {
 		StringBuilder builder = new StringBuilder();
 		for (String name : assembleSortedPropertyNames()) {
