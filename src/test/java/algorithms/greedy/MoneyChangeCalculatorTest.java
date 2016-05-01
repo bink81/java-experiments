@@ -5,7 +5,6 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import algorithms.greedy.MoneyChangeCalculator;
 import utils.RandomIntegerGenerator;
 
 public class MoneyChangeCalculatorTest {
@@ -33,8 +32,7 @@ public class MoneyChangeCalculatorTest {
 
 	@Test
 	public void testRandomArray() throws Exception {
-		List<Integer> randomAmounts =
-				new RandomIntegerGenerator(100, 999999999).toList();
+		List<Integer> randomAmounts = new RandomIntegerGenerator(1, Integer.MAX_VALUE).toList();
 		for (Integer randomAmount : randomAmounts) {
 			MoneyChangeCalculator.calculateMinimumChange(randomAmount);
 		}
