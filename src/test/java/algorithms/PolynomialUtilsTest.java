@@ -5,7 +5,7 @@ import java.util.Arrays;
 import org.junit.Assert;
 import org.junit.Test;
 
-import utils.RandomArrayGenerator;
+import utils.RandomIntegerGenerator;
 
 public class PolynomialUtilsTest {
 	@Test(expected = IllegalArgumentException.class)
@@ -87,8 +87,8 @@ public class PolynomialUtilsTest {
 
 	@Test
 	public void testMultiplyWithRandomMatrix() throws Exception {
-		int[] a = new RandomArrayGenerator(100, Integer.MAX_VALUE).toArray();
-		int[] b = new RandomArrayGenerator(100, Integer.MAX_VALUE).toArray();
+		int[] a = new RandomIntegerGenerator(100, Integer.MAX_VALUE).toArray();
+		int[] b = new RandomIntegerGenerator(100, Integer.MAX_VALUE).toArray();
 
 		PolynomialUtils.multiply(a, b);
 	}

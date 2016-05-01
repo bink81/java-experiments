@@ -9,37 +9,37 @@ import com.google.common.base.Preconditions;
 /**
  * This class generates an array of random integers that are useful for testing.
  */
-public class RandomArrayGenerator {
+public class RandomIntegerGenerator {
 
-	private final int size;
+	private final int amount;
 
 	private final int min;
 
 	private final int max;
 
-	public RandomArrayGenerator(int recordSize, int max) {
-		this(recordSize, max, 0);
+	public RandomIntegerGenerator(int amount, int max) {
+		this(amount, max, 0);
 	}
 
-	public RandomArrayGenerator(int size, int max, int min) {
+	public RandomIntegerGenerator(int amount, int max, int min) {
 		Preconditions.checkArgument(max > min, "Max must be bigger than Min");
 		Preconditions.checkArgument(min >= 0, "Min must not be negative");
-		Preconditions.checkArgument(size >= 0, "Size must not be negative");
-		this.size = size;
+		Preconditions.checkArgument(amount >= 0, "Amount must not be negative");
+		this.amount = amount;
 		this.max = max;
 		this.min = min;
 	}
 
-	public List<Integer> generateRandomNumbers() {
+	public List<Integer> toList() {
 		Random generator = new Random();
-		List<Integer> list = new ArrayList<>(size);
-		for (int i = 0; i < size; i++) {
+		List<Integer> list = new ArrayList<>(amount);
+		for (int i = 0; i < amount; i++) {
 			list.add(generator.nextInt(max - min) + min);
 		}
 		return list;
 	}
 
 	public int[] toArray() {
-		return generateRandomNumbers().stream().mapToInt(i -> i).toArray();
+		return toList().stream().mapToInt(i -> i).toArray();
 	}
 }

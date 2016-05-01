@@ -5,7 +5,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import utils.RandomArrayGenerator;
+import utils.RandomIntegerGenerator;
 
 public class KnapsackTest {
 
@@ -71,7 +71,7 @@ public class KnapsackTest {
 
 	private int[] generateRandomValues(int recordSize) {
 		List<Integer> randomNumbers =
-				new RandomArrayGenerator(recordSize, 100).generateRandomNumbers();
+				new RandomIntegerGenerator(recordSize, 100).toList();
 		int[] values = new int[recordSize];
 		for (int i = 0; i < values.length; i++) {
 			values[i] = randomNumbers.get(i);
