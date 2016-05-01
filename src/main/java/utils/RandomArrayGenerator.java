@@ -38,4 +38,8 @@ public class RandomArrayGenerator {
 		}
 		return list;
 	}
+
+	public int[] toArray() {
+		return generateRandomNumbers().stream().mapToInt(i -> i).toArray();
+	}
 }
