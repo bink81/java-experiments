@@ -1,4 +1,4 @@
-package algorithms;
+package algorithms.greedy;
 
 import java.util.Collection;
 import java.util.Collections;

@@ -1,10 +1,11 @@
-package algorithms;
+package algorithms.greedy;
 
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import algorithms.greedy.MoneyChangeCalculator;
 import utils.RandomArrayGenerator;
 
 public class MoneyChangeCalculatorTest {

@@ -1,4 +1,4 @@
-package algorithms;
+package algorithms.greedy;
 
 /**
  * Provides a minimum change (number of supported coins) for an amount
