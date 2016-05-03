@@ -1,18 +1,23 @@
 package algorithms.divide;
 
+import java.util.Arrays;
+
 public class IntegerArraySearch {
 	public static final int RESULT_NOT_FOUND = -1;
 
 	static int binarySearch(int[] a, int number) {
+		Arrays.sort(a);
 		int low = 0;
 		int high = a.length - 1;
 		while (high >= low) {
 			int middle = low + (high - low) / 2;
 			if (number == a[middle]) {
 				return middle;
-			} else if (number < a[middle]) {
+			}
+			else if (number < a[middle]) {
 				high = middle - 1;
-			} else {
+			}
+			else {
 				low = middle + 1;
 			}
 		}
