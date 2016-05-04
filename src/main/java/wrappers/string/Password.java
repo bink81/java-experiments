@@ -11,19 +11,30 @@ import wrappers.core.ValueSafe;
  */
 @ValueSafe
 public final class Password extends SecretStringWrapper {
+	private static final String VALIDATION_ERROR = "Password format not valid. ";
+
 	private static final long serialVersionUID = 1664428264118410830L;
 
-	private static final int PARAMETER_MAX_SIZE = 128;
+	public static final int MINIMUM_LENGTH = 6;
+
+	public static final int MAXIMUM_LENGTH = 20;
 
 	private Password(String value) {
 		super(value);
 		checkArgument(
-			value.length() <= PARAMETER_MAX_SIZE,
-			"The length of %s exceeds maximum number of characters must be %s", value, PARAMETER_MAX_SIZE);
+			value.length() <= MAXIMUM_LENGTH,
+			"The length of %s exceeds maximum number of characters must be %s", value,
+			MAXIMUM_LENGTH);
 		checkArgument(
-			new PasswordLengthValidator().isValid(value), "Not enough characters in password: %s",
-			value.length() + ". It must be from " + PasswordLengthValidator.MINIMUM_LENGTH + " to "
-					+ PasswordLengthValidator.MAXIMUM_LENGTH);
+			new RegexValidator("^(.+){" + MINIMUM_LENGTH + "," + MAXIMUM_LENGTH + "}$")
+				.isValid(value),
+			VALIDATION_ERROR + "It must be from " + MINIMUM_LENGTH + " to " + MAXIMUM_LENGTH);
+		checkArgument(
+			new RegexValidator(".*[a-z]").isValid(value),
+			VALIDATION_ERROR + "It must have at least one lower case character.");
+		checkArgument(
+			new RegexValidator("^(.*?[A-Z]){3,}.*$").isValid(value),
+			VALIDATION_ERROR + "It must have at least three upper case characters.");
 	}
 
 	public static Password of(String value) {

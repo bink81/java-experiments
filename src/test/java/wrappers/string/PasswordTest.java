@@ -10,7 +10,11 @@ public class PasswordTest {
 
 	private static final String NO_LOWERCASES_PASSWORD = "12345678";
 
-	private static final String VALID_PASSWORD = "dummydummy";
+	private static final String NO_UPPERCASES_PASSWORD = "dummydummy";
+
+	private static final String NOT_ENOUGH_UPPERCASES_PASSWORD = "dUmNydummy";
+
+	private static final String VALID_PASSWORD = "dUMnydUmmy";
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testTooShort() throws Exception {
@@ -20,6 +24,16 @@ public class PasswordTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testNoLowercases() throws Exception {
 		Password.of(NO_LOWERCASES_PASSWORD);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testNoUppercases() throws Exception {
+		Password.of(NO_UPPERCASES_PASSWORD);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testNotEnoughUppercases() throws Exception {
+		Password.of(NOT_ENOUGH_UPPERCASES_PASSWORD);
 	}
 
 	@Test
