@@ -8,6 +8,14 @@ public class PasswordLengthValidator extends StringValidator {
 	public static final String MAXIMUM_LENGTH = "20";
 
 	public PasswordLengthValidator() {
-		super("^(.+){" + MINIMUM_LENGTH + "," + MAXIMUM_LENGTH + "}$");
+		super(assembleLengthCheck(), assembleLowerCaseCheck());
+	}
+
+	private static String assembleLengthCheck() {
+		return "^(.+){" + MINIMUM_LENGTH + "," + MAXIMUM_LENGTH + "}$";
+	}
+
+	private static String assembleLowerCaseCheck() {
+		return ".*[a-z]";
 	}
 }
