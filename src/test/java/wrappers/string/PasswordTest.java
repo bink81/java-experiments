@@ -1,14 +1,23 @@
 package wrappers.string;
 
+import org.junit.Assert;
 import org.junit.Test;
 
-import org.junit.Assert;
 import wrappers.core.SecretStringWrapper;
 
 public class PasswordTest {
+	private static final String TOO_SHORT_PASSWORD = "dummy";
+
+	private static final String VALID_PASSWORD = "dummydummy";
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testTooShort() throws Exception {
+		Password.of(TOO_SHORT_PASSWORD);
+	}
+
 	@Test
-	public void testToString() throws Exception {
-		Password password = Password.of("dummy");
+	public void testValid() throws Exception {
+		Password password = Password.of(VALID_PASSWORD);
 
 		Assert.assertEquals(SecretStringWrapper.REPLACEMENT_TEXT, password.toString());
 	}
