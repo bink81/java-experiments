@@ -20,8 +20,6 @@ public class StringValidator implements WrapperValidator {
 			throw new IllegalArgumentException("Text must not be null!");
 		}
 		for (String pattern : patterns) {
-			// FIXME RM:pattern NOCOMMIT
-			System.err.println("#pattern=" + pattern);
 			Pattern p = Pattern.compile(pattern);
 			Matcher m = p.matcher(text);
 			if (!m.matches()) {
