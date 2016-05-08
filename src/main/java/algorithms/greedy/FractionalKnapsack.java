@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-public class Knapsack {
-	public static double getFractionalBestValue(int capacity, int[] values, int[] weights) {
+public class FractionalKnapsack {
+	public static double getBestValue(int capacity, int[] values, int[] weights) {
 		double availableCapacity = capacity;
 		double[] availableWeights = convertIntArrayToDoubleArray(weights);
 		double totalValue = 0;

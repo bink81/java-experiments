@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import utils.RandomIntegerGenerator;
 
-public class KnapsackTest {
+public class FractionalKnapsackTest {
 
 	private static final double DELTA = 0.0001;
 
@@ -19,7 +19,7 @@ public class KnapsackTest {
 	public void testZeroSpace() throws Exception {
 		int[] values = new int[] {};
 		int[] weights = new int[] {};
-		double actual = Knapsack.getFractionalBestValue(ZERO_SPACE, values, weights);
+		double actual = FractionalKnapsack.getBestValue(ZERO_SPACE, values, weights);
 
 		Assert.assertEquals(0, actual, DELTA);
 	}
@@ -28,7 +28,7 @@ public class KnapsackTest {
 	public void testSomeSpaceButItemsWithNoWeight() throws Exception {
 		int[] values = new int[] { 500 };
 		int[] weights = new int[] { 0 };
-		double actual = Knapsack.getFractionalBestValue(SOME_SPACE, values, weights);
+		double actual = FractionalKnapsack.getBestValue(SOME_SPACE, values, weights);
 
 		Assert.assertEquals(0, actual, DELTA);
 	}
@@ -37,7 +37,7 @@ public class KnapsackTest {
 	public void testSomeSpaceButNoItems() throws Exception {
 		int[] values = new int[] {};
 		int[] weights = new int[] {};
-		double actual = Knapsack.getFractionalBestValue(SOME_SPACE, values, weights);
+		double actual = FractionalKnapsack.getBestValue(SOME_SPACE, values, weights);
 
 		Assert.assertEquals(0, actual, DELTA);
 	}
@@ -46,7 +46,7 @@ public class KnapsackTest {
 	public void test50() throws Exception {
 		int[] values = new int[] { 60, 100, 120 };
 		int[] weights = new int[] { 20, 50, 30 };
-		double actual = Knapsack.getFractionalBestValue(50, values, weights);
+		double actual = FractionalKnapsack.getBestValue(50, values, weights);
 
 		Assert.assertEquals(180, actual, DELTA);
 	}
@@ -55,7 +55,7 @@ public class KnapsackTest {
 	public void test10() throws Exception {
 		int[] values = new int[] { 500 };
 		int[] weights = new int[] { 30 };
-		double actual = Knapsack.getFractionalBestValue(10, values, weights);
+		double actual = FractionalKnapsack.getBestValue(10, values, weights);
 
 		Assert.assertEquals(166.6667, actual, DELTA);
 	}
@@ -66,16 +66,33 @@ public class KnapsackTest {
 		int[] values = generateRandomValues(recordSize);
 		int[] weights = generateRandomValues(recordSize);
 
-		Knapsack.getFractionalBestValue(100, values, weights);
+		FractionalKnapsack.getBestValue(100, values, weights);
 	}
 
 	private int[] generateRandomValues(int recordSize) {
-		List<Integer> randomNumbers =
-				new RandomIntegerGenerator(recordSize, 100).toList();
+		List<Integer> randomNumbers = new RandomIntegerGenerator(recordSize, 100).toList();
 		int[] values = new int[recordSize];
 		for (int i = 0; i < values.length; i++) {
 			values[i] = randomNumbers.get(i);
 		}
 		return values;
+	}
+
+	@Test
+	public void testGetValueWithRepetititions() throws Exception {
+		int[] values = new int[] { 30, 14, 16, 9 };
+		int[] weights = new int[] { 6, 3, 4, 2 };
+		double actual = FractionalKnapsack.getBestValue(10, values, weights);
+
+		Assert.assertEquals(48, actual, DELTA);
+	}
+
+	@Test
+	public void testGetValueWithoutRepetititions() throws Exception {
+		int[] values = new int[] { 30, 14, 16, 9 };
+		int[] weights = new int[] { 6, 3, 4, 2 };
+		double actual = FractionalKnapsack.getBestValue(10, values, weights);
+
+		Assert.assertEquals(46, actual, DELTA);
 	}
 }
