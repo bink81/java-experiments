@@ -1,14 +1,44 @@
 package wrappers.string;
 
+import org.junit.Assert;
 import org.junit.Test;
 
-import org.junit.Assert;
 import wrappers.core.SecretStringWrapper;
 
 public class PasswordTest {
+	private static final String TOO_SHORT_PASSWORD = "dummy";
+
+	private static final String NO_LOWERCASES_PASSWORD = "12345678";
+
+	private static final String NO_UPPERCASES_PASSWORD = "dummydummy";
+
+	private static final String NOT_ENOUGH_UPPERCASES_PASSWORD = "dUmNydummy";
+
+	private static final String VALID_PASSWORD = "dUMnydUmmy";
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testTooShort() throws Exception {
+		Password.of(TOO_SHORT_PASSWORD);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testNoLowercases() throws Exception {
+		Password.of(NO_LOWERCASES_PASSWORD);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testNoUppercases() throws Exception {
+		Password.of(NO_UPPERCASES_PASSWORD);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testNotEnoughUppercases() throws Exception {
+		Password.of(NOT_ENOUGH_UPPERCASES_PASSWORD);
+	}
+
 	@Test
-	public void testToString() throws Exception {
-		Password password = Password.of("dummy");
+	public void testValid() throws Exception {
+		Password password = Password.of(VALID_PASSWORD);
 
 		Assert.assertEquals(SecretStringWrapper.REPLACEMENT_TEXT, password.toString());
 	}

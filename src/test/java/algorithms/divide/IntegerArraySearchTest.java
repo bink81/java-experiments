@@ -1,11 +1,7 @@
 package algorithms.divide;
 
-import java.util.Random;
-
 import org.junit.Assert;
 import org.junit.Test;
-
-import utils.RandomIntegerGenerator;
 
 public class IntegerArraySearchTest {
 
@@ -56,17 +52,5 @@ public class IntegerArraySearchTest {
 			int actual = IntegerArraySearch.binarySearch(a, numbers[i]);
 			Assert.assertEquals(expectedIndexes[i], actual);
 		}
-	}
-
-	@Test
-	public void testRandomValues() throws Exception {
-		int amount = 10;
-		int[] a = new RandomIntegerGenerator(amount, Integer.MAX_VALUE).toArray();
-		int expectedIndex = new Random().nextInt(amount);
-
-		int linearSearchResult = IntegerArraySearch.linearSearch(a, a[expectedIndex]);
-		int binarySearchResult = IntegerArraySearch.binarySearch(a, a[expectedIndex]);
-
-		Assert.assertEquals(linearSearchResult, binarySearchResult);
 	}
 }

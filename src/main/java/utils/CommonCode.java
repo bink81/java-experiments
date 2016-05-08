@@ -1,5 +1,7 @@
 package utils;
 
+import java.util.function.BiConsumer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +22,14 @@ public class CommonCode {
 		} catch (Throwable e) {
 			LOGGER.info("Exception caught: {} - {}", e.getClass().getSimpleName(), e.getMessage());
 			LOGGER.debug("Exception stack: {}", e);
+		}
+	}
+
+	public static void doubleForLoop(int lengthI, int lengthJ, BiConsumer<Integer, Integer> consumer) {
+		for (int i = 0; i < lengthI; i++) {
+			for (int k = 0; k < lengthJ; k++) {
+				consumer.accept(i, k);
+			}
 		}
 	}
 }

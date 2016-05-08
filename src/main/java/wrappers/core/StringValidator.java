@@ -5,10 +5,13 @@ import java.util.regex.Pattern;
 
 public class StringValidator implements WrapperValidator {
 
-	private String pattern;
+	private String[] patterns;
 
-	public StringValidator(String pattern) {
-		this.setPattern(pattern);
+	public StringValidator(String... patterns) {
+		this.patterns = new String[patterns.length];
+		for (int i = 0; i < patterns.length; i++) {
+			this.patterns[i] = patterns[i];
+		}
 	}
 
 	@Override
@@ -16,16 +19,21 @@ public class StringValidator implements WrapperValidator {
 		if (text == null) {
 			throw new IllegalArgumentException("Text must not be null!");
 		}
-		Pattern p = Pattern.compile(getPattern());
-		Matcher m = p.matcher(text);
-		return m.matches();
+		for (String pattern : patterns) {
+			Pattern p = Pattern.compile(pattern);
+			Matcher m = p.matcher(text);
+			if (!m.matches()) {
+				return false;
+			}
+		}
+		return true;
 	}
 
-	public String getPattern() {
-		return pattern;
+	public String[] getPatterns() {
+		return patterns;
 	}
 
-	public void setPattern(String pattern) {
-		this.pattern = pattern;
+	public void setPattern(String[] patterns) {
+		this.patterns = patterns;
 	}
 }

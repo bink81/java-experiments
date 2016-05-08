@@ -15,6 +15,6 @@ public final class Email extends StringWrapper {
 		checkArgument(
 			emailAddressValidator.isValid(value),
 			"The value %s does match expected regular expression: %s", value,
-			emailAddressValidator.getPattern());
+			emailAddressValidator.getPatterns());
 	}
 }

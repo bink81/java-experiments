@@ -33,7 +33,6 @@ public class NonBlockingCounterTest {
 				@Override
 				public Integer call() throws Exception {
 					int number = counter.increment();
-					System.out.println(number);
 					return number;
 				}
 			};
