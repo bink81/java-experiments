@@ -77,22 +77,4 @@ public class FractionalKnapsackTest {
 		}
 		return values;
 	}
-
-	@Test
-	public void testGetValueWithRepetititions() throws Exception {
-		int[] values = new int[] { 30, 14, 16, 9 };
-		int[] weights = new int[] { 6, 3, 4, 2 };
-		double actual = FractionalKnapsack.getBestValue(10, values, weights);
-
-		Assert.assertEquals(48, actual, DELTA);
-	}
-
-	@Test
-	public void testGetValueWithoutRepetititions() throws Exception {
-		int[] values = new int[] { 30, 14, 16, 9 };
-		int[] weights = new int[] { 6, 3, 4, 2 };
-		double actual = FractionalKnapsack.getBestValue(10, values, weights);
-
-		Assert.assertEquals(46, actual, DELTA);
-	}
 }
