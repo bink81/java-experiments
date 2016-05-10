@@ -42,12 +42,11 @@ public class FeatureSwitchLocalizationTest {
 			IllegalAccessException {
 		Field[] fields = testedClass.getDeclaredFields();
 		for (Field field : fields) {
-			if (java.lang.reflect.Modifier.isPublic(field.getModifiers())) {
-				if (field.get(null).getClass().equals(testedClass)) {
-					@SuppressWarnings("unchecked")
-					NamedType<String> property = (NamedType<String>) field.get(field);
-					return bundle.getString(property.getId());
-				}
+			if (java.lang.reflect.Modifier.isPublic(field.getModifiers())
+					&& field.get(null).getClass().equals(testedClass)) {
+				@SuppressWarnings("unchecked")
+				NamedType<String> property = (NamedType<String>) field.get(field);
+				return bundle.getString(property.getId());
 			}
 		}
 		return null;
