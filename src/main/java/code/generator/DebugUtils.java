@@ -16,7 +16,7 @@ import com.google.common.collect.Lists;
 
 // A convenience class for debugging the codes
 public class DebugUtils {
-	private static final Logger LOGGER = LoggerFactory.getLogger(DebugUtils.class);
+	private static final Logger logger = LoggerFactory.getLogger(DebugUtils.class);
 
 	private static final String EOL_REGEX = "\\r?\\n";
 
@@ -26,7 +26,7 @@ public class DebugUtils {
 		char[] referenceCharacters = reference.toCharArray();
 		char[] actualCharacters = actual.toCharArray();
 		int minimalLength = Math.min(referenceCharacters.length, actualCharacters.length);
-		LOGGER.debug("minimalLength={}", minimalLength);
+		logger.debug("minimalLength={}", minimalLength);
 		for (int i = 0; i < minimalLength; i++) {
 			if (referenceCharacters[i] != actualCharacters[i]) {
 				throw new ComparisonDifferenceException(
@@ -41,7 +41,7 @@ public class DebugUtils {
 		String[] referenceCharacters = reference.split(EOL_REGEX);
 		String[] actualCharacters = actual.split(EOL_REGEX);
 		int minimalLength = Math.min(referenceCharacters.length, actualCharacters.length);
-		LOGGER.debug("minimalLength={}", minimalLength);
+		logger.debug("minimalLength={}", minimalLength);
 		for (int i = 0; i < minimalLength; i++) {
 			if (!referenceCharacters[i].equals(actualCharacters[i])) {
 				throw new ComparisonDifferenceException(
@@ -69,7 +69,7 @@ public class DebugUtils {
 			String value = System.getProperty(name);
 			builder.append("\n  ").append(name).append("=").append(value);
 		}
-		LOGGER.info(builder.toString());
+		logger.info(builder.toString());
 	}
 
 	private static List<String> assembleSortedPropertyNames() {

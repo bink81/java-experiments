@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CommonCode {
-	private static final Logger LOGGER = LoggerFactory.getLogger(CommonCode.class);
+	private static final Logger logger = LoggerFactory.getLogger(CommonCode.class);
 
 	@FunctionalInterface
 	public interface CheckedRunnable {
@@ -20,8 +20,8 @@ public class CommonCode {
 		try {
 			r.run();
 		} catch (Throwable e) {
-			LOGGER.info("Exception caught: {} - {}", e.getClass().getSimpleName(), e.getMessage());
-			LOGGER.debug("Exception stack: {}", e);
+			logger.info("Exception caught: {} - {}", e.getClass().getSimpleName(), e.getMessage());
+			logger.debug("Exception stack: {}", e);
 		}
 	}
 

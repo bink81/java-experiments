@@ -18,7 +18,7 @@ import wrappers.core.ValueSafe;
 public final class Money implements Serializable {
 	private static final long serialVersionUID = -5210975541585203124L;
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(Money.class);
+	private static final Logger logger = LoggerFactory.getLogger(Money.class);
 
 	public static final Currency DEFAULT_CURRENCY = Currency.getInstance("EUR");
 
@@ -157,7 +157,7 @@ public final class Money implements Serializable {
 			return false;
 		Money other = (Money) obj;
 		if (!currency.equals(other.currency)) {
-			LOGGER.error("Currency {} is different than {}", currency, other.currency);
+			logger.error("Currency {} is different than {}", currency, other.currency);
 			return false;
 		}
 		// if we use standard equals here then we get '1 != 1.00'

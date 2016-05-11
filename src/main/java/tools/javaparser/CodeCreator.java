@@ -18,7 +18,7 @@ import com.github.javaparser.ast.expr.StringLiteralExpr;
 import com.github.javaparser.ast.stmt.BlockStmt;
 
 public class CodeCreator {
-	private static final Logger LOGGER = LoggerFactory.getLogger(CodeCreator.class);
+	private static final Logger logger = LoggerFactory.getLogger(CodeCreator.class);
 
 	public CompilationUnit createCU() {
 		CompilationUnit compilationUnit = new CompilationUnit();
@@ -28,7 +28,7 @@ public class CodeCreator {
 		addMethodParameter(method);
 		BlockStmt codeBlock = addBlock(method);
 		addSystemOutPrintln(codeBlock);
-		LOGGER.info("{}", compilationUnit);
+		logger.info("{}", compilationUnit);
 		return compilationUnit;
 	}
 

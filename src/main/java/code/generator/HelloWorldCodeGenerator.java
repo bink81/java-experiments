@@ -16,7 +16,7 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 
 public class HelloWorldCodeGenerator {
-	private static final Logger LOGGER = LoggerFactory.getLogger(HelloWorldCodeGenerator.class);
+	private static final Logger logger = LoggerFactory.getLogger(HelloWorldCodeGenerator.class);
 
 	public OutputStream generateCode() throws IOException, URISyntaxException {
 		MethodSpec main = MethodSpec.methodBuilder("main")
@@ -42,6 +42,6 @@ public class HelloWorldCodeGenerator {
 
 	public static void main(String[] args) throws IOException, URISyntaxException {
 		OutputStream result = new HelloWorldCodeGenerator().generateCode();
-		LOGGER.info("result={}", result);
+		logger.info("result={}", result);
 	}
 }

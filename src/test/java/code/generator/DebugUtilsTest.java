@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DebugUtilsTest {
-	private static final Logger LOGGER = LoggerFactory.getLogger(DebugUtilsTest.class);
+	private static final Logger logger = LoggerFactory.getLogger(DebugUtilsTest.class);
 
 	@Test
 	public void testIgnoreExceptionForBlock() throws Exception {
@@ -27,7 +27,7 @@ public class DebugUtilsTest {
 	}
 
 	private void logThatExecutionContinuesDespiteTheException() {
-		LOGGER.info("Ignored! Execution continues despite the exception");
+		logger.info("Ignored! Execution continues despite the exception");
 	}
 
 	@Test

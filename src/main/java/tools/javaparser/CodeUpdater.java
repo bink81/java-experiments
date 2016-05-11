@@ -20,7 +20,7 @@ import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.body.TypeDeclaration;
 
 public class CodeUpdater {
-	private static final Logger LOGGER = LoggerFactory.getLogger(CodeUpdater.class);
+	private static final Logger logger = LoggerFactory.getLogger(CodeUpdater.class);
 
 	public static void main(String[] args) throws Exception {
 		CodeUpdater codeParser = new CodeUpdater();
@@ -31,21 +31,21 @@ public class CodeUpdater {
 	}
 
 	private void updateMethods(CompilationUnit compilationUnit) {
-		LOGGER.info("Updating a method declaration...");
+		logger.info("Updating a method declaration...");
 		new MethodUpdater().visit(compilationUnit, "2");
-		LOGGER.info("New code:\n{}", compilationUnit);
+		logger.info("New code:\n{}", compilationUnit);
 	}
 
 	private CompilationUnit parseFile(File file) throws FileNotFoundException, ParseException, IOException {
 		FileInputStream inputStream = new FileInputStream(file);
-		LOGGER.info("Parsing file {}", file);
+		logger.info("Parsing file {}", file);
 		CompilationUnit compilationUnit;
 		try {
 			compilationUnit = JavaParser.parse(inputStream);
 		} finally {
 			inputStream.close();
 		}
-		LOGGER.info("Original code:\n{}", compilationUnit);
+		logger.info("Original code:\n{}", compilationUnit);
 		return compilationUnit;
 	}
 
@@ -58,7 +58,7 @@ public class CodeUpdater {
 					MethodDeclaration method = (MethodDeclaration) member;
 					String methodName = method.getName();
 					List<Parameter> parameters = method.getParameters();
-					LOGGER.info("Method name={}, parameters={}", methodName, parameters);
+					logger.info("Method name={}, parameters={}", methodName, parameters);
 				}
 			}
 		}

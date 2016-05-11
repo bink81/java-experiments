@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * report or total execution time at the end.
  */
 public class EventAnalyzer {
-	private static final Logger LOGGER = LoggerFactory.getLogger(EventAnalyzer.class);
+	private static final Logger logger = LoggerFactory.getLogger(EventAnalyzer.class);
 
 	private final List<Long> timestamps = new ArrayList<>();
 
@@ -31,7 +31,7 @@ public class EventAnalyzer {
 		getTimestamps().add(currentTimestamp);
 		getLabels().add(label);
 		if (getTimestamps().size() != getLabels().size()) {
-			LOGGER.error(
+			logger.error(
 				"After addition of label '{}', size of timestamps ({}) does not match size of labels ({}) ",
 				new String[] { label, getTimestamps().size() + "", getLabels().size() + "" });
 		}

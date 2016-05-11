@@ -12,7 +12,7 @@ public class CompletableFutureDemo {
 
 	private static final int RESULT_FROM_TASK = 20;
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(CompletableFutureDemo.class);
+	private static final Logger logger = LoggerFactory.getLogger(CompletableFutureDemo.class);
 
 	public static void main(String[] args) {
 		new CompletableFutureDemo().init(args);
@@ -26,9 +26,9 @@ public class CompletableFutureDemo {
 				}).thenApply(result -> "Result: " + result);
 
 		try {
-			LOGGER.info("{}", completableFuture.get());
+			logger.info("{}", completableFuture.get());
 		} catch (InterruptedException | ExecutionException ex) {
-			LOGGER.error("CompletableFutureTest exception", ex);
+			logger.error("CompletableFutureTest exception", ex);
 		}
 	}
 
@@ -38,7 +38,7 @@ public class CompletableFutureDemo {
 				// test delay
 				Thread.sleep(TimeUnit.SECONDS.toMillis(5));
 			} catch (InterruptedException e) {
-				LOGGER.error("CompletableFutureDemo exception", e);
+				logger.error("CompletableFutureDemo exception", e);
 			}
 			return RESULT_FROM_TASK;
 		});

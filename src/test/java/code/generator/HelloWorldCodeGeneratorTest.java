@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.junit.Assert;
 
 public class HelloWorldCodeGeneratorTest {
-	private static final Logger LOGGER = LoggerFactory.getLogger(HelloWorldCodeGeneratorTest.class);
+	private static final Logger logger = LoggerFactory.getLogger(HelloWorldCodeGeneratorTest.class);
 
 	@Test
 	public void testName() throws IOException, URISyntaxException {
@@ -28,16 +28,16 @@ public class HelloWorldCodeGeneratorTest {
 			try {
 				DebugUtils.compareStringsByCharacters(reference, generatedCode.toString());
 			} catch (ComparisonDifferenceException e) {
-				LOGGER.info("Different characters ('{}'!='{}') at index {}",
+				logger.info("Different characters ('{}'!='{}') at index {}",
 						new Object[] { e.getReference(), e.getActual(), e.getIndex() });
-				LOGGER.debug("Stack trace", e);
+				logger.debug("Stack trace", e);
 			}
 			try {
 				DebugUtils.compareStringsByLines(reference, generatedCode.toString());
 			} catch (ComparisonDifferenceException e) {
-				LOGGER.warn("Lines differ:\n{}\nVS\n{}\nat line number {}",
+				logger.warn("Lines differ:\n{}\nVS\n{}\nat line number {}",
 						new Object[] { e.getReference(), e.getActual(), e.getIndex() });
-				LOGGER.debug("Stack trace", e);
+				logger.debug("Stack trace", e);
 			}
 		}
 		Assert.assertTrue(stringsAreEqual);
