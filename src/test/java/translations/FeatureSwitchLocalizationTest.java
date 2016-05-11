@@ -1,17 +1,17 @@
-package utils;
+package translations;
 
-import java.io.File;
 import java.lang.reflect.Field;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import translations.terms.CorrectFeatureSwitches;
+import translations.terms.MissingFeatureSwitches;
+import utils.NamedType;
 
 /**
  * Test for missing localizations of feature toggles
@@ -22,19 +22,19 @@ public class FeatureSwitchLocalizationTest {
 
 	@BeforeClass
 	public static void setUp() throws Exception {
-		bundle = fetchBundle();
+		bundle = new TranslationProvider("testResource").fetchBundle();
 	}
 
 	@Test
 	public void testCorrectCode() throws Exception {
-		String result = fetchTranslation(CorrectFeatureSwitch.class);
+		String result = fetchTranslation(CorrectFeatureSwitches.class);
 
 		Assert.assertTrue(result != null);
 	}
 
 	@Test(expected = MissingResourceException.class)
 	public void testIncorrectCode() throws Exception {
-		fetchTranslation(IncorrectFeatureSwitch.class);
+		fetchTranslation(MissingFeatureSwitches.class);
 	}
 
 	private String fetchTranslation(Class<?> testedClass)
@@ -50,13 +50,5 @@ public class FeatureSwitchLocalizationTest {
 			}
 		}
 		return null;
-	}
-
-	private static ResourceBundle fetchBundle() throws MalformedURLException {
-		File localizationsDirectory = new File("src/test/resources/localizations");
-		URL[] urls = { localizationsDirectory.toURI().toURL() };
-		ClassLoader loader = new URLClassLoader(urls);
-		ResourceBundle bundle = ResourceBundle.getBundle("myResource", Locale.ENGLISH, loader);
-		return bundle;
 	}
 }
