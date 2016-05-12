@@ -1,8 +1,10 @@
 package translations.terms;
 
+import translations.Localizable;
 import translations.Translatable;
 import utils.NamedType;
 
+@Localizable
 public class CorrectFeatureSwitches<I> extends NamedType<I> implements Translatable {
 
 	@Override

@@ -1,7 +1,9 @@
 package translations.terms;
 
+import translations.Localizable;
 import utils.NamedType;
 
+@Localizable
 public class MissingFeatureSwitches<I> extends NamedType<I> {
 
 	@Override

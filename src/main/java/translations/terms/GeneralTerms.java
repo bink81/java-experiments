@@ -1,7 +1,9 @@
 package translations.terms;
 
+import translations.Localizable;
 import translations.Translatable;
 
+@Localizable
 public class GeneralTerms implements Translatable {
 
 	public static final String NAME = "GeneralTerms";

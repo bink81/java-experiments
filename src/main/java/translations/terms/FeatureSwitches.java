@@ -1,8 +1,10 @@
 package translations.terms;
 
+import translations.Localizable;
 import translations.Translatable;
 import utils.NamedType;
 
+@Localizable
 public class FeatureSwitches<I> extends NamedType<I> implements Translatable {
 
 	private static final String NAME = "FeatureSwitches";
