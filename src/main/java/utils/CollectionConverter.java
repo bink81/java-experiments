@@ -6,16 +6,16 @@ import java.util.List;
 
 import com.google.common.base.Preconditions;
 
-public class CollectionToListConverter<T> {
+public class CollectionConverter<T> {
 
 	private final Collection<T> collection;
 
-	public CollectionToListConverter(Collection<T> collection) {
+	public CollectionConverter(Collection<T> collection) {
 		Preconditions.checkNotNull(collection, "collection must not be null");
 		this.collection = collection;
 	}
 
-	public List<T> convert() {
+	public List<T> toList() {
 		List<T> list;
 		if (collection instanceof List) {
 			list = (List<T>) collection;
