@@ -11,6 +11,9 @@ public class TreeHeightCalculator {
 		this.parents = parents;
 	}
 
+	/**
+	 * assumptions: there is exactly one root and the input represents a tree
+	 */
 	public int computeHeight() {
 		TreeNode root = createTree();
 		return recursiveHeightCalculation(root);
