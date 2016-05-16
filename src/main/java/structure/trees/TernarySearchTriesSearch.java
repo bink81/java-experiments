@@ -9,9 +9,15 @@ package structure.trees;
 // - search miss: ln N
 // - insert: L + ln N
 // Space: 4N
-public class TernarySearchTriesSearch<T> {
-	Node root = new Node();
+public class TernarySearchTriesSearch<T> implements DataStructure<T> {
+	private Node root = new Node();
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see structure.trees.DataStructure#put(java.lang.String, T)
+	 */
+	@Override
 	public void put(String key, T value) {
 		root = put(root, key, value, 0);
 	}
@@ -34,10 +40,22 @@ public class TernarySearchTriesSearch<T> {
 		return node;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see structure.trees.DataStructure#contains(java.lang.String)
+	 */
+	@Override
 	public boolean contains(String key) {
 		return get(key) != null;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see structure.trees.DataStructure#get(java.lang.String)
+	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public T get(String key) {
 		Node node = get(root, key, 0);
@@ -63,14 +81,20 @@ public class TernarySearchTriesSearch<T> {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see structure.trees.DataStructure#delete(java.lang.String)
+	 */
+	@Override
 	public void delete(String key) {
 		put(key, null);
 		// TODO: remove parent nodes if their values are null
 	}
 
 	private static class Node {
-		Object value;
-		char character;
-		Node left, middle, right;
+		private Object value;
+		private char character;
+		private Node left, middle, right;
 	}
 }

@@ -6,7 +6,7 @@ import org.junit.Test;
 public class TernarySearchTriesSearchTest {
 
 	private static final String DUMMY_KEY = "DUMMY_KEY";
-	TernarySearchTriesSearch<Integer> search = new TernarySearchTriesSearch<Integer>();
+	DataStructure<Integer> search = new TernarySearchTriesSearch<Integer>();
 
 	@Test
 	public void testContainsWithoutPut() throws Exception {
