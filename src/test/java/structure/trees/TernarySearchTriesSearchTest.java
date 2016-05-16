@@ -45,4 +45,25 @@ public class TernarySearchTriesSearchTest {
 
 		Assert.assertEquals(expected, actual);
 	}
+
+	@Test
+	public void testDelete() throws Exception {
+		TernarySearchTriesSearch<Integer> s = new TernarySearchTriesSearch<Integer>();
+		s.delete(DUMMY_KEY);
+
+		Integer actual = s.get(DUMMY_KEY);
+
+		Assert.assertEquals(null, actual);
+	}
+
+	@Test
+	public void testDeleteAfterPut() throws Exception {
+		TernarySearchTriesSearch<Integer> s = new TernarySearchTriesSearch<Integer>();
+		s.put(DUMMY_KEY, 1);
+		s.delete(DUMMY_KEY);
+
+		Integer actual = s.get(DUMMY_KEY);
+
+		Assert.assertEquals(null, actual);
+	}
 }
