@@ -111,6 +111,25 @@ public class RwayTrieSearch<T> implements DataStructure<T> {
 		return queue;
 	}
 
+	public String longestPrefixOf(String query) {
+		int length = search(root, query, 0, 0);
+		return query.substring(0, length);
+	}
+
+	private int search(final Node node, final String query, final int index, int length) {
+		if (node == null) {
+			return length;
+		}
+		if (node.value != null) {
+			length = index;
+		}
+		if (index == query.length()) {
+			return length;
+		}
+		char character = query.charAt(index);
+		return search(node.next[character], query, index + 1, length);
+	}
+
 	private static class Node {
 		Object value;
 		Node[] next = new Node[R];

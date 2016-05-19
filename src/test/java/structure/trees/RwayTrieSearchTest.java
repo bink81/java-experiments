@@ -148,4 +148,21 @@ public class RwayTrieSearchTest {
 		Assert.assertEquals(DUMMY_KEY_1, iterator.next());
 		Assert.assertEquals(DUMMY_KEY_2, iterator.next());
 	}
+
+	@Test
+	public void testLongestPrefixWithEmpty() throws Exception {
+		String actual = search.longestPrefixOf("DUMMY_KEY_");
+
+		Assert.assertEquals("", actual);
+	}
+
+	@Test
+	public void testLongestPrefixWithTwo() throws Exception {
+		search.put(DUMMY_KEY_1, 1);
+		search.put(DUMMY_KEY_2, 1);
+
+		String actual = search.longestPrefixOf(DUMMY_KEY_2);
+
+		Assert.assertEquals(DUMMY_KEY_2, actual);
+	}
 }
