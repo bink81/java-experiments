@@ -120,4 +120,32 @@ public class RwayTrieSearchTest {
 		Assert.assertEquals(DUMMY_KEY_1, iterator.next());
 		Assert.assertEquals(DUMMY_KEY_2, iterator.next());
 	}
+
+	@Test
+	public void testKeysWithPrefixWithEmpty() throws Exception {
+		Iterable<String> actual = search.keysWithPrefix("DUMMY_KEY_");
+
+		Assert.assertEquals(false, actual.iterator().hasNext());
+	}
+
+	@Test
+	public void testKeysWithPrefixWithOne() throws Exception {
+		search.put(DUMMY_KEY_1, 1);
+
+		Iterable<String> actual = search.keysWithPrefix("DUMMY_KEY_");
+
+		Assert.assertEquals(DUMMY_KEY_1, actual.iterator().next());
+	}
+
+	@Test
+	public void testKeysWithPrefix() throws Exception {
+		search.put(DUMMY_KEY_1, 1);
+		search.put(DUMMY_KEY_2, 1);
+
+		Iterable<String> actual = search.keysWithPrefix("DUMMY_KEY_");
+
+		Iterator<String> iterator = actual.iterator();
+		Assert.assertEquals(DUMMY_KEY_1, iterator.next());
+		Assert.assertEquals(DUMMY_KEY_2, iterator.next());
+	}
 }

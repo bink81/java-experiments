@@ -104,6 +104,13 @@ public class RwayTrieSearch<T> implements DataStructure<T> {
 		}
 	}
 
+	public Iterable<String> keysWithPrefix(final String prefix) {
+		List<String> queue = new ArrayList<String>();
+		Node node = get(root, prefix, 0);
+		collect(node, prefix, queue);
+		return queue;
+	}
+
 	private static class Node {
 		Object value;
 		Node[] next = new Node[R];
