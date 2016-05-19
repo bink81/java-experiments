@@ -1,5 +1,8 @@
 package structure.trees;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Implementation of a R-way Try Search algorithm
  *
@@ -81,6 +84,24 @@ public class RwayTrieSearch<T> implements DataStructure<T> {
 	public void delete(String key) {
 		put(key, null);
 		// TODO: remove parent nodes if their value is null
+	}
+
+	public Iterable<String> keys() {
+		List<String> queue = new ArrayList<String>();
+		collect(root, "", queue);
+		return queue;
+	}
+
+	private void collect(Node node, String prefix, List<String> queue) {
+		if (node == null) {
+			return;
+		}
+		if (node.value != null) {
+			queue.add(prefix);
+		}
+		for (char c = 0; c < R; c++) {
+			collect(node.next[c], prefix + c, queue);
+		}
 	}
 
 	private static class Node {
