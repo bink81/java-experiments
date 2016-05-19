@@ -26,17 +26,17 @@ public class RwayTrieSearch<T> implements DataStructure<T> {
 		root = put(root, key, value, 0);
 	}
 
-	private Node put(Node x, String key, T value, int d) {
-		if (x == null) {
-			x = new Node();
+	private Node put(Node node, String key, T value, int index) {
+		if (node == null) {
+			node = new Node();
 		}
-		if (d == key.length()) {
-			x.value = value;
-			return x;
+		if (index == key.length()) {
+			node.value = value;
+			return node;
 		}
-		char c = key.charAt(d);
-		x.next[c] = put(x.next[c], key, value, d + 1);
-		return x;
+		char character = key.charAt(index);
+		node.next[character] = put(node.next[character], key, value, index + 1);
+		return node;
 	}
 
 	/*
@@ -64,15 +64,15 @@ public class RwayTrieSearch<T> implements DataStructure<T> {
 		return (T) x.value;
 	}
 
-	private Node get(Node x, String key, int d) {
-		if (x == null) {
-			x = new Node();
+	private Node get(Node node, String key, int index) {
+		if (node == null) {
+			node = new Node();
 		}
-		if (d == key.length()) {
-			return x;
+		if (index == key.length()) {
+			return node;
 		}
-		char c = key.charAt(d);
-		return get(x.next[c], key, d + 1);
+		char character = key.charAt(index);
+		return get(node.next[character], key, index + 1);
 	}
 
 	/*
