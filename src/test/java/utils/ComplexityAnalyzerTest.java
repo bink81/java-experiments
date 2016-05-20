@@ -31,7 +31,7 @@ public class ComplexityAnalyzerTest {
 	private void logarithmicAlgorithm(int n) throws InterruptedException {
 		Integer[] array = new Integer[n];
 		for (int i = 1; i <= array.length; i *= 2) {
-			Thread.sleep(3);
+			Thread.sleep(ONE);
 		}
 	}
 
@@ -98,6 +98,29 @@ public class ComplexityAnalyzerTest {
 					Thread.sleep(ONE);
 				}
 			}
+		}
+	}
+
+	@Test
+	public void testNlogNAlgorithm() throws Exception {
+		nlogNAlgorithm(ONE);
+		analyzer.addIteration(ONE);
+
+		int n = 50;
+		int[] array = new int[n];//
+		for (int i = 0; i < n; i++) {
+			array[i] = n - i;
+		}
+		nlogNAlgorithm(n);
+		analyzer.addIteration(n);
+
+		AlgorithmComplexity actual = analyzer.estimateComplexity();
+		Assert.assertEquals(AlgorithmComplexity.N_LOG_N, actual);
+	}
+
+	private void nlogNAlgorithm(int n) throws InterruptedException {
+		for (int i = 0; i < n; i++) {
+			logarithmicAlgorithm(n);
 		}
 	}
 }

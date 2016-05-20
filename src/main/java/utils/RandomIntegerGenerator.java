@@ -17,6 +17,10 @@ public class RandomIntegerGenerator {
 
 	private final int max;
 
+	public RandomIntegerGenerator(int amount) {
+		this(amount, Integer.MAX_VALUE, 0);
+	}
+
 	public RandomIntegerGenerator(int amount, int max) {
 		this(amount, max, 0);
 	}

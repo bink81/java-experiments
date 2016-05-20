@@ -77,6 +77,9 @@ public class ComplexityAnalyzer {
 		differences.put(
 			calculateDifference(actual, base * Math.round(Math.log(n))), AlgorithmComplexity.LOG_N);
 		differences.put(calculateDifference(actual, base * n), AlgorithmComplexity.LINEAR);
+		differences.put(
+			calculateDifference(actual, base * n * Math.round(Math.log(n))),
+			AlgorithmComplexity.N_LOG_N);
 		differences.put(calculateDifference(actual, base * n * n), AlgorithmComplexity.QUADRATIC);
 		differences.put(calculateDifference(actual, base * n * n * n), AlgorithmComplexity.CUBIC);
 
