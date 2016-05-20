@@ -1,6 +1,7 @@
 package algorithms;
 
 import java.util.Arrays;
+import java.util.Set;
 
 public class MathUtils {
 	// Euclidean algorithm
@@ -29,5 +30,13 @@ public class MathUtils {
 			result += (long) a[i] * b[b.length - i - 1];
 		}
 		return result;
+	}
+
+	public static long minimum(Set<Long> values) {
+		long minimum = Long.MAX_VALUE;
+		for (long value : values) {
+			minimum = Math.min(minimum, value);
+		}
+		return minimum;
 	}
 }
