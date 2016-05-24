@@ -6,7 +6,7 @@ import translations.Translatable;
 @Localizable
 public class ButtonTerms implements Translatable {
 
-	private static final String NAME = "ButtonTerms";
+	public static final String NAME = "ButtonTerms";
 
 	@Override
 	public String getBundleName() {

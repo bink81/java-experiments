@@ -7,7 +7,7 @@ import utils.NamedType;
 @Localizable
 public class FeatureSwitches<I> extends NamedType<I> implements Translatable {
 
-	private static final String NAME = "FeatureSwitches";
+	public static final String NAME = "FeatureSwitches";
 
 	@Override
 	public String getBundleName() {
