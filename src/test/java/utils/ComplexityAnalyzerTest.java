@@ -40,7 +40,7 @@ public class ComplexityAnalyzerTest {
 		linearAlgorithm(ONE);
 		analyzer.addIteration(ONE);
 
-		int n = 100;
+		int n = 1000;
 		linearAlgorithm(n);
 		analyzer.addIteration(n);
 
