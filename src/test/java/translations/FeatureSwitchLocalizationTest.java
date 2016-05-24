@@ -9,8 +9,8 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import translations.terms.CorrectFeatureSwitches;
-import translations.terms.MissingFeatureSwitches;
+import translations.testterms.CorrectFeatureSwitches;
+import translations.testterms.MissingFeatureSwitches;
 import utils.NamedType;
 
 /**

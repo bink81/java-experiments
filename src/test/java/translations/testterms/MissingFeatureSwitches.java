@@ -1,4 +1,4 @@
-package translations.terms;
+package translations.testterms;
 
 import translations.Localizable;
 import utils.NamedType;
