@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import utils.RandomIntegerGenerator;
+import utils.RandomStringGenerator;
 
 public class HashSubstringTest {
 
@@ -54,13 +55,29 @@ public class HashSubstringTest {
 	public void testGetOccurrences11() throws Exception {
 		String text = "qwertyuiopasdfghjklzxcvbnm1234567890";
 		List<Integer> beginIndices = new RandomIntegerGenerator(10, text.length() - 1).toList();
-
 		for (Integer beginIndex : beginIndices) {
 			String pattern = text.substring(beginIndex);
 			HashSubstring.Data input = new HashSubstring.Data(pattern, text);
+
 			List<Integer> actual = HashSubstring.getOccurrences(input);
+
 			Assert.assertEquals(1, actual.size());
 			Assert.assertEquals(beginIndex, actual.get(0));
+		}
+	}
+
+	@Test
+	public void testGetOccurrencesRandom() throws Exception {
+		String text = new RandomStringGenerator(100).generateString();
+		List<Integer> beginIndices = new RandomIntegerGenerator(10, text.length() - 1).toList();
+		for (Integer beginIndex : beginIndices) {
+			String pattern = text.substring(beginIndex);
+			HashSubstring.Data input = new HashSubstring.Data(pattern, text);
+
+			List<Integer> actual = HashSubstring.getOccurrences(input);
+			List<Integer> actualNaively = HashSubstring.getOccurrencesNaively(input);
+
+			Assert.assertEquals(actualNaively, actual);
 		}
 	}
 }

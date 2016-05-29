@@ -7,6 +7,25 @@ import java.util.Random;
 import utils.PrimeUtils;
 
 public class HashSubstring {
+
+	public static List<Integer> getOccurrencesNaively(Data input) {
+		String pattern = input.getPattern(), text = input.getText();
+		List<Integer> occurrences = new ArrayList<Integer>();
+		for (int i = 0; i + pattern.length() <= text.length(); ++i) {
+			boolean equal = true;
+			for (int j = 0; j < pattern.length(); ++j) {
+				if (pattern.charAt(j) != text.charAt(i + j)) {
+					equal = false;
+					break;
+				}
+			}
+			if (equal) {
+				occurrences.add(i);
+			}
+		}
+		return occurrences;
+	}
+
 	public static List<Integer> getOccurrences(Data input) {
 		String pattern = input.getPattern();
 		String text = input.getText();
