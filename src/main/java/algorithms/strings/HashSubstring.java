@@ -8,8 +8,7 @@ import utils.PrimeUtils;
 
 public class HashSubstring {
 
-	public static List<Integer> getOccurrencesNaively(Data input) {
-		String pattern = input.getPattern(), text = input.getText();
+	public static List<Integer> getOccurrencesNaively(String pattern, String text) {
 		List<Integer> occurrences = new ArrayList<Integer>();
 		for (int i = 0; i + pattern.length() <= text.length(); ++i) {
 			boolean equal = true;
@@ -26,9 +25,7 @@ public class HashSubstring {
 		return occurrences;
 	}
 
-	public static List<Integer> getOccurrences(Data input) {
-		String pattern = input.getPattern();
-		String text = input.getText();
+	public static List<Integer> getOccurrences(String pattern, String text) {
 		List<Integer> occurrences = new ArrayList<Integer>();
 		long p = PrimeUtils.findBigPrime();
 		long x = generateRandomNumberLimitedBy(p);
@@ -89,23 +86,5 @@ public class HashSubstring {
 			hash = (a % p + p) % p;
 		}
 		return hash;
-	}
-
-	static class Data {
-		private final String pattern;
-		private final String text;
-
-		public Data(String pattern, String text) {
-			this.pattern = pattern;
-			this.text = text;
-		}
-
-		public String getPattern() {
-			return pattern;
-		}
-
-		public String getText() {
-			return text;
-		}
 	}
 }

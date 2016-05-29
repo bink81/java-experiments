@@ -12,9 +12,7 @@ public class HashSubstringTest {
 
 	@Test
 	public void testGetOccurrences1() throws Exception {
-		HashSubstring.Data input = new HashSubstring.Data("aba", "abacaba");
-
-		List<Integer> actual = HashSubstring.getOccurrences(input);
+		List<Integer> actual = HashSubstring.getOccurrences("aba", "abacaba");
 
 		Assert.assertEquals(2, actual.size());
 		Assert.assertEquals((Integer) 0, actual.get(0));
@@ -23,9 +21,7 @@ public class HashSubstringTest {
 
 	@Test
 	public void testGetOccurrences2() throws Exception {
-		HashSubstring.Data input = new HashSubstring.Data("Test", "testTesttesT");
-
-		List<Integer> actual = HashSubstring.getOccurrences(input);
+		List<Integer> actual = HashSubstring.getOccurrences("Test", "testTesttesT");
 
 		Assert.assertEquals(1, actual.size());
 		Assert.assertEquals((Integer) 4, actual.get(0));
@@ -33,9 +29,7 @@ public class HashSubstringTest {
 
 	@Test
 	public void testGetOccurrencesAllFound() throws Exception {
-		HashSubstring.Data input = new HashSubstring.Data("a", "aaa");
-
-		List<Integer> actual = HashSubstring.getOccurrences(input);
+		List<Integer> actual = HashSubstring.getOccurrences("a", "aaa");
 
 		Assert.assertEquals(3, actual.size());
 		Assert.assertEquals((Integer) 0, actual.get(0));
@@ -45,9 +39,8 @@ public class HashSubstringTest {
 
 	@Test
 	public void testGetOccurrencesNoneFound() throws Exception {
-		HashSubstring.Data input = new HashSubstring.Data("b", "aaa");
+		List<Integer> actual = HashSubstring.getOccurrences("b", "aaa");
 
-		List<Integer> actual = HashSubstring.getOccurrences(input);
 		Assert.assertEquals(0, actual.size());
 	}
 
@@ -57,9 +50,7 @@ public class HashSubstringTest {
 		List<Integer> beginIndices = new RandomIntegerGenerator(10, text.length() - 1).toList();
 		for (Integer beginIndex : beginIndices) {
 			String pattern = text.substring(beginIndex);
-			HashSubstring.Data input = new HashSubstring.Data(pattern, text);
-
-			List<Integer> actual = HashSubstring.getOccurrences(input);
+			List<Integer> actual = HashSubstring.getOccurrences(pattern, text);
 
 			Assert.assertEquals(1, actual.size());
 			Assert.assertEquals(beginIndex, actual.get(0));
@@ -72,10 +63,9 @@ public class HashSubstringTest {
 		List<Integer> beginIndices = new RandomIntegerGenerator(10, text.length() - 1).toList();
 		for (Integer beginIndex : beginIndices) {
 			String pattern = text.substring(beginIndex);
-			HashSubstring.Data input = new HashSubstring.Data(pattern, text);
 
-			List<Integer> actual = HashSubstring.getOccurrences(input);
-			List<Integer> actualNaively = HashSubstring.getOccurrencesNaively(input);
+			List<Integer> actual = HashSubstring.getOccurrences(pattern, text);
+			List<Integer> actualNaively = HashSubstring.getOccurrencesNaively(pattern, text);
 
 			Assert.assertEquals(actualNaively, actual);
 		}
