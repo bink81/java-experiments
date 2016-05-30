@@ -34,7 +34,7 @@ public class RandomStringGenerator {
 		this.firstAsciCharacter = firstAsciCharacter;
 	}
 
-	public String generateString() {
+	public String produceString() {
 		char[] data = new char[size];
 		for (int i = 0; i < size; i++) {
 			int range = lastAsciCharacter - firstAsciCharacter;

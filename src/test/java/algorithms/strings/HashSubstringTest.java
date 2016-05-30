@@ -59,7 +59,7 @@ public class HashSubstringTest {
 
 	@Test
 	public void testGetOccurrencesRandom() throws Exception {
-		String text = new RandomStringGenerator(100).generateString();
+		String text = new RandomStringGenerator(100).produceString();
 		List<Integer> beginIndices = new RandomIntegerGenerator(10, text.length() - 1).produceList();
 		for (Integer beginIndex : beginIndices) {
 			String pattern = text.substring(beginIndex);
