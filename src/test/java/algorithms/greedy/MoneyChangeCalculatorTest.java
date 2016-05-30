@@ -33,7 +33,7 @@ public class MoneyChangeCalculatorTest {
 	@Test
 	public void testRandomArray() throws Exception {
 		int[] coinTypes = new int[] { 10, 5, 1 };
-		List<Integer> randomAmounts = new RandomIntegerGenerator(1, Integer.MAX_VALUE).toList();
+		List<Integer> randomAmounts = new RandomIntegerGenerator(1, Integer.MAX_VALUE).produceList();
 		for (Integer randomAmount : randomAmounts) {
 			// We just check that it doesn't crash
 			MoneyChangeCalculator.calculateMinimumChange(randomAmount, coinTypes);

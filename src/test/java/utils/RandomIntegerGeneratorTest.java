@@ -16,7 +16,7 @@ public class RandomIntegerGeneratorTest {
 	@Test
 	public void testOneWithMax() throws Exception {
 		List<Integer> randomNumbers = new RandomIntegerGenerator(ONE, TEN)
-				.toList();
+				.produceList();
 
 		Assert.assertEquals(ONE, randomNumbers.size());
 	}
@@ -24,19 +24,19 @@ public class RandomIntegerGeneratorTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testNegativeMin() throws Exception {
 		new RandomIntegerGenerator(TEN, TEN, NEGATIVE_NUMBER)
-				.toList();
+				.produceList();
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testNegativeSize() throws Exception {
 		new RandomIntegerGenerator(NEGATIVE_NUMBER, TEN, TEN)
-				.toList();
+				.produceList();
 	}
 
 	@Test
 	public void testThousandWithMaxAndMin() throws Exception {
 		List<Integer> randomNumbers = new RandomIntegerGenerator(THOUSAND, MAX, MIN)
-				.toList();
+				.produceList();
 		Assert.assertEquals(THOUSAND, randomNumbers.size());
 		for (int integer : randomNumbers) {
 			Assert.assertTrue("Found value higher than Max", integer < MAX);

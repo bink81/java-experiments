@@ -29,11 +29,11 @@ public class DayOfWeekTest {
 	public void testRandom() throws Exception {
 		Calendar cal = Calendar.getInstance();
 		List<Integer> years = new RandomIntegerGenerator(NUMBER_OF_RANDOM_TESTS, VERY_FUTURE_DATE,
-				START_OF_GREGORIAN_CALENDAR).toList();
+				START_OF_GREGORIAN_CALENDAR).produceList();
 		List<Integer> months = new RandomIntegerGenerator(NUMBER_OF_RANDOM_TESTS, NUMER_OF_MONTHS,
-				FIRST_MONTH).toList();
+				FIRST_MONTH).produceList();
 		List<Integer> days = new RandomIntegerGenerator(NUMBER_OF_RANDOM_TESTS,
-				MAX_NUMBER_OF_DAYS_IN_A_MONTH, FIRST_DAY_OF_A_MONTH).toList();
+				MAX_NUMBER_OF_DAYS_IN_A_MONTH, FIRST_DAY_OF_A_MONTH).produceList();
 		for (int i = 0; i < NUMBER_OF_RANDOM_TESTS; i++) {
 			int year = years.get(i);
 			int month = months.get(i);

@@ -47,7 +47,7 @@ public class HashSubstringTest {
 	@Test
 	public void testGetOccurrences11() throws Exception {
 		String text = "qwertyuiopasdfghjklzxcvbnm1234567890";
-		List<Integer> beginIndices = new RandomIntegerGenerator(10, text.length() - 1).toList();
+		List<Integer> beginIndices = new RandomIntegerGenerator(10, text.length() - 1).produceList();
 		for (Integer beginIndex : beginIndices) {
 			String pattern = text.substring(beginIndex);
 			List<Integer> actual = HashSubstring.getOccurrences(pattern, text);
@@ -60,7 +60,7 @@ public class HashSubstringTest {
 	@Test
 	public void testGetOccurrencesRandom() throws Exception {
 		String text = new RandomStringGenerator(100).generateString();
-		List<Integer> beginIndices = new RandomIntegerGenerator(10, text.length() - 1).toList();
+		List<Integer> beginIndices = new RandomIntegerGenerator(10, text.length() - 1).produceList();
 		for (Integer beginIndex : beginIndices) {
 			String pattern = text.substring(beginIndex);
 

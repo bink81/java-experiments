@@ -51,7 +51,7 @@ public class QuickSortTest {
 
 	@Test
 	public void testAndCompareWithRandomValues() throws Exception {
-		int[] a = new RandomIntegerGenerator(1000, Integer.MAX_VALUE).toArray();
+		int[] a = new RandomIntegerGenerator(1000, Integer.MAX_VALUE).produceArray();
 
 		QuickSort.sort(a, 0, a.length - 1);
 

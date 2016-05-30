@@ -87,8 +87,8 @@ public class PolynomialUtilsTest {
 
 	@Test
 	public void testMultiplyWithRandomMatrix() throws Exception {
-		int[] a = new RandomIntegerGenerator(100, Integer.MAX_VALUE).toArray();
-		int[] b = new RandomIntegerGenerator(100, Integer.MAX_VALUE).toArray();
+		int[] a = new RandomIntegerGenerator(100, Integer.MAX_VALUE).produceArray();
+		int[] b = new RandomIntegerGenerator(100, Integer.MAX_VALUE).produceArray();
 
 		PolynomialUtils.multiply(a, b);
 	}

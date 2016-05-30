@@ -70,7 +70,7 @@ public class FractionalKnapsackTest {
 	}
 
 	private int[] generateRandomValues(int recordSize) {
-		List<Integer> randomNumbers = new RandomIntegerGenerator(recordSize, 100).toList();
+		List<Integer> randomNumbers = new RandomIntegerGenerator(recordSize, 100).produceList();
 		int[] values = new int[recordSize];
 		for (int i = 0; i < values.length; i++) {
 			values[i] = randomNumbers.get(i);
