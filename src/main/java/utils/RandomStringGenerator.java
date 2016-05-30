@@ -15,8 +15,8 @@ public class RandomStringGenerator {
 
 	private final int lastAsciCharacter;
 
-	public RandomStringGenerator(int amount) {
-		this(amount, '}', '!');
+	public RandomStringGenerator(int size) {
+		this(size, '}', '!');
 	}
 
 	public RandomStringGenerator(int size, int lastAsciCharacter) {
