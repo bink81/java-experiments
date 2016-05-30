@@ -25,7 +25,9 @@ public class RandomStringGenerator {
 
 	public RandomStringGenerator(int size, int lastAsciCharacter, int firstAsciCharacter) {
 		Preconditions.checkArgument(lastAsciCharacter > firstAsciCharacter,
-				"First ASCI character must be bigger than Min");
+				"First ASCI character (" + firstAsciCharacter +
+						") must be bigger than last (" + lastAsciCharacter
+						+ ")");
 		Preconditions.checkArgument(firstAsciCharacter >= 0,
 				"Last ASCI character must not be negative");
 		Preconditions.checkArgument(size >= 0, "Size must not be negative");
