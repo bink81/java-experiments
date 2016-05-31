@@ -40,7 +40,7 @@ public class ComplexityAnalyzerTest {
 		linearAlgorithm(ONE);
 		analyzer.addIteration(ONE);
 
-		int n = 1000;
+		int n = 100;
 		linearAlgorithm(n);
 		analyzer.addIteration(n);
 
@@ -49,8 +49,7 @@ public class ComplexityAnalyzerTest {
 	}
 
 	private void linearAlgorithm(int n) throws InterruptedException {
-		Integer[] array = new Integer[n];
-		for (int i = 0; i < array.length; i++) {
+		for (int i = 0; i < n; i++) {
 			Thread.sleep(ONE);
 		}
 	}
