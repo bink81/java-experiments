@@ -11,16 +11,16 @@ import patterns.visitor.components.Refactoring;
 import patterns.visitor.components.Unknown;
 import patterns.visitor.components.UnsuportedChangeException;
 
-public class SmellyCodeTest {
+public class StartTest {
 
 	@Test
 	public void testTriggerProcessingChangeOfRefactoring() throws Exception {
 		Code code = new Code();
 		Change change = new Refactoring();
 
-		String actual = new SmellyCode().triggerProcessingChangeOf(code, change);
+		String actual = new Start().triggerProcessingChangeOf(code, change);
 
-		Assert.assertEquals(SmellyCode.REFACTORING, actual);
+		Assert.assertEquals(Refactoring.LABEL, actual);
 	}
 
 	@Test
@@ -28,9 +28,9 @@ public class SmellyCodeTest {
 		Code code = new Code();
 		Change change = new Improvement();
 
-		String actual = new SmellyCode().triggerProcessingChangeOf(code, change);
+		String actual = new Start().triggerProcessingChangeOf(code, change);
 
-		Assert.assertEquals(SmellyCode.IMPROVEMENT, actual);
+		Assert.assertEquals(Improvement.LABEL, actual);
 	}
 
 	@Test
@@ -38,9 +38,9 @@ public class SmellyCodeTest {
 		Code code = new Code();
 		Change change = new Growth();
 
-		String actual = new SmellyCode().triggerProcessingChangeOf(code, change);
+		String actual = new Start().triggerProcessingChangeOf(code, change);
 
-		Assert.assertEquals(SmellyCode.GROWTH, actual);
+		Assert.assertEquals(Growth.LABEL, actual);
 	}
 
 	@Test(expected = UnsuportedChangeException.class)
@@ -48,6 +48,6 @@ public class SmellyCodeTest {
 		Code code = new Code();
 		Change change = new Unknown();
 
-		new SmellyCode().triggerProcessingChangeOf(code, change);
+		new Start().triggerProcessingChangeOf(code, change);
 	}
 }
