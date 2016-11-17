@@ -4,7 +4,7 @@ public class Growth implements Change {
 	public static final String LABEL = "Growth";
 
 	@Override
-	public String accept(VisitorDemo visitor) {
+	public String accept(DoubleDispatcher visitor) {
 		return visitor.visit(this);
 	}
 }

@@ -1,6 +1,6 @@
 package patterns.visitor.components;
 
-public interface VisitorDemo {
+public interface DoubleDispatcher {
 	String visit(Refactoring refactoring);
 
 	String visit(Improvement improvement);

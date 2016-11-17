@@ -1,6 +1,6 @@
 package patterns.visitor.components;
 
-public class ChangeProcessor implements VisitorDemo {
+public class ChangeProcessor implements DoubleDispatcher {
 	private final Code code;
 
 	public ChangeProcessor(Code code) {

@@ -1,5 +1,5 @@
 package patterns.visitor.components;
 
 public interface Change {
-	String accept(VisitorDemo visitor) throws UnsuportedChangeException;
+	String accept(DoubleDispatcher visitor) throws UnsuportedChangeException;
 }

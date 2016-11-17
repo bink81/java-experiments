@@ -4,7 +4,7 @@ public class Refactoring implements Change {
 	public static final String LABEL = "Refactoring";
 
 	@Override
-	public String accept(VisitorDemo visitor) {
+	public String accept(DoubleDispatcher visitor) {
 		return visitor.visit(this);
 	}
 }
