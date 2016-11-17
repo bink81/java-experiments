@@ -43,6 +43,8 @@ public class StartTest {
 		Assert.assertEquals(Growth.LABEL, actual);
 	}
 
+	// Not really needed anymore since a new type will cause a compilation error if implementation
+	// of "accept" method is missing
 	@Test(expected = UnsuportedChangeException.class)
 	public void testTriggerProcessingChangeOfUnknown() throws Exception {
 		Code code = new Code();
