@@ -31,16 +31,16 @@ public enum Direction {
 		}
 	}
 
-	public Point nextPosition(Point current) {
+	public Point nextPosition(Point coordinates) {
 		switch (this) {
 		case NORTH:
-			return new Point(current.x, current.y + 1);
+			return new Point(coordinates.x, coordinates.y + 1);
 		case SOUTH:
-			return new Point(current.x, current.y - 1);
+			return new Point(coordinates.x, coordinates.y - 1);
 		case EAST:
-			return new Point(current.x + 1, current.y);
+			return new Point(coordinates.x + 1, coordinates.y);
 		case WEST:
-			return new Point(current.x - 1, current.y);
+			return new Point(coordinates.x - 1, coordinates.y);
 		default:
 			throw new IllegalArgumentException();
 		}

@@ -63,7 +63,7 @@ public class Day1 {
 		HashSet<Point> points = new HashSet<>();
 		String[] movements = split(input);
 
-		Point current = new Point(0, 0);
+		Point currentPosition = new Point(0, 0);
 		Direction direction = Direction.NORTH;
 		for (int i = 0; i < movements.length; i++) {
 			String movement = movements[i];
@@ -71,12 +71,12 @@ public class Day1 {
 
 			Integer distanceFrom = distanceFrom(movement);
 			for (int j = 0; j < distanceFrom; j++) {
-				current = direction.nextPosition(current);
-				if (points.contains(current)) {
-					return Math.abs(current.x) + Math.abs(current.y);
+				currentPosition = direction.nextPosition(currentPosition);
+				if (points.contains(currentPosition)) {
+					return Math.abs(currentPosition.x) + Math.abs(currentPosition.y);
 				}
 				else {
-					points.add(current);
+					points.add(currentPosition);
 				}
 			}
 		}
@@ -84,8 +84,7 @@ public class Day1 {
 	}
 
 	private String[] split(String input) {
-		String[] movements = input.split(", ");
-		return movements;
+		return input.split(", ");
 	}
 
 	private Integer distanceFrom(String movement) {
