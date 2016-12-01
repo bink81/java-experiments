@@ -63,42 +63,20 @@ public class Day1 {
 		HashSet<Point> points = new HashSet<>();
 		String[] movements = split(input);
 
-		int x = 0;
-		int y = 0;
-		int direction = 0;
-		// 0 - NORTH
-		// 1 - EAST
-		// 2 - SOUTH
-		// 3 - WEST
+		Point current = new Point(0, 0);
+		Direction direction = Direction.NORTH;
 		for (int i = 0; i < movements.length; i++) {
 			String movement = movements[i];
-			direction = determineDirection(direction, movement.charAt(0));
+			direction = direction.determineDirection(movement.charAt(0));
 
 			Integer distanceFrom = distanceFrom(movement);
 			for (int j = 0; j < distanceFrom; j++) {
-				switch (direction) {
-				case 0:
-					y++;
-					break;
-				case 2:
-					y--;
-					break;
-				case 1:
-					x++;
-					break;
-				case 3:
-					x--;
-					break;
-				default:
-					throw new IllegalArgumentException(movement);
-				}
-
-				Point point = new Point(x, y);
-				if (points.contains(point)) {
-					return Math.abs(x) + Math.abs(y);
+				current = direction.nextPosition(current);
+				if (points.contains(current)) {
+					return Math.abs(current.x) + Math.abs(current.y);
 				}
 				else {
-					points.add(point);
+					points.add(current);
 				}
 			}
 		}
