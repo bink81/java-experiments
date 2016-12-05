@@ -10,9 +10,8 @@ import java.util.function.Consumer;
 public class Day3 {
 	private static final String NUMBER_DELIMETER = "\\s+";
 
-	int triangleCount = 0;
-
 	public int task1(File file) throws IOException {
+		MutableIntegerValue triangleCount = new MutableIntegerValue();
 
 		Files.lines(file.toPath()).forEach(new Consumer<String>() {
 			@Override
@@ -22,11 +21,11 @@ public class Day3 {
 				int y = Integer.valueOf(split[1].trim());
 				int z = Integer.valueOf(split[2].trim());
 				if (x + y > z && x + z > y && y + z > x) {
-					triangleCount++;
+					triangleCount.set(triangleCount.get() + 1);
 				}
 			}
 		});
-		return triangleCount;
+		return triangleCount.get();
 	}
 
 	public int task2(File file) throws IOException {
