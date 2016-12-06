@@ -3,10 +3,11 @@ package advent2016;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
@@ -44,7 +45,7 @@ public class Day4 {
 		String[] split = line.split(NAME_PART_DELIMETER);
 		String sectorIdWithCrcCode = split[split.length - 1];
 		Long sectorId = Long
-				.valueOf(sectorIdWithCrcCode.substring(0, sectorIdWithCrcCode.indexOf(CRC_PREFIX)));
+			.valueOf(sectorIdWithCrcCode.substring(0, sectorIdWithCrcCode.indexOf(CRC_PREFIX)));
 		return sectorId;
 	}
 
@@ -67,18 +68,24 @@ public class Day4 {
 
 	public boolean isReal(final String room) {
 		String[] roomNameWithCrcCode = room.split(ESCAPE_REGEX + CRC_PREFIX);
-
 		String nonCrcPart = roomNameWithCrcCode[0];
 		int lastIndexOfRoomName = nonCrcPart.lastIndexOf(NAME_PART_DELIMETER);
 		String roomName = nonCrcPart.substring(0, lastIndexOfRoomName);
+		Comparator<Entry<Character, Integer>> reverseOrder =
+				Collections.reverseOrder(Comparator.comparing(e -> e.getValue()));
+		Comparator<Entry<Character, Integer>> order =
+				reverseOrder.thenComparing(Entry<Character, Integer>::getKey);
+		Map<Character, Integer> sortedCharMap = new LinkedHashMap<Character, Integer>();
 		String roomNameWithoutDashes = roomName.replace(NAME_PART_DELIMETER, "");
 		Map<Character, Integer> countedCharacters = countCharacters(roomNameWithoutDashes);
-		List<CharacterWithCount> sortedList = convertIntoSortedList(countedCharacters);
+		String checksumPart = roomNameWithCrcCode[1].replace(CRC_SUFFIX, "");
+		countedCharacters.entrySet().stream().sorted(order).limit(checksumPart.length()).forEachOrdered(
+			e -> sortedCharMap.put(e.getKey(), e.getValue()));
 
-		String crcPart = roomNameWithCrcCode[1].replace(CRC_SUFFIX, "");
-		for (int i = 0; i < crcPart.length(); i++) {
-			CharacterWithCount characterWithCount = sortedList.get(sortedList.size() - 1 - i);
-			if (characterWithCount.getCharacter() != crcPart.charAt(i)) {
+		Iterator<Entry<Character, Integer>> iterator = sortedCharMap.entrySet().iterator();
+		for (int i = 0; i < checksumPart.length(); i++) {
+			Entry<Character, Integer> characterWithCount = iterator.next();
+			if (characterWithCount.getKey() != checksumPart.charAt(i)) {
 				return false;
 			}
 		}
@@ -95,15 +102,6 @@ public class Day4 {
 		return countedCharacters;
 	}
 
-	private List<CharacterWithCount> convertIntoSortedList(final Map<Character, Integer> m) {
-		List<CharacterWithCount> list = new ArrayList<>();
-		for (Entry<Character, Integer> e : m.entrySet()) {
-			list.add(new CharacterWithCount(e.getKey(), e.getValue()));
-		}
-		Collections.sort(list);
-		return list;
-	}
-
 	public String decryptRoomName(final String encryptedRoomName) {
 		int lastIndexOfName = encryptedRoomName.lastIndexOf(NAME_PART_DELIMETER);
 		StringBuffer sb = new StringBuffer();
@@ -111,10 +109,11 @@ public class Day4 {
 			char currentCharacter = encryptedRoomName.charAt(i);
 			if (currentCharacter == NAME_PART_DELIMETER.charAt(0)) {
 				sb.append(' ');
-			} else {
+			}
+			else {
 				String sectorIdString = encryptedRoomName.substring(lastIndexOfName + 1);
 				Long sectorId = Long.valueOf(sectorIdString);
-				long shiftingFactor = (long) currentCharacter + sectorId - POSISTION_OF_A;
+				long shiftingFactor = currentCharacter + sectorId - POSISTION_OF_A;
 				char decryptedChar = (char) (shiftingFactor % LETTER_COUNT + POSISTION_OF_A);
 				sb.append(decryptedChar);
 			}
