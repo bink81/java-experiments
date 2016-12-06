@@ -68,21 +68,38 @@ public class Day4 {
 
 	public boolean isReal(final String room) {
 		String[] roomNameWithCrcCode = room.split(ESCAPE_REGEX + CRC_PREFIX);
-		String nonCrcPart = roomNameWithCrcCode[0];
-		int lastIndexOfRoomName = nonCrcPart.lastIndexOf(NAME_PART_DELIMETER);
-		String roomName = nonCrcPart.substring(0, lastIndexOfRoomName);
+		String nonCrcString = roomNameWithCrcCode[0];
+		String roomName = nonCrcString.substring(0, nonCrcString.lastIndexOf(NAME_PART_DELIMETER));
+		String checksumString = roomNameWithCrcCode[1].replace(CRC_SUFFIX, "");
+
+		Map<Character, Integer> sortedFiveMostFrequentCharacters =
+				sortFiveMostFrequentCharacters(roomName, checksumString);
+
+		return isCheckSumMadeFromFiveMostFrequentCharacters(
+			sortedFiveMostFrequentCharacters, checksumString);
+	}
+
+	private Map<Character, Integer> sortFiveMostFrequentCharacters(
+			final String roomName,
+			final String checksum) {
 		Comparator<Entry<Character, Integer>> reverseOrder =
 				Collections.reverseOrder(Comparator.comparing(e -> e.getValue()));
 		Comparator<Entry<Character, Integer>> order =
 				reverseOrder.thenComparing(Entry<Character, Integer>::getKey);
-		Map<Character, Integer> sortedFiveMostFrequentCharacters = new LinkedHashMap<Character, Integer>();
+		Map<Character, Integer> sortedFiveMostFrequentCharacters =
+				new LinkedHashMap<Character, Integer>();
 		String roomNameWithoutDashes = roomName.replace(NAME_PART_DELIMETER, "");
 		Map<Character, Integer> countedCharacters = countCharacters(roomNameWithoutDashes);
-		String checksumPart = roomNameWithCrcCode[1].replace(CRC_SUFFIX, "");
-		countedCharacters.entrySet().stream().sorted(order).limit(checksumPart.length()).forEachOrdered(
+		countedCharacters.entrySet().stream().sorted(order).limit(checksum.length()).forEachOrdered(
 			e -> sortedFiveMostFrequentCharacters.put(e.getKey(), e.getValue()));
+		return sortedFiveMostFrequentCharacters;
+	}
 
-		Iterator<Entry<Character, Integer>> iterator = sortedFiveMostFrequentCharacters.entrySet().iterator();
+	private boolean isCheckSumMadeFromFiveMostFrequentCharacters(
+			final Map<Character, Integer> sortedFiveMostFrequentCharacters,
+			final String checksumPart) {
+		Iterator<Entry<Character, Integer>> iterator =
+				sortedFiveMostFrequentCharacters.entrySet().iterator();
 		for (int i = 0; i < checksumPart.length(); i++) {
 			if (iterator.next().getKey() != checksumPart.charAt(i)) {
 				return false;
