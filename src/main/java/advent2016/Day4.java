@@ -75,17 +75,16 @@ public class Day4 {
 				Collections.reverseOrder(Comparator.comparing(e -> e.getValue()));
 		Comparator<Entry<Character, Integer>> order =
 				reverseOrder.thenComparing(Entry<Character, Integer>::getKey);
-		Map<Character, Integer> sortedCharMap = new LinkedHashMap<Character, Integer>();
+		Map<Character, Integer> sortedFiveMostFrequentCharacters = new LinkedHashMap<Character, Integer>();
 		String roomNameWithoutDashes = roomName.replace(NAME_PART_DELIMETER, "");
 		Map<Character, Integer> countedCharacters = countCharacters(roomNameWithoutDashes);
 		String checksumPart = roomNameWithCrcCode[1].replace(CRC_SUFFIX, "");
 		countedCharacters.entrySet().stream().sorted(order).limit(checksumPart.length()).forEachOrdered(
-			e -> sortedCharMap.put(e.getKey(), e.getValue()));
+			e -> sortedFiveMostFrequentCharacters.put(e.getKey(), e.getValue()));
 
-		Iterator<Entry<Character, Integer>> iterator = sortedCharMap.entrySet().iterator();
+		Iterator<Entry<Character, Integer>> iterator = sortedFiveMostFrequentCharacters.entrySet().iterator();
 		for (int i = 0; i < checksumPart.length(); i++) {
-			Entry<Character, Integer> characterWithCount = iterator.next();
-			if (characterWithCount.getKey() != checksumPart.charAt(i)) {
+			if (iterator.next().getKey() != checksumPart.charAt(i)) {
 				return false;
 			}
 		}
@@ -96,8 +95,7 @@ public class Day4 {
 		Map<Character, Integer> countedCharacters = new HashMap<>();
 		for (int i = 0; i < original.length(); i++) {
 			Character key = original.charAt(i);
-			Integer count = countedCharacters.getOrDefault(key, 0);
-			countedCharacters.put(key, count + 1);
+			countedCharacters.put(key, countedCharacters.getOrDefault(key, 0) + 1);
 		}
 		return countedCharacters;
 	}
