@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.function.Consumer;
+import java.util.Optional;
 
 public class Day4 {
 	private static final String CRC_SUFFIX = "]";
@@ -26,43 +26,25 @@ public class Day4 {
 	private static final int POSISTION_OF_A = 97;
 
 	public long task1(final File file) throws IOException {
-		MutableValue<Long> sumOfSectorIds = new MutableValue<>();
-		sumOfSectorIds.set(0L);
-
-		Files.lines(file.toPath()).forEach(new Consumer<String>() {
-			@Override
-			public void accept(String line) {
-				if (isReal(line)) {
-					Long sectorId = extractId(line);
-					sumOfSectorIds.set(sumOfSectorIds.get() + sectorId);
-				}
-			}
-		});
-		return sumOfSectorIds.get();
+		return Files
+			.lines(file.toPath()).filter(line -> isReal(line)).mapToLong(line -> extractId(line))
+			.sum();
 	}
 
 	private Long extractId(final String line) {
 		String[] split = line.split(NAME_PART_DELIMETER);
 		String sectorIdWithCrcCode = split[split.length - 1];
-		Long sectorId = Long
+		return Long
 			.valueOf(sectorIdWithCrcCode.substring(0, sectorIdWithCrcCode.indexOf(CRC_PREFIX)));
-		return sectorId;
 	}
 
 	public long task2(final File file) throws IOException {
-		MutableValue<Long> result = new MutableValue<>();
-		Files.lines(file.toPath()).forEach(new Consumer<String>() {
-			@Override
-			public void accept(String line) {
-				if (isReal(line)) {
-					Long id = extractId(line);
-					String decrypted = decryptRoomName(line.substring(0, line.indexOf(CRC_PREFIX)));
-					if (decrypted.equals("northpole object storage")) {
-						result.set(id);
-					}
-				}
-			}
-		});
+		Optional<Long> result = Files
+			.lines(file.toPath()).filter(line -> isReal(line))
+			.filter(
+				line -> decryptRoomName(line.substring(0, line.indexOf(CRC_PREFIX)))
+					.equals("northpole object storage"))
+			.map(line -> extractId(line)).findFirst();
 		return result.get();
 	}
 
@@ -108,11 +90,19 @@ public class Day4 {
 		return true;
 	}
 
+	@FunctionalInterface
+	interface Incrementer<F, T> {
+		T increment(F from);
+	}
+
 	private Map<Character, Integer> countCharacters(final String original) {
 		Map<Character, Integer> countedCharacters = new HashMap<>();
+
+		Incrementer<Integer, Integer> incrementer =
+				(index) -> countedCharacters.getOrDefault(original.charAt(index), 0) + 1;
+
 		for (int i = 0; i < original.length(); i++) {
-			Character key = original.charAt(i);
-			countedCharacters.put(key, countedCharacters.getOrDefault(key, 0) + 1);
+			countedCharacters.put(original.charAt(i), incrementer.increment(i));
 		}
 		return countedCharacters;
 	}
@@ -127,8 +117,8 @@ public class Day4 {
 			}
 			else {
 				String sectorIdString = encryptedRoomName.substring(lastIndexOfName + 1);
-				Long sectorId = Long.valueOf(sectorIdString);
-				long shiftingFactor = currentCharacter + sectorId - POSISTION_OF_A;
+				long shiftingFactor =
+						currentCharacter + Long.valueOf(sectorIdString) - POSISTION_OF_A;
 				char decryptedChar = (char) (shiftingFactor % LETTER_COUNT + POSISTION_OF_A);
 				sb.append(decryptedChar);
 			}
