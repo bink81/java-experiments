@@ -1,5 +1,6 @@
 package advent2016;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +49,8 @@ public class Day2 {
 		return result.toString();
 	}
 
+	private static final Point START_POINT = new Point(1, 3);
+
 	public String calculateCodePart2(List<String> input) {
 		List<Character> result = new ArrayList<>();
 		List<String> panel = new ArrayList<>();
@@ -58,39 +61,31 @@ public class Day2 {
 		panel.add("  ABC  ");
 		panel.add("   D   ");
 		panel.add("       ");
-
-		int x = 1;
-		int y = 3;
+		Point currentPosition = START_POINT;
+		Direction direction = Direction.WEST; // choosing any initial direction
 		for (String directions : input) {
 			for (int i = 0; i < directions.length(); i++) {
-				char direction = directions.charAt(i);
-				int backupX = x;
-				int backupY = y;
-				switch (direction) {
-				case 'D':
-					y++;
-					break;
-				case 'U':
-					y--;
-					break;
-				case 'R':
-					x++;
-					break;
-				case 'L':
-					x--;
-					break;
-				default:
-					throw new IllegalArgumentException("Unsupported characted: " + direction);
+				char directionChar = directions.charAt(i);
+				Point previous = new Point(currentPosition.x, currentPosition.y);
+				if (directionChar == 'D') {
+					direction = Direction.NORTH;
 				}
-
-				if (panel.get(y).charAt(x) == ' ') {
-					x = backupX;
-					y = backupY;
+				else if (directionChar == 'U') {
+					direction = Direction.SOUTH;
+				}
+				else if (directionChar == 'R') {
+					direction = Direction.EAST;
+				}
+				else if (directionChar == 'L') {
+					direction = Direction.WEST;
+				}
+				currentPosition = direction.nextPosition(currentPosition);
+				if (panel.get(currentPosition.y).charAt(currentPosition.x) == ' ') {
+					currentPosition = previous;
 				}
 			}
-			result.add(panel.get(y).charAt(x));
+			result.add(panel.get(currentPosition.y).charAt(currentPosition.x));
 		}
 		return result.toString();
 	}
-
 }
