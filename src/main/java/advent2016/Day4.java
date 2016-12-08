@@ -90,19 +90,11 @@ public class Day4 {
 		return true;
 	}
 
-	@FunctionalInterface
-	interface Incrementer<F, T> {
-		T increment(F from);
-	}
-
 	private Map<Character, Integer> countCharacters(final String original) {
 		Map<Character, Integer> countedCharacters = new HashMap<>();
-
-		Incrementer<Integer, Integer> incrementer =
-				(index) -> countedCharacters.getOrDefault(original.charAt(index), 0) + 1;
-
 		for (int i = 0; i < original.length(); i++) {
-			countedCharacters.put(original.charAt(i), incrementer.increment(i));
+			countedCharacters
+				.put(original.charAt(i), countedCharacters.getOrDefault(original.charAt(i), 0) + 1);
 		}
 		return countedCharacters;
 	}
