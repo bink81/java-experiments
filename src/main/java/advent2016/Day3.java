@@ -10,22 +10,10 @@ import java.util.function.Consumer;
 public class Day3 {
 	private static final String NUMBER_DELIMETER = "\\s+";
 
-	public int task1(File file) throws IOException {
-		MutableIntegerValue triangleCount = new MutableIntegerValue();
-
-		Files.lines(file.toPath()).forEach(new Consumer<String>() {
-			@Override
-			public void accept(String text) {
-				String[] split = text.trim().split(NUMBER_DELIMETER);
-				int x = Integer.valueOf(split[0].trim());
-				int y = Integer.valueOf(split[1].trim());
-				int z = Integer.valueOf(split[2].trim());
-				if (x + y > z && x + z > y && y + z > x) {
-					triangleCount.set(triangleCount.get() + 1);
-				}
-			}
-		});
-		return triangleCount.get();
+	public long task1(File file) throws IOException {
+		return Files
+			.lines(file.toPath()).map(line -> new Triangle(line))
+			.filter(triangle -> triangle.isReal()).count();
 	}
 
 	public int task2(File file) throws IOException {
@@ -56,5 +44,27 @@ public class Day3 {
 			}
 		}
 		return triangleCount;
+	}
+
+	class Triangle {
+		private int x;
+
+		private int y;
+
+		private int z;
+
+		public Triangle(String text) {
+			String[] split = text.trim().split(NUMBER_DELIMETER);
+			x = Integer.valueOf(split[0].trim());
+			y = Integer.valueOf(split[1].trim());
+			z = Integer.valueOf(split[2].trim());
+		}
+
+		public boolean isReal() {
+			if (x + y > z && x + z > y && y + z > x) {
+				return true;
+			}
+			return false;
+		}
 	}
 }

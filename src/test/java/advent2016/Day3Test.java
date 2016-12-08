@@ -12,7 +12,7 @@ public class Day3Test {
 
 	@Test
 	public void testTask1() throws Exception {
-		int actual = new Day3().task1(fetchFile());
+		long actual = new Day3().task1(fetchFile());
 
 		Assert.assertEquals(869, actual);
 	}
@@ -26,8 +26,8 @@ public class Day3Test {
 
 	private File fetchFile() throws Exception {
 		try {
-			String filePath = PathUtils.assembleFilePath("src", "test", "java", "advent2016",
-					"day3-input.txt");
+			String filePath = PathUtils
+				.assembleFilePath("src", "test", "java", "advent2016", "day3-input.txt");
 			return new File(filePath);
 		} catch (URISyntaxException e) {
 			throw new Exception();
