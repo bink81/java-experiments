@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class Day3 {
 	private static final String NUMBER_DELIMETER = "\\s+";
@@ -17,26 +16,22 @@ public class Day3 {
 	}
 
 	public int task2(File file) throws IOException {
-		int triangleCount = 0;
 		List<List<Integer>> columns = new ArrayList<List<Integer>>(3);
 		columns.add(new ArrayList<>());
 		columns.add(new ArrayList<>());
 		columns.add(new ArrayList<>());
 
-		Files.lines(file.toPath()).forEach(new Consumer<String>() {
-			@Override
-			public void accept(String text) {
-				String[] split = text.trim().split(NUMBER_DELIMETER);
+		Files.lines(file.toPath()).map(line -> line.trim().split(NUMBER_DELIMETER)).forEach(
+			split -> {
 				columns.get(0).add(Integer.valueOf(split[0].trim()));
 				columns.get(1).add(Integer.valueOf(split[1].trim()));
 				columns.get(2).add(Integer.valueOf(split[2].trim()));
-			}
-		});
+			});
 
-		for (List<Integer> list : columns) {
-			for (int i = 0; i < list.size(); i += 3) {
-				Triangle triangle = new Triangle(list.get(i), list.get(i + 1), list.get(i + 2));
-				if (triangle.isReal()) {
+		int triangleCount = 0;
+		for (List<Integer> column : columns) {
+			for (int i = 0; i < column.size(); i += 3) {
+				if (new Triangle(column.get(i), column.get(i + 1), column.get(i + 2)).isReal()) {
 					triangleCount++;
 				}
 			}
