@@ -5,8 +5,8 @@ import java.util.HashSet;
 
 public class Day1 {
 
-	public int calculateDistance(String input) {
-		String[] movements = split(input);
+	public int calculateDistance(final String input) {
+		String[] movements = splitMovements(input);
 		int x = 0;
 		int y = 0;
 		int direction = 0;
@@ -18,7 +18,7 @@ public class Day1 {
 			String movement = movements[i];
 			direction = determineDirection(direction, movement.charAt(0));
 
-			Integer distanceFrom = distanceFrom(movement);
+			Integer distanceFrom = distanceToTravel(movement);
 			switch (direction) {
 			case 0:
 				y += distanceFrom;
@@ -36,19 +36,19 @@ public class Day1 {
 				throw new IllegalArgumentException(movement);
 			}
 		}
-		return Math.abs(x) + Math.abs(y);
+		return calculateDirectDistance(x, y);
 	}
 
-	private int determineDirection(int direction, char charAt) {
-		switch (charAt) {
-		case 'L':
+	private int determineDirection(int direction, final char rotation) {
+		switch (rotation) {
+		case 'L': // left
 			direction--;
 			break;
-		case 'R':
+		case 'R': // right
 			direction++;
 			break;
 		default:
-			throw new IllegalArgumentException("only L and R are allowed, but was: " + charAt);
+			throw new IllegalArgumentException("only L and R are allowed, but was: " + rotation);
 		}
 		if (direction < 0) {
 			direction = 3;
@@ -59,21 +59,19 @@ public class Day1 {
 		return direction;
 	}
 
-	public int calculateDistanceToTwice(String input) {
-		HashSet<Point> points = new HashSet<>();
-		String[] movements = split(input);
-
+	public int calculateDistanceToTwice(final String input) {
 		Point currentPosition = new Point(0, 0);
 		Direction direction = Direction.NORTH;
+
+		HashSet<Point> points = new HashSet<>();
+		String[] movements = splitMovements(input);
 		for (int i = 0; i < movements.length; i++) {
 			String movement = movements[i];
 			direction = direction.determineDirection(movement.charAt(0));
-
-			Integer distanceFrom = distanceFrom(movement);
-			for (int j = 0; j < distanceFrom; j++) {
+			for (int j = 0; j < distanceToTravel(movement); j++) {
 				currentPosition = direction.nextPosition(currentPosition);
 				if (points.contains(currentPosition)) {
-					return Math.abs(currentPosition.x) + Math.abs(currentPosition.y);
+					return calculateDirectDistance(currentPosition);
 				}
 				else {
 					points.add(currentPosition);
@@ -83,11 +81,19 @@ public class Day1 {
 		return -1;
 	}
 
-	private String[] split(String input) {
+	private int calculateDirectDistance(final Point currentPosition) {
+		return calculateDirectDistance(currentPosition.x, currentPosition.y);
+	}
+
+	private int calculateDirectDistance(final int x, final int y) {
+		return Math.abs(x) + Math.abs(y);
+	}
+
+	private String[] splitMovements(final String input) {
 		return input.split(", ");
 	}
 
-	private Integer distanceFrom(String movement) {
+	private Integer distanceToTravel(final String movement) {
 		return Integer.valueOf(movement.substring(1));
 	}
 }

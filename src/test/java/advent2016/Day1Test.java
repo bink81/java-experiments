@@ -48,5 +48,4 @@ public class Day1Test {
 
 		Assert.assertEquals(166, actual);
 	}
-
 }
