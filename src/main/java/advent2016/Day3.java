@@ -35,10 +35,8 @@ public class Day3 {
 
 		for (List<Integer> list : columns) {
 			for (int i = 0; i < list.size(); i += 3) {
-				int x = list.get(i);
-				int y = list.get(i + 1);
-				int z = list.get(i + 2);
-				if (x + y > z && x + z > y && y + z > x) {
+				Triangle triangle = new Triangle(list.get(i), list.get(i + 1), list.get(i + 2));
+				if (triangle.isReal()) {
 					triangleCount++;
 				}
 			}
@@ -47,17 +45,23 @@ public class Day3 {
 	}
 
 	class Triangle {
-		private int x;
+		private final int x;
 
-		private int y;
+		private final int y;
 
-		private int z;
+		private final int z;
 
 		public Triangle(String text) {
 			String[] split = text.trim().split(NUMBER_DELIMETER);
 			x = Integer.valueOf(split[0].trim());
 			y = Integer.valueOf(split[1].trim());
 			z = Integer.valueOf(split[2].trim());
+		}
+
+		public Triangle(int x, int y, int z) {
+			this.x = x;
+			this.y = y;
+			this.z = z;
 		}
 
 		public boolean isReal() {
