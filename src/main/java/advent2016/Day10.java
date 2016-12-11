@@ -10,9 +10,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Day10 {
-	private static final int FINAL_LOW = 17;
-	private static final int FINAL_HIGH = 61;
-
 	private Bot[] bots;
 	private List<Integer>[] outputs;
 	private LinkedList<Operation> initOperations = new LinkedList<>();
@@ -20,6 +17,13 @@ public class Day10 {
 	private int maxBotId = 0;
 	private int maxOutputId = 0;
 	private int solutionBot;
+	private final int finalLow;
+	private final int finalHigh;
+
+	public Day10(int finalLow, int finalHigh) {
+		this.finalLow = finalLow;
+		this.finalHigh = finalHigh;
+	}
 
 	public long task1(final File file) throws IOException {
 		commonSolution(file);
@@ -232,7 +236,7 @@ public class Day10 {
 				result[0] = val2;
 				result[1] = val1;
 			}
-			if (result[0] == FINAL_LOW && result[1] == FINAL_HIGH) {
+			if (result[0] == finalLow && result[1] == finalHigh) {
 				solutionBot = id;
 			}
 			values.clear();
