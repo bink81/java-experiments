@@ -10,50 +10,44 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Day10 {
+	private final int wantedLowValue; // to get answer to task 1
+	private final int wantedHighValue; // to get answer to task 1
 	private Bot[] bots;
 	private List<Integer>[] outputs;
 	private LinkedList<Operation> initOperations = new LinkedList<>();
-	private LinkedList<Operation> operations = new LinkedList<>();
+	private LinkedList<Operation> giveOperations = new LinkedList<>();
 	private int maxBotId = 0;
 	private int maxOutputId = 0;
-	private int solutionBot;
-	private final int finalLow;
-	private final int finalHigh;
+	private int solutionBot; // to get answer to task 1
 
 	public Day10(int finalLow, int finalHigh) {
-		this.finalLow = finalLow;
-		this.finalHigh = finalHigh;
+		this.wantedLowValue = finalLow;
+		this.wantedHighValue = finalHigh;
 	}
 
 	public long task1(final File file) throws IOException {
 		commonSolution(file);
-		return outputs[0].get(0) * outputs[1].get(0) * outputs[2].get(0);
+		return solutionBot;
 	}
 
 	public long task2(final File file) throws IOException {
 		commonSolution(file);
-		return solutionBot;
+		return outputs[0].get(0) * outputs[1].get(0) * outputs[2].get(0);
 	}
 
 	private void commonSolution(final File file) throws IOException {
 		Files.lines(file.toPath()).forEach(line -> parse(line));
-		bots = new Bot[maxBotId + 1];
-		for (int i = 0; i < maxBotId + 1; i++) {
-			bots[i] = new Bot(i);
-		}
-		outputs = new List[maxOutputId + 1];
-		for (int i = 0; i < maxOutputId + 1; i++) {
-			outputs[i] = new ArrayList<>();
-		}
+		initArrayOfBots();
+		initArrayOfOutputs();
 
-		for (Operation operation : initOperations) {
-			operation.execute();
+		for (Operation initOperation : initOperations) {
+			initOperation.execute();
 		}
 
 		boolean somethingGotExecuted = true;
 		while (somethingGotExecuted) {
 			somethingGotExecuted = false;
-			for (Operation operation : operations) {
+			for (Operation operation : giveOperations) {
 				if (operation.canExecute()) {
 					operation.execute();
 					somethingGotExecuted = true;
@@ -62,45 +56,45 @@ public class Day10 {
 		}
 	}
 
-	private Object parse(String line) {
+	private void initArrayOfBots() {
+		bots = new Bot[maxBotId + 1];
+		for (int i = 0; i < maxBotId + 1; i++) {
+			bots[i] = new Bot(i);
+		}
+	}
+
+	private void initArrayOfOutputs() {
+		outputs = new List[maxOutputId + 1];
+		for (int i = 0; i < maxOutputId + 1; i++) {
+			outputs[i] = new ArrayList<>();
+		}
+	}
+
+	private Object parse(final String line) {
 		Pattern givesPattern = Pattern
 				.compile("bot (\\d+) gives low to (\\w+) (\\d+) and high to (\\w+) (\\d+)");
 		Matcher givesMatch = givesPattern.matcher(line.trim());
 		if (givesMatch.find()) {
-			int lowTarget = -1;
-			int highTarget = -1;
-			boolean lowBot = true;
-			boolean highBot = true;
+			int lowTargetId = -1;
+			int highTargetId = -1;
+			boolean lowIsBot = true;
+			boolean highIsBot = true;
 			if (givesMatch.group(2).equals("output")) {
-				lowBot = false;
+				lowIsBot = false;
 			}
-			lowTarget = Integer.valueOf(givesMatch.group(3));
+			lowTargetId = Integer.valueOf(givesMatch.group(3));
 
-			// gives high
 			if (givesMatch.group(4).equals("output")) {
-				highBot = false;
+				highIsBot = false;
 			}
-			highTarget = Integer.valueOf(givesMatch.group(5));
+			highTargetId = Integer.valueOf(givesMatch.group(5));
 
 			int botId = Integer.valueOf(givesMatch.group(1));
-			if (botId > maxBotId) {
-				maxBotId = botId;
-			}
-			if (lowBot && lowTarget > maxBotId) {
-				maxBotId = lowTarget;
-			}
-			if (!lowBot && lowTarget > maxOutputId) {
-				maxOutputId = lowTarget;
-			}
-			if (highBot && highTarget > maxBotId) {
-				maxBotId = highTarget;
-			}
-			if (!highBot && highTarget > maxOutputId) {
-				maxOutputId = highTarget;
-			}
-			OperationGive operationGive = new OperationGive(botId, lowTarget, lowBot, highTarget,
-					highBot);
-			operations.add(operationGive);
+
+			updateMaxBotAndMaxOutput(lowTargetId, highTargetId, lowIsBot, highIsBot, botId);
+			OperationGive operationGive = new OperationGive(botId, lowTargetId, lowIsBot, highTargetId,
+					highIsBot);
+			giveOperations.add(operationGive);
 		} else {
 			Pattern initPattern = Pattern.compile("value (\\d+) goes to bot (\\d+)");
 			Matcher initMatch = initPattern.matcher(line.trim());
@@ -114,6 +108,27 @@ public class Day10 {
 			}
 		}
 		return null;
+	}
+
+	private void updateMaxBotAndMaxOutput(final int lowTarget, final int highTarget,
+			final boolean lowBot, final boolean highBot, final int botId) {
+		if (botId > maxBotId) {
+			maxBotId = botId;
+		}
+		if (lowBot) {
+			if (lowTarget > maxBotId) {
+				maxBotId = lowTarget;
+			}
+		} else if (lowTarget > maxOutputId) {
+			maxOutputId = lowTarget;
+		}
+		if (highBot) {
+			if (highTarget > maxBotId) {
+				maxBotId = highTarget;
+			}
+		} else if (highTarget > maxOutputId) {
+			maxOutputId = highTarget;
+		}
 	}
 
 	public interface Operation {
@@ -206,7 +221,7 @@ public class Day10 {
 		private final int id;
 		private final List<Integer> values = new ArrayList<>();
 
-		public Bot(int id) {
+		public Bot(final int id) {
 			this.id = id;
 		}
 
@@ -214,7 +229,7 @@ public class Day10 {
 			return values.size() < 2;
 		}
 
-		public void receive(Integer value) {
+		public void receive(final Integer value) {
 			values.add(value);
 			if (values.size() > 2) {
 				throw new RuntimeException(id + " has too many tokens: " + values);
@@ -236,7 +251,7 @@ public class Day10 {
 				result[0] = val2;
 				result[1] = val1;
 			}
-			if (result[0] == finalLow && result[1] == finalHigh) {
+			if (result[0] == wantedLowValue && result[1] == wantedHighValue) {
 				solutionBot = id;
 			}
 			values.clear();

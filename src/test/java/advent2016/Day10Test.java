@@ -13,22 +13,22 @@ public class Day10Test {
 	private static final int FINAL_HIGH = 61;
 
 	@Test
-	public void testTask11() throws Exception {
-		long actual = new Day10(2, 5).task2(fetchFile("day10-test1.txt"));
+	public void testTask211() throws Exception {
+		long actual = new Day10(2, 5).task1(fetchFile("day10-test1.txt"));
 
 		Assert.assertEquals(2, actual);
 	}
 
 	@Test
-	public void testTask1() throws Exception {
-		long actual = new Day10(FINAL_LOW, FINAL_HIGH).task2(fetchFile("day10.txt"));
+	public void testTask21() throws Exception {
+		long actual = new Day10(FINAL_LOW, FINAL_HIGH).task1(fetchFile("day10.txt"));
 
 		Assert.assertEquals(98, actual);
 	}
 
 	@Test
 	public void testTask2() throws Exception {
-		long actual = new Day10(FINAL_LOW, FINAL_HIGH).task1(fetchFile("day10.txt"));
+		long actual = new Day10(FINAL_LOW, FINAL_HIGH).task2(fetchFile("day10.txt"));
 
 		Assert.assertEquals(4042, actual);
 	}
