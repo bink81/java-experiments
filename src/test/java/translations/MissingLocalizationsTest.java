@@ -27,24 +27,21 @@ public class MissingLocalizationsTest {
 				}
 			}
 		};
-		ClassPath
-			.from(Thread.currentThread().getContextClassLoader()).getTopLevelClasses().stream()
-			.filter(
-				classPath -> classPath.getPackageName().startsWith("translations")
+		ClassPath.from(Thread.currentThread().getContextClassLoader()).getTopLevelClasses().stream()
+				.filter(classPath -> classPath.getPackageName().startsWith("translations")
 						&& !classPath.getPackageName().endsWith("testterms"))
-			.flatMap(classPath -> {
-				try {
-					Class<?> klass = classPath.load();
-					return Stream.of(klass);
-				} catch (Throwable t) {
-					return Stream.empty();
-				}
-			}).filter(clazz -> !clazz.isAnnotation()).forEach(action);
+				.flatMap(classPath -> {
+					try {
+						Class<?> klass = classPath.load();
+						return Stream.of(klass);
+					} catch (Throwable t) {
+						return Stream.empty();
+					}
+				}).filter(clazz -> !clazz.isAnnotation()).forEach(action);
 	}
 
 	private String checkTranslatableFields(Class<?> testedClass)
-			throws MalformedURLException,
-			IllegalAccessException {
+			throws MalformedURLException, IllegalAccessException {
 		Field[] fields = testedClass.getDeclaredFields();
 		if (fields.length > 0) {
 			for (Field field : fields) {
@@ -55,11 +52,7 @@ public class MissingLocalizationsTest {
 					@SuppressWarnings("unchecked")
 					NamedType<String> property = (NamedType<String>) field.get(field);
 					String internalString = property.getId();
-					// FIXME RM:internalString NOCOMMIT
-					System.err.println("#internalString=" + internalString);
 					String externalText = bundle.getString(internalString);
-					// FIXME RM:externalText NOCOMMIT
-					System.err.println("#externalText=" + externalText);
 					return externalText;
 				}
 			}
@@ -70,8 +63,7 @@ public class MissingLocalizationsTest {
 	private String determineBundleName(Class<?> testedClass, Field field)
 			throws IllegalAccessException {
 		String name = testedClass.getSimpleName();
-		if (java.lang.reflect.Modifier.isPublic(field.getModifiers())
-				&& field.getName().equals("NAME")
+		if (java.lang.reflect.Modifier.isPublic(field.getModifiers()) && field.getName().equals("NAME")
 				&& field.get(null).getClass().equals(String.class)) {
 			name = (String) field.get(field);
 		}
