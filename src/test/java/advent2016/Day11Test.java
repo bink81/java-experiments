@@ -10,18 +10,25 @@ import utils.PathUtils;
 
 public class Day11Test {
 
-	// @Test
-	// public void testTask11() throws Exception {
-	// long actual = new Day11().task1(fetchFile("day11-test1.txt"));
-	//
-	// Assert.assertEquals(11, actual);
-	// }
+	@Test
+	public void testTask11() throws Exception {
+		long actual = new Day11().task1(fetchFile("day11-test1.txt"));
+
+		Assert.assertEquals(11, actual);
+	}
 
 	@Test
 	public void testTask1() throws Exception {
 		long actual = new Day11().task1(fetchFile("day11.txt"));
 
 		Assert.assertEquals(47, actual);
+	}
+
+	@Test
+	public void testTask2() throws Exception {
+		long actual = new Day11().task2(fetchFile("day11.txt"));
+
+		Assert.assertEquals(71, actual);
 	}
 
 	private File fetchFile(String filename) throws Exception {

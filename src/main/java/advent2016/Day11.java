@@ -23,15 +23,23 @@ public class Day11 {
 
 	private static final String MICROCHIP = "microchip";
 
-	Map<String, Integer> microchips = new HashMap<>();
+	private Map<String, Integer> microchips = new HashMap<>();
 
-	Map<String, Integer> generators = new HashMap<>();
+	private Map<String, Integer> generators = new HashMap<>();
 
-	int numberOfFloors = 0;
+	private int numberOfFloors = 0;
 
 	public long task1(final File file) throws IOException {
 		Files.lines(file.toPath()).forEach(line -> parse(line));
 		return shuffle(extractLocations());
+	}
+
+	public long task2(final File file) throws IOException {
+		Files.lines(file.toPath()).forEach(line -> parse(line));
+		int[] baseLocations = extractLocations();
+
+		int[] extendedLocations = Arrays.copyOf(baseLocations, baseLocations.length + 4);
+		return shuffle(extendedLocations);
 	}
 
 	private int[] extractLocations() {
@@ -81,7 +89,7 @@ public class Day11 {
 	}
 
 	private String shorten(final String split1) {
-		return split1.substring(0, 2).toUpperCase();
+		return split1.substring(0, 3).toUpperCase();
 	}
 
 	public int shuffle(final int[] itemLocations) {
