@@ -34,40 +34,30 @@ public class Day11 {
 		return shuffle(extractLocations());
 	}
 
-	public long task2(final File file) throws IOException {
+	public long task2(final File file, final int numberOfNewPairsOnFloor0) throws IOException {
 		Files.lines(file.toPath()).forEach(line -> parse(line));
 		int[] baseLocations = extractLocations();
-
-		int[] extendedLocations = Arrays.copyOf(baseLocations, baseLocations.length + 4);
+		int[] extendedLocations =
+				Arrays.copyOf(baseLocations, baseLocations.length + numberOfNewPairsOnFloor0);
 		return shuffle(extendedLocations);
 	}
 
-	private int[] extractLocations() {
-		List<Integer> itemLocations = new ArrayList<>();
-		for (Entry<String, Integer> e : microchips.entrySet()) {
-			itemLocations.add(e.getValue());
-			itemLocations.add(generators.get(e.getKey()));
-		}
-		return Ints.toArray(itemLocations);
-	}
-
 	private Object parse(String line) {
-		Pattern p = Pattern.compile("The \\w+ floor contains (.+).");
-		Matcher m = p.matcher(line.trim());
-		if (m.find()) {
-			if (!m.group(1).equals("nothing relevant")) {
-				String names = m.group(1);
-				String[] and = names.split("and ");
-				String[] split = and[0].split(", ");
-				for (int i = 0; i < split.length; i++) {
-					String name = split[i];
-					if (name.length() > 0) {
-						addItem(name, numberOfFloors);
+		Pattern pattern = Pattern.compile("The \\w+ floor contains (.+).");
+		Matcher matcher = pattern.matcher(line.trim());
+		if (matcher.find()) {
+			if (!matcher.group(1).equals("nothing relevant")) {
+				String[] splitByAnd = matcher.group(1).split("and ");
+				String[] splitByComma = splitByAnd[0].split(", ");
+				for (int i = 0; i < splitByComma.length; i++) {
+					String nameWithPreposition = splitByComma[i];
+					if (nameWithPreposition.length() > 0) {
+						addItem(nameWithPreposition, numberOfFloors);
 					}
 				}
-				if (and.length > 1) {
-					String lastName = and[and.length - 1];
-					addItem(lastName, numberOfFloors);
+				if (splitByAnd.length > 1) {
+					String nameWithPreposition = splitByAnd[splitByAnd.length - 1];
+					addItem(nameWithPreposition, numberOfFloors);
 				}
 			}
 			numberOfFloors++;
@@ -75,16 +65,25 @@ public class Day11 {
 		return null;
 	}
 
-	private void addItem(final String aname, final int floor) {
-		String name = aname.trim().substring(2);
+	private int[] extractLocations() {
+		List<Integer> itemLocations = new ArrayList<>(generators.size() + microchips.size());
+		for (Entry<String, Integer> entry : microchips.entrySet()) {
+			itemLocations.add(entry.getValue());
+			itemLocations.add(generators.get(entry.getKey()));
+		}
+		return Ints.toArray(itemLocations);
+	}
+
+	private void addItem(final String nameWithPreposition, final int floor) {
+		String name = nameWithPreposition.trim().substring(2);
 		if (name.endsWith(MICROCHIP)) {
-			String[] split = name.split(DASH);
-			microchips.put(shorten(split[0]), floor);
+			String[] splitDash = name.split(DASH);
+			microchips.put(shorten(splitDash[0]), floor);
 		}
 		else {
-			String[] split = name.split(" ");
-			String split1 = split[0].split(DASH)[0];
-			generators.put(shorten(split1), floor);
+			String[] splitSpace = name.split(" ");
+			String splitDash = splitSpace[0].split(DASH)[0];
+			generators.put(shorten(splitDash), floor);
 		}
 	}
 
@@ -97,34 +96,33 @@ public class Day11 {
 		String finalStateString =
 				new State(calculateFinalState(itemLocations), 666, numberOfFloors - 1)
 					.getInternalStringRepresentation();
-		Queue<State> list = new LinkedList<>();
-		list.add(new State(itemLocations, 0, 0));
-		while (!list.isEmpty()) {
-			State state = list.poll();
+		Queue<State> queue = new LinkedList<>();
+		queue.add(new State(itemLocations, 0, 0));
+		while (!queue.isEmpty()) {
+			State state = queue.poll();
 			if (isAllowedState(state.itemLocations)) {
 				String newStateString = state.getInternalStringRepresentation();
+				if (newStateString.equalsIgnoreCase(finalStateString)) {
+					return state.depth;
+				}
 				if (!exploredStates.contains(newStateString)) {
 					exploredStates.add(newStateString);
-					if (newStateString.equalsIgnoreCase(finalStateString)) {
-						return state.depth;
-					}
-
 					for (int i = 0; i < state.itemLocations.length; i++) {
 						if (state.itemLocations[i] == state.elevator) {
 							state.itemLocations[i]--;
-							addState(list, state, state.elevator - 1);
+							addState(queue, state, state.elevator - 1);
 							state.itemLocations[i] += 2;
-							addState(list, state, state.elevator + 1);
+							addState(queue, state, state.elevator + 1);
 							state.itemLocations[i]--;
-
+							// move second item
 							for (int j = i + 1; j < state.itemLocations.length; j++) {
 								if (state.itemLocations[j] == state.elevator) {
 									state.itemLocations[j]--;
 									state.itemLocations[i]--;
-									addState(list, state, state.elevator - 1);
+									addState(queue, state, state.elevator - 1);
 									state.itemLocations[j] += 2;
 									state.itemLocations[i] += 2;
-									addState(list, state, state.elevator + 1);
+									addState(queue, state, state.elevator + 1);
 									state.itemLocations[j]--;
 									state.itemLocations[i]--;
 								}
@@ -143,6 +141,7 @@ public class Day11 {
 		}
 	}
 
+	// everything on last floor
 	private int[] calculateFinalState(final int[] itemLocations) {
 		List<Integer> finalstate = new ArrayList<>(itemLocations.length);
 		for (int i = 0; i < itemLocations.length; i++) {

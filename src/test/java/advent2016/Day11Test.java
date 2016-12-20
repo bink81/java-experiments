@@ -26,7 +26,7 @@ public class Day11Test {
 
 	@Test
 	public void testTask2() throws Exception {
-		long actual = new Day11().task2(fetchFile("day11.txt"));
+		long actual = new Day11().task2(fetchFile("day11.txt"), 4);
 
 		Assert.assertEquals(71, actual);
 	}
