@@ -3,186 +3,192 @@ package advent2016;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Queue;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+
+import com.google.common.primitives.Ints;
 
 public class Day11 {
+	private static final String DASH = "-";
 
-	State start = new State(null);
+	private static final String MICROCHIP = "microchip";
+
+	private Map<String, Integer> microchips = new HashMap<>();
+
+	private Map<String, Integer> generators = new HashMap<>();
+
+	private int numberOfFloors = 0;
 
 	public long task1(final File file) throws IOException {
 		Files.lines(file.toPath()).forEach(line -> parse(line));
+		return shuffle(extractLocations());
+	}
 
-		String p = start.getFloors().stream().map(floor -> floor.toString())
-				.collect(Collectors.joining("\n"));
-		// FIXME RM:p NOCOMMIT
-		System.err.println("#floors=\n" + p);
-		return shuffle();
+	public long task2(final File file, final int numberOfNewPairsOnFloor0) throws IOException {
+		Files.lines(file.toPath()).forEach(line -> parse(line));
+		int[] baseLocations = extractLocations();
+		int[] extendedLocations =
+				Arrays.copyOf(baseLocations, baseLocations.length + numberOfNewPairsOnFloor0);
+		return shuffle(extendedLocations);
 	}
 
 	private Object parse(String line) {
-		Pattern p = Pattern.compile("The (\\w+) floor contains(.+).");
-		Matcher m = p.matcher(line.trim());
-		if (m.find()) {
-			Floor floor = new Floor();
-			start.getFloors().add(floor);
-			if (!m.group(2).equals(" nothing relevant")) {
-				String names = m.group(2);
-				String[] and = names.split(" and a ");
-				String[] split = and[0].split(" a ");
-				for (int i = 0; i < split.length; i++) {
-					String name = split[i];
-					if (name.length() > 0) {
-						addItem(floor, name);
+		Pattern pattern = Pattern.compile("The \\w+ floor contains (.+).");
+		Matcher matcher = pattern.matcher(line.trim());
+		if (matcher.find()) {
+			if (!matcher.group(1).equals("nothing relevant")) {
+				String[] splitByAnd = matcher.group(1).split("and ");
+				String[] splitByComma = splitByAnd[0].split(", ");
+				for (int i = 0; i < splitByComma.length; i++) {
+					String nameWithPreposition = splitByComma[i];
+					if (nameWithPreposition.length() > 0) {
+						addItem(nameWithPreposition, numberOfFloors);
 					}
 				}
-				if (and.length > 1) {
-					addItem(floor, and[and.length - 1]);
+				if (splitByAnd.length > 1) {
+					String nameWithPreposition = splitByAnd[splitByAnd.length - 1];
+					addItem(nameWithPreposition, numberOfFloors);
 				}
 			}
+			numberOfFloors++;
 		}
 		return null;
 	}
 
-	private void addItem(Floor floor, String name) {
-		if (name.endsWith(Floor.MICROCHIP)) {
-			String[] split = name.split("-");
-			floor.addMicrochip(split[0]);
-		} else {
-			String[] split = name.split(" ");
-			floor.addGenerator(split[0]);
+	private int[] extractLocations() {
+		List<Integer> itemLocations = new ArrayList<>(generators.size() + microchips.size());
+		for (Entry<String, Integer> entry : microchips.entrySet()) {
+			itemLocations.add(entry.getValue());
+			itemLocations.add(generators.get(entry.getKey()));
+		}
+		return Ints.toArray(itemLocations);
+	}
+
+	private void addItem(final String nameWithPreposition, final int floor) {
+		String name = nameWithPreposition.trim().substring(2);
+		if (name.endsWith(MICROCHIP)) {
+			String[] splitDash = name.split(DASH);
+			microchips.put(shorten(splitDash[0]), floor);
+		}
+		else {
+			String[] splitSpace = name.split(" ");
+			String splitDash = splitSpace[0].split(DASH)[0];
+			generators.put(shorten(splitDash), floor);
 		}
 	}
 
-	private long shuffle() {
-		Set<State> explored = new HashSet<>();
-		Queue<State> q = new ArrayDeque<>();
-		q.add(start);
-		while (!q.isEmpty()) {
-			State head = q.poll();
-			if (head.isDone()) {
-				long steps = 0;
-				State temp = head;
-				while (temp != null) {
-					// FIXME RM:temp NOCOMMIT
-					System.err.println("#temp=" + temp);
-					temp = temp.getParent();
-					steps++;
-				}
-				return steps;
-			}
-			int elevatorFloor = head.getElevatorFloor();
-			List<Integer> possibleElevatorChanges = new ArrayList<>();
-			if (elevatorFloor < State.NUMBER_OF_FLOORS - 1) {
-				possibleElevatorChanges.add(1);
-			}
-			if (elevatorFloor > 0) {
-				possibleElevatorChanges.add(-1);
-			}
+	private String shorten(final String split1) {
+		return split1.substring(0, 3).toUpperCase();
+	}
 
-			List<Floor> floors;
-			floors = cloneList(head.getFloors());
-			for (int e : possibleElevatorChanges) {
-				Floor floor = floors.get(head.getElevatorFloor());
-				for (String item1 : floor.getMicrochips()) {
-					floors = cloneList(head.getFloors());
-					int newElevatorLevel = e + head.getElevatorFloor();
-					floors.get(newElevatorLevel).addMicrochip(item1);
-					floors.get(head.getElevatorFloor()).removeMicrochip(item1);
-					boolean success = appendNewStateIfValid(q, head, floors, explored, newElevatorLevel);
-					if (success) {
-						for (String item2 : floor.getMicrochips()) {
-							List<Floor> floors2 = cloneList(floors);
-							if (!item1.equals(item2)) {
-								floors2.get(newElevatorLevel).addMicrochip(item2);
-								floors2.get(head.getElevatorFloor()).removeMicrochip(item2);
-								appendNewStateIfValid(q, head, floors2, explored, newElevatorLevel);
+	public int shuffle(final int[] itemLocations) {
+		Set<String> exploredStates = new HashSet<>();
+		String finalStateString =
+				new State(calculateFinalState(itemLocations), 666, numberOfFloors - 1)
+					.getInternalStringRepresentation();
+		Queue<State> queue = new LinkedList<>();
+		queue.add(new State(itemLocations, 0, 0));
+		while (!queue.isEmpty()) {
+			State state = queue.poll();
+			if (isAllowedState(state.itemLocations)) {
+				String newStateString = state.getInternalStringRepresentation();
+				if (newStateString.equalsIgnoreCase(finalStateString)) {
+					return state.depth;
+				}
+				if (!exploredStates.contains(newStateString)) {
+					exploredStates.add(newStateString);
+					for (int i = 0; i < state.itemLocations.length; i++) {
+						if (state.itemLocations[i] == state.elevator) {
+							state.itemLocations[i]--;
+							addState(queue, state, state.elevator - 1);
+							state.itemLocations[i] += 2;
+							addState(queue, state, state.elevator + 1);
+							state.itemLocations[i]--;
+							// move second item
+							for (int j = i + 1; j < state.itemLocations.length; j++) {
+								if (state.itemLocations[j] == state.elevator) {
+									state.itemLocations[j]--;
+									state.itemLocations[i]--;
+									addState(queue, state, state.elevator - 1);
+									state.itemLocations[j] += 2;
+									state.itemLocations[i] += 2;
+									addState(queue, state, state.elevator + 1);
+									state.itemLocations[j]--;
+									state.itemLocations[i]--;
+								}
 							}
 						}
 					}
 				}
 			}
-			floors = cloneList(head.getFloors());
-			for (int e : possibleElevatorChanges) {
-				Floor floor = floors.get(head.getElevatorFloor());
-				for (String item1 : floor.getMicrochips()) {
-					floors = cloneList(head.getFloors());
-					int newElevatorLevel = e + head.getElevatorFloor();
-					for (String item2 : floor.getGenerators()) {
-						List<Floor> floors2 = cloneList(floors);
-						floors2.get(newElevatorLevel).addMicrochip(item1);
-						floors2.get(head.getElevatorFloor()).removeMicrochip(item1);
-						floors2.get(newElevatorLevel).addGenerator(item2);
-						floors2.get(head.getElevatorFloor()).removeGenerator(item2);
-						appendNewStateIfValid(q, head, floors2, explored, newElevatorLevel);
-					}
-				}
-			}
-			floors = cloneList(head.getFloors());
-			for (int e : possibleElevatorChanges) {
-				Floor floor = floors.get(head.getElevatorFloor());
-				for (String item1 : floor.getGenerators()) {
-					floors = cloneList(head.getFloors());
-					int newElevatorLevel = e + head.getElevatorFloor();
-					floors.get(newElevatorLevel).addGenerator(item1);
-					floors.get(head.getElevatorFloor()).removeGenerator(item1);
-					boolean success = appendNewStateIfValid(q, head, floors, explored, newElevatorLevel);
-					if (success) {
-						for (String item2 : floor.getGenerators()) {
-							List<Floor> floors2 = cloneList(floors);
-							if (!item1.equals(item2)) {
-								floors2.get(newElevatorLevel).addGenerator(item2);
-								floors2.get(head.getElevatorFloor()).removeGenerator(item2);
-								appendNewStateIfValid(q, head, floors2, explored, newElevatorLevel);
-							}
-						}
-					}
-				}
-			}
-			floors = cloneList(head.getFloors());
-			for (int e : possibleElevatorChanges) {
-				floors = cloneList(head.getFloors());
-				Floor floor = floors.get(head.getElevatorFloor());
-				for (String item1 : floor.getGenerators()) {
-					int newElevatorLevel = e + head.getElevatorFloor();
-					for (String item2 : floor.getMicrochips()) {
-						List<Floor> floors2 = cloneList(floors);
-						floors2.get(newElevatorLevel).addGenerator(item1);
-						floors2.get(head.getElevatorFloor()).removeGenerator(item1);
-						floors2.get(newElevatorLevel).addMicrochip(item2);
-						floors2.get(head.getElevatorFloor()).removeMicrochip(item2);
-						appendNewStateIfValid(q, head, floors2, explored, newElevatorLevel);
-					}
-				}
-			}
-			explored.add(head);
 		}
 		return -1;
 	}
 
-	public static List<Floor> cloneList(List<Floor> list) {
-		List<Floor> clone = new ArrayList<Floor>(list.size());
-		for (Floor floor : list)
-			clone.add(new Floor(floor));
-		return clone;
+	private void addState(final Queue<State> list, final State state, final int newElevatorLevel) {
+		if (newElevatorLevel >= 0 && newElevatorLevel < numberOfFloors) {
+			list.add(new State(state.itemLocations, state.depth + 1, newElevatorLevel));
+		}
 	}
 
-	private boolean appendNewStateIfValid(final Queue<State> q, final State head,
-			final List<Floor> floors, final Set<State> explored, int newElevatorLevel) {
-		State newState = new State(head, floors, newElevatorLevel);
-		if (newState.valid() && !q.contains(newState) && !explored.contains(newState)) {
-			// FIXME RM:newState NOCOMMIT
-			System.err.println("#newState=" + newState);
-			q.add(newState);
-			return true;
+	// everything on last floor
+	private int[] calculateFinalState(final int[] itemLocations) {
+		List<Integer> finalstate = new ArrayList<>(itemLocations.length);
+		for (int i = 0; i < itemLocations.length; i++) {
+			finalstate.add(numberOfFloors - 1);
 		}
-		return false;
+		return Ints.toArray(finalstate);
+	}
+
+	public boolean isAllowedState(final int[] itemLocations) {
+		for (int i = 0; i < itemLocations.length; i += 2) {
+			if (itemLocations[i] != itemLocations[i + 1]) {
+				for (int j = 1; j < itemLocations.length; j += 2) {
+					if (itemLocations[j] == itemLocations[i]) {
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
+
+	private static class State {
+		int[] itemLocations;
+
+		int depth;
+
+		int elevator;
+
+		public State(int itemLocations[], int depth, int elevator) {
+			this.itemLocations = Arrays.copyOf(itemLocations, itemLocations.length);
+			this.depth = depth;
+			this.elevator = elevator;
+		}
+
+		@Override
+		public String toString() {
+			return "State [itemLocations=" + Arrays.toString(itemLocations) + ", depth=" + depth
+					+ ", elevator=" + elevator + "]";
+		}
+
+		public String getInternalStringRepresentation() { // depths is not part of the state
+			StringBuilder sb = new StringBuilder();
+			sb.append(elevator);
+			for (int i = 0; i < itemLocations.length; i++) {
+				sb.append(itemLocations[i]);
+			}
+			return sb.toString();
+		}
 	}
 }

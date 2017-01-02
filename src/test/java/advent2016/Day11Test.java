@@ -11,15 +11,30 @@ import utils.PathUtils;
 public class Day11Test {
 
 	@Test
-	public void testTask1() throws Exception {
+	public void testTask11() throws Exception {
 		long actual = new Day11().task1(fetchFile("day11-test1.txt"));
 
 		Assert.assertEquals(11, actual);
 	}
 
+	@Test
+	public void testTask1() throws Exception {
+		long actual = new Day11().task1(fetchFile("day11.txt"));
+
+		Assert.assertEquals(47, actual);
+	}
+
+	@Test
+	public void testTask2() throws Exception {
+		long actual = new Day11().task2(fetchFile("day11.txt"), 4);
+
+		Assert.assertEquals(71, actual);
+	}
+
 	private File fetchFile(String filename) throws Exception {
 		try {
-			String filePath = PathUtils.assembleFilePath("src", "test", "java", "advent2016", filename);
+			String filePath =
+					PathUtils.assembleFilePath("src", "test", "java", "advent2016", filename);
 			return new File(filePath);
 		} catch (URISyntaxException e) {
 			throw new Exception();
