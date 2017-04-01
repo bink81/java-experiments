@@ -1,1 +1,4 @@
 bot
+maximize
+maximizes
+th

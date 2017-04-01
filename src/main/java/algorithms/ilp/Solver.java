@@ -26,8 +26,8 @@ import com.google.common.collect.Queues;
 import com.google.common.collect.Sets;
 
 /**
- * This class is used to solve integer linear programming problems, i.e. problems that can be
- * expressed as
+ * This class is used to solve integer linear programming problems, i.e.
+ * problems that can be expressed as
  * <ul>
  * <li>maximize function c<sup>T</sup>x (T = transpose)</li>
  * <li>with constraint Ax <= b</li>
@@ -63,21 +63,17 @@ public final class Solver {
 
 	/**
 	 * @param aMatrix
-	 *            the matrix A so that Ax <= b
+	 *          the matrix A so that Ax <= b
 	 * @param bVector
-	 *            the vector b so that Ax <= b
+	 *          the vector b so that Ax <= b
 	 * @param cVector
-	 *            the coefficients for the function to maximize cTx
+	 *          the coefficients for the function to maximize cTx
 	 * @param timeout
-	 *            (in milliseconds) the timeout for the algorithm iteration. When reached, we will
-	 *            use the best solution we got within the time, even though we can't determine if it
-	 *            is the theoretical best.
+	 *          (in milliseconds) the timeout for the algorithm iteration. When
+	 *          reached, we will use the best solution we got within the time,
+	 *          even though we can't determine if it is the theoretical best.
 	 */
-	public Solver(
-			double[][] aMatrix,
-			double[] bVector,
-			double[] cVector,
-			double timeout,
+	public Solver(double[][] aMatrix, double[] bVector, double[] cVector, double timeout,
 			TraversingStrategy traversingStrategy) {
 		super();
 		this.timeout = timeout;
@@ -99,15 +95,7 @@ public final class Solver {
 	/** Check that the matrix does not have any zeroes row or column */
 	private static void checkFoZeroRowsAndColumns(double[][] aMatrix) {
 		RealMatrix realMatrix = new Array2DRowRealMatrix(aMatrix);
-		checkNonZeroRows(aMatrix, realMatrix);
 		checkNonZeroColumns(aMatrix, realMatrix);
-	}
-
-	private static void checkNonZeroRows(double[][] aMatrix, RealMatrix realMatrix) {
-		double[] zeroesRow = new double[aMatrix[0].length];
-		for (int i = 0; i < aMatrix.length; i++) {
-			checkArgument(!realMatrix.getRow(i).equals(zeroesRow));
-		}
 	}
 
 	private static void checkNonZeroColumns(double[][] aMatrix, RealMatrix realMatrix) {
@@ -120,7 +108,8 @@ public final class Solver {
 	/**
 	 * Computes an integer solution for the problem.
 	 * 
-	 * @return the array x that maximizes the function under the given constraints.
+	 * @return the array x that maximizes the function under the given
+	 *         constraints.
 	 */
 	public int[] solve() {
 		reset();
@@ -132,9 +121,9 @@ public final class Solver {
 		}
 
 		/*
-		 * We are going to solve the Linear programming problem (where x is an array of double)
-		 * recursively on subspaces of the feasible space, and take the best integer solution we can
-		 * reach in the given timeout.
+		 * We are going to solve the Linear programming problem (where x is an array
+		 * of double) recursively on subspaces of the feasible space, and take the
+		 * best integer solution we can reach in the given timeout.
 		 */
 		start = System.currentTimeMillis();
 		queue.offer(new SubSpaceSolver(constraints));
@@ -189,9 +178,9 @@ public final class Solver {
 		}
 
 		LinearObjectiveFunction functionToBeMaximized = new LinearObjectiveFunction(cVector, 0);
-		PointValuePair optimize = new SimplexSolver().optimize(
-			functionToBeMaximized, new LinearConstraintSet(constraints), GoalType.MAXIMIZE,
-			PivotSelectionRule.BLAND, new NonNegativeConstraint(true));
+		PointValuePair optimize = new SimplexSolver().optimize(functionToBeMaximized,
+				new LinearConstraintSet(constraints), GoalType.MAXIMIZE, PivotSelectionRule.BLAND,
+				new NonNegativeConstraint(true));
 		Optional<Double> maxSoFar = getMaxSoFar();
 		if (maxSoFar.isPresent() && maxSoFar.get().compareTo(optimize.getValue()) >= 0) {
 			// We won't find any better on this subspace
@@ -199,8 +188,9 @@ public final class Solver {
 		}
 
 		/*
-		 * Once we have a solution for the LP problem (not necessarily integer), we subdivide the
-		 * feasible region in 2 like described in Integer Programming, chapter 9
+		 * Once we have a solution for the LP problem (not necessarily integer), we
+		 * subdivide the feasible region in 2 like described in Integer Programming,
+		 * chapter 9
 		 */
 		double[] solution = optimize.getPoint();
 		for (int i = solution.length - 1; i >= 0; i--) {
@@ -209,32 +199,34 @@ public final class Solver {
 			double round = Math.round(max);
 			if (Math.abs(max - round) < EPSILON) {
 				if (i == 0) {
-					// All elements in x are integer. This is a potential solution to the ILP
+					// All elements in x are integer. This is a potential solution to the
+					// ILP
 					// problem.
-					if (!maxSoFar.isPresent()
-							|| maxSoFar.get().compareTo(optimize.getValue()) < 0) {
+					if (!maxSoFar.isPresent() || maxSoFar.get().compareTo(optimize.getValue()) < 0) {
 						updateBestSolutionSoFar(optimize);
 					}
 				}
-			}
-			else {
+			} else {
 				// Separate space and start again
 				double[] selectMaxResult = new double[cVector.length];
 				selectMaxResult[indexOfGreatestElement] = 1;
 
-				// Here we have a solution with x[g]=d is a double. But we are looking for integers.
-				// We will search the solution on 2 sub-regions: x[g] <= floor(d) and x[g] >=
+				// Here we have a solution with x[g]=d is a double. But we are looking
+				// for integers.
+				// We will search the solution on 2 sub-regions: x[g] <= floor(d) and
+				// x[g] >=
 				// ceil(d).
-				// For this we just need to add a linear constraint to the existing ones.
+				// For this we just need to add a linear constraint to the existing
+				// ones.
 				// See documentation mentioned above.
-				LinearConstraint constraintBelow =
-						new LinearConstraint(selectMaxResult, Relationship.LEQ, Math.floor(max));
+				LinearConstraint constraintBelow = new LinearConstraint(selectMaxResult, Relationship.LEQ,
+						Math.floor(max));
 				Set<LinearConstraint> constraintsBelow = Sets.newHashSet(constraints);
 				constraintsBelow.add(constraintBelow);
 				addToQueue(new SubSpaceSolver(constraintsBelow));
 
-				LinearConstraint constraintAbove =
-						new LinearConstraint(selectMaxResult, Relationship.GEQ, Math.ceil(max));
+				LinearConstraint constraintAbove = new LinearConstraint(selectMaxResult, Relationship.GEQ,
+						Math.ceil(max));
 				Set<LinearConstraint> constraintsAbove = Sets.newHashSet(constraints);
 				constraintsAbove.add(constraintAbove);
 				addToQueue(new SubSpaceSolver(constraintsAbove));
@@ -246,8 +238,7 @@ public final class Solver {
 	private void addToQueue(SubSpaceSolver solver) {
 		if (type == TraversingStrategy.DEPTH_FIRST) {
 			queue.addFirst(solver);
-		}
-		else {
+		} else {
 			queue.add(solver);
 		}
 	}
