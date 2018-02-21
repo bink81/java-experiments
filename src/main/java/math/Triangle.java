@@ -18,18 +18,20 @@ public final class Triangle {
 
 	public enum Type {
 		/**
-		 * An equilateral triangle is a triangle in which all three sides are equal.
+		 * An equilateral triangle is a triangle in which all three sides are
+		 * equal.
 		 */
 		EQUILATERAL,
 
 		/**
-		 * An isosceles triangle is a triangle in which two and only two sides are
-		 * equal.
+		 * An isosceles triangle is a triangle in which two and only two sides
+		 * are equal.
 		 */
 		ISOSCELES,
 
 		/**
-		 * An scalene triangle is a triangle in which all three sides are different.
+		 * An scalene triangle is a triangle in which all three sides are
+		 * different.
 		 */
 		SCALENE
 	}
@@ -38,13 +40,13 @@ public final class Triangle {
 	 * The constructor ensures only valid triangles are instantiated.
 	 * 
 	 * @param sideA
-	 *            - value of side A
+	 *            - positive, decimal value of side A
 	 * @param sideB
-	 *            - value of side B
+	 *            - positive, decimal value of side B
 	 * @param sideC
-	 *            - value of side C
+	 *            - positive, decimal value of side C
 	 * @throws TriangleUnequalException
-	 *             when a triangle is unequal
+	 *             when a triangle is unequal (@see TriangleUnequalException)
 	 */
 	public Triangle(final BigDecimal sideA, final BigDecimal sideB, final BigDecimal sideC)
 			throws TriangleUnequalException {
@@ -61,8 +63,8 @@ public final class Triangle {
 	}
 
 	/**
-	 * Check if a triangle is unequal (a side is bigger or equals than the sum of
-	 * the remaining two).
+	 * Check if a triangle is unequal (a side is bigger or equals than the sum
+	 * of the remaining two).
 	 */
 	private boolean isInequal(final BigDecimal side1, final BigDecimal side2, final BigDecimal side3)
 			throws TriangleUnequalException {

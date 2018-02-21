@@ -22,21 +22,22 @@ public final class TriangleDemo {
 		} catch (TriangleUnequalException e) {
 			printExceptionMessage(e.getMessage());
 		}
-		printGoodbyeMessage();
+		printExitMessage();
 	}
 
 	private static BigDecimal readUserInputForSide(final Scanner scanner, final String sideName) {
 		BigDecimal value = null;
 		while (value == null) {
 			try {
-				System.out.print("Enter a positive value for side " + sideName + ": ");
+				System.out.print("Enter a positive, decimal value for side " + sideName + ": ");
 				value = new BigDecimal(scanner.nextLine());
 				if (value.compareTo(BigDecimal.ZERO) < 0) {
 					System.out.println("The provided value is not positive, try again (or 0 to exit)");
 					value = null;
 					continue;
 				} else if (value.compareTo(BigDecimal.ZERO) == 0) {
-					printGoodbyeMessage();
+					System.out.println("User abort detected0");
+					printExitMessage();
 					System.exit(0);
 				}
 			} catch (NumberFormatException e) {
@@ -59,10 +60,11 @@ public final class TriangleDemo {
 
 	private static void printExceptionMessage(final String message) {
 		System.out.println("");
-		System.out.println("The provided values do not form a valid triangle (hint: " + message + ").");
+		System.out.println("The provided values do not form a valid triangle (guess: " + message + ").");
 	}
 
-	private static void printGoodbyeMessage() {
+	private static void printExitMessage() {
+		System.out.println("");
 		System.out.print("Exiting...");
 	}
 }

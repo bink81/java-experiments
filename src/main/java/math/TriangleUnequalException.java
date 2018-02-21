@@ -6,7 +6,7 @@ package math;
  * other two sides and greater than the difference of the lengths of the other
  * two sides.
  * 
- * @author Robert
+ * @author bink81@gmail.com
  */
 public class TriangleUnequalException extends Exception {
 	private static final long serialVersionUID = 1L;
