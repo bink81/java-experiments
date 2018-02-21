@@ -34,8 +34,20 @@ public final class Triangle {
 		SCALENE
 	}
 
-	// The constructor ensures only valid triangles are instantiated.
-	public Triangle(final BigDecimal sideA, final BigDecimal sideB, final BigDecimal sideC) {
+	/**
+	 * The constructor ensures only valid triangles are instantiated.
+	 * 
+	 * @param sideA
+	 *            - value of side A
+	 * @param sideB
+	 *            - value of side B
+	 * @param sideC
+	 *            - value of side C
+	 * @throws TriangleUnequalException
+	 *             when a triangle is unequal
+	 */
+	public Triangle(final BigDecimal sideA, final BigDecimal sideB, final BigDecimal sideC)
+			throws TriangleUnequalException {
 		Preconditions.checkNotNull(sideA, "sideA must not be null");
 		Preconditions.checkNotNull(sideB, "sideB must not be null");
 		Preconditions.checkNotNull(sideC, "sideC must not be null");
@@ -51,15 +63,18 @@ public final class Triangle {
 	/**
 	 * Check if a triangle is unequal (a side is bigger or equals than the sum of
 	 * the remaining two).
-	 * 
-	 * @return False if the triangle is not unequal.
-	 * @throws TriangleUnequalException
-	 *             - if a triangle is unequal
 	 */
-	private boolean isInequal(final BigDecimal side1, final BigDecimal side2, final BigDecimal side3) {
-		Preconditions.checkArgument(side1.compareTo(side3.add(side2)) < 0, side1 + " is too big");
-		Preconditions.checkArgument(side2.compareTo(side3.add(side1)) < 0, side2 + " is too big");
-		Preconditions.checkArgument(side3.compareTo(side1.add(side2)) < 0, side3 + " is too big");
+	private boolean isInequal(final BigDecimal side1, final BigDecimal side2, final BigDecimal side3)
+			throws TriangleUnequalException {
+		if (side1.compareTo(side3.add(side2)) >= 0) {
+			throw new TriangleUnequalException(side1 + " is too big");
+		}
+		if (side2.compareTo(side3.add(side1)) >= 0) {
+			throw new TriangleUnequalException(side2 + " is too big");
+		}
+		if (side3.compareTo(side1.add(side2)) >= 0) {
+			throw new TriangleUnequalException(side3 + " is too big");
+		}
 		return false;
 	}
 

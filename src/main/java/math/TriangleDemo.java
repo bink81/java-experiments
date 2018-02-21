@@ -19,7 +19,7 @@ public final class TriangleDemo {
 			BigDecimal sideB = readUserInputForSide(scanner, "B");
 			BigDecimal sideC = readUserInputForSide(scanner, "C");
 			printTriangleType(new Triangle(sideA, sideB, sideC).determineType());
-		} catch (IllegalArgumentException e) {
+		} catch (TriangleUnequalException e) {
 			printExceptionMessage(e.getMessage());
 		}
 		printGoodbyeMessage();

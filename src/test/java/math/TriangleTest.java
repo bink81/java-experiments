@@ -77,33 +77,33 @@ public class TriangleTest {
 	}
 
 	// 4. Check inequality
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = TriangleUnequalException.class)
 	public void givenTooBigSideAThenFailConstruction() throws Exception {
 		new Triangle(TEN, ONE, ONE);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = TriangleUnequalException.class)
 	public void givenTooBigSideBThenFailConstruction() throws Exception {
 		new Triangle(ONE, TEN, ONE);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = TriangleUnequalException.class)
 	public void givenTooBigSideCThenFailConstruction() throws Exception {
 		new Triangle(ONE, ONE, TEN);
 	}
 
 	// 5. Check invalid triangle (straight line)
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = TriangleUnequalException.class)
 	public void givenWeirdSides1ThenFailConstruction() throws Exception {
 		new Triangle(TEN, FIVE, FIVE);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = TriangleUnequalException.class)
 	public void givenWeirdSides2ThenFailConstruction() throws Exception {
 		new Triangle(FIVE, TEN, FIVE);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = TriangleUnequalException.class)
 	public void givenWeirdSides3ThenFailConstruction() throws Exception {
 		new Triangle(FIVE, FIVE, TEN);
 	}
